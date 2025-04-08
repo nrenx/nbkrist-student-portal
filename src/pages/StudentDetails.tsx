@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import StudentProfile from '@/components/StudentProfile';
 import AdBanner from '@/components/AdBanner';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/sonner';
+import { toast } from "sonner"; // Updated import
 
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
