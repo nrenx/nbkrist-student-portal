@@ -1,22 +1,46 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
 import AdBanner from '@/components/AdBanner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const Index = () => {
   const isMobile = useIsMobile();
+  const [showNotificationDialog, setShowNotificationDialog] = useState(false);
   
   // This could be used to show an interstitial ad on page load
   useEffect(() => {
     // In a real implementation, you would initialize your ad service here
     console.log('Home page loaded - ideal place to initialize ads');
+    
+    // Show notification opt-in dialog after 3 seconds
+    const timer = setTimeout(() => {
+      setShowNotificationDialog(true);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
   }, []);
+
+  const handleAllowNotifications = () => {
+    // In production, this would trigger the actual notification permission request
+    console.log('User allowed notifications');
+    setShowNotificationDialog(false);
+    // Code to register for push notifications would go here
+  };
 
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
+        {/* Interstitial ad on page load - shown immediately */}
+        <AdBanner 
+          width="w-full" 
+          height="h-96" 
+          slotId="interstitial-pageload" 
+          type="interstitial" 
+        />
+        
         {/* Top Ad Banner - Prime position */}
         <div className="mb-8">
           <AdBanner width="w-full" height="h-28" slotId="home-top-banner" />
@@ -97,11 +121,62 @@ const Index = () => {
           </div>
         )}
         
-        {/* Sticky ad for mobile only - constant visibility */}
-        {isMobile && (
+        {/* Push notification ad that appears after a delay */}
+        <AdBanner 
+          width="w-72" 
+          height="h-24" 
+          slotId="push-notification-ad" 
+          type="push-notification" 
+          delay={10000} // Show after 10 seconds
+        />
+        
+        {/* Exit intent ad - appears when user tries to leave page */}
+        <AdBanner 
+          width="w-full max-w-md" 
+          height="h-80" 
+          slotId="exit-intent-ad" 
+          type="exit-intent" 
+        />
+        
+        {/* Floating footer ad - always visible */}
+        <AdBanner 
+          width="w-full" 
+          height="h-16" 
+          slotId="floating-footer-ad" 
+          type="floating-footer" 
+        />
+        
+        {/* Sticky ad for mobile only - replaced by floating footer */}
+        {isMobile && !document.querySelector('[data-ad-type="floating-footer"]') && (
           <AdBanner width="w-full" height="h-16" slotId="home-sticky-mobile" type="sticky" />
         )}
       </div>
+      
+      {/* Notification permission dialog */}
+      <Dialog open={showNotificationDialog} onOpenChange={setShowNotificationDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Enable Notifications</DialogTitle>
+            <DialogDescription>
+              Get instant updates about your results, upcoming exams, and important college announcements.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mt-4">
+            <button 
+              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90"
+              onClick={handleAllowNotifications}
+            >
+              Allow Notifications
+            </button>
+            <button 
+              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+              onClick={() => setShowNotificationDialog(false)}
+            >
+              Not Now
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
