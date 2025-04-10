@@ -1,15 +1,26 @@
-
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
 import AdBanner from '@/components/AdBanner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAdNetworks } from '@/hooks/use-ad-networks';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const Index = () => {
   const isMobile = useIsMobile();
   const [showNotificationDialog, setShowNotificationDialog] = useState(false);
   const [showStickyAd, setShowStickyAd] = useState(true);
+  
+  // Initialize ad networks
+  const { initializedNetworks, loading: adsLoading, error: adsError } = useAdNetworks({
+    networks: ['default', 'google'], // Add the networks you want to use
+    onInitialized: (network) => {
+      console.log(`${network} ad network initialized successfully`);
+    },
+    onError: (network, error) => {
+      console.error(`Error initializing ${network} ad network:`, error);
+    }
+  });
   
   // This could be used to show an interstitial ad on page load
   useEffect(() => {
@@ -38,6 +49,11 @@ const Index = () => {
     setShowStickyAd(!floatingFooterExists);
   }, []);
 
+  // Display any ad network loading errors
+  if (adsError) {
+    console.error('Ad network error:', adsError);
+  }
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
@@ -47,11 +63,18 @@ const Index = () => {
           height="h-96" 
           slotId="interstitial-pageload" 
           type="interstitial" 
+          network="google" 
         />
         
         {/* Top Ad Banner - Prime position */}
         <div className="mb-8">
-          <AdBanner width="w-full" height="h-28" slotId="home-top-banner" />
+          <AdBanner 
+            width="w-full" 
+            height="h-28" 
+            slotId="home-top-banner" 
+            network="google"
+            adConfig={{ 'data-ad-client': 'ca-pub-example' }} 
+          />
         </div>
 
         <div className="max-w-4xl mx-auto text-center mb-10 animate-fade-in">
@@ -66,7 +89,12 @@ const Index = () => {
         {/* Pre-search ad - high visibility */}
         {isMobile && (
           <div className="mb-6">
-            <AdBanner width="w-full" height="h-20" slotId="pre-search-mobile" />
+            <AdBanner 
+              width="w-full" 
+              height="h-20" 
+              slotId="pre-search-mobile" 
+              network="facebook" 
+            />
           </div>
         )}
 
@@ -79,12 +107,22 @@ const Index = () => {
 
         {/* Post-search ad - high engagement area */}
         <div className="my-8">
-          <AdBanner width="w-full" height="h-24" slotId="post-search" />
+          <AdBanner 
+            width="w-full" 
+            height="h-24" 
+            slotId="post-search" 
+            network="taboola" 
+          />
         </div>
 
         {/* Side Ads on larger screens */}
         <div className="hidden md:flex justify-between my-12">
-          <AdBanner width="w-1/4" height="h-96" slotId="home-left-sidebar" />
+          <AdBanner 
+            width="w-1/4" 
+            height="h-96" 
+            slotId="home-left-sidebar" 
+            network="amazon" 
+          />
           <div className="w-2/4 px-4">
             <div className="mt-8 max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
@@ -101,7 +139,12 @@ const Index = () => {
               </p>
             </div>
           </div>
-          <AdBanner width="w-1/4" height="h-96" slotId="home-right-sidebar" />
+          <AdBanner 
+            width="w-1/4" 
+            height="h-96" 
+            slotId="home-right-sidebar" 
+            network="outbrain" 
+          />
         </div>
 
         {/* Mobile about section */}
@@ -125,7 +168,12 @@ const Index = () => {
         {/* Bottom Ad on mobile screens - closing experience */}
         {isMobile && (
           <div className="mt-8">
-            <AdBanner width="w-full" height="h-32" slotId="home-bottom-mobile" />
+            <AdBanner 
+              width="w-full" 
+              height="h-32" 
+              slotId="home-bottom-mobile" 
+              network="google" 
+            />
           </div>
         )}
         
@@ -136,6 +184,7 @@ const Index = () => {
           slotId="push-notification-ad" 
           type="push-notification" 
           delay={10000} // Show after 10 seconds
+          network="default"
         />
         
         {/* Exit intent ad - appears when user tries to leave page */}
@@ -144,6 +193,7 @@ const Index = () => {
           height="h-80" 
           slotId="exit-intent-ad" 
           type="exit-intent" 
+          network="google"
         />
         
         {/* Floating footer ad - always visible */}
@@ -152,11 +202,18 @@ const Index = () => {
           height="h-16" 
           slotId="floating-footer-ad" 
           type="floating-footer" 
+          network="amazon"
         />
         
         {/* Sticky ad for mobile only - replaced by floating footer */}
         {isMobile && showStickyAd && (
-          <AdBanner width="w-full" height="h-16" slotId="home-sticky-mobile" type="sticky" />
+          <AdBanner 
+            width="w-full" 
+            height="h-16" 
+            slotId="home-sticky-mobile" 
+            type="sticky" 
+            network="facebook"
+          />
         )}
       </div>
       

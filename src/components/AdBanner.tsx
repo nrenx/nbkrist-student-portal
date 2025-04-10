@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -7,6 +8,8 @@ interface AdBannerProps {
   slotId?: string;
   type?: 'standard' | 'interstitial' | 'sticky' | 'floating-footer' | 'exit-intent' | 'push-notification';
   delay?: number; // For timed ads
+  network?: 'default' | 'google' | 'facebook' | 'amazon' | 'taboola' | 'outbrain'; // Add supported networks
+  adConfig?: Record<string, any>; // Additional network-specific configuration
 }
 
 const AdBanner = ({ 
@@ -14,11 +17,14 @@ const AdBanner = ({
   height, 
   slotId = "default-ad", 
   type = "standard",
-  delay = 0
+  delay = 0,
+  network = "default",
+  adConfig = {}
 }: AdBannerProps) => {
   const isMobile = useIsMobile();
   const [showAd, setShowAd] = React.useState(type !== 'exit-intent' && type !== 'interstitial');
   const [showExitIntent, setShowExitIntent] = React.useState(false);
+  const [adLoaded, setAdLoaded] = React.useState(false);
   
   React.useEffect(() => {
     // Handle delayed ads (interstitials)
@@ -45,6 +51,61 @@ const AdBanner = ({
       }
     }
   }, [type, delay, isMobile]);
+
+  // Effect to initialize the ad based on the network
+  React.useEffect(() => {
+    if (!showAd && !showExitIntent) return;
+    
+    const initializeAd = async () => {
+      try {
+        // Placeholder for ad network initialization
+        // Each network will have different initialization needs
+        switch (network) {
+          case 'google':
+            // Google AdSense/AdManager initialization logic
+            console.log(`Initializing Google ad: ${slotId}, format: ${isMobile ? "mobile" : "desktop"}`);
+            // window.adsbygoogle = window.adsbygoogle || [];
+            // window.adsbygoogle.push({});
+            break;
+          case 'facebook':
+            // Facebook Audience Network initialization
+            console.log(`Initializing Facebook ad: ${slotId}`);
+            break;
+          case 'amazon':
+            // Amazon ads initialization
+            console.log(`Initializing Amazon ad: ${slotId}`);
+            break;
+          case 'taboola':
+            // Taboola ads initialization
+            console.log(`Initializing Taboola ad: ${slotId}`);
+            break;
+          case 'outbrain':
+            // Outbrain ads initialization
+            console.log(`Initializing Outbrain ad: ${slotId}`);
+            break;
+          default:
+            // Default placeholder or custom ad network
+            console.log(`Initializing default/custom ad: ${slotId}`);
+            break;
+        }
+        
+        // Simulate ad loading
+        setTimeout(() => {
+          setAdLoaded(true);
+        }, 300);
+      } catch (error) {
+        console.error(`Error initializing ${network} ad:`, error);
+      }
+    };
+    
+    initializeAd();
+    
+    // Cleanup function if needed
+    return () => {
+      // Cleanup logic for the specific ad network
+      console.log(`Cleaning up ${network} ad: ${slotId}`);
+    };
+  }, [showAd, showExitIntent, network, slotId, isMobile, adConfig]);
   
   const getAdStyling = () => {
     let baseStyles = `ad-container ${width} ${height} relative overflow-hidden`;
@@ -67,6 +128,19 @@ const AdBanner = ({
   const handleCloseAd = () => {
     setShowAd(false);
     setShowExitIntent(false);
+  };
+  
+  // Generate network-specific data attributes
+  const getNetworkAttributes = () => {
+    const baseAttributes: Record<string, string> = {
+      'data-ad-slot': slotId,
+      'data-ad-format': isMobile ? "mobile" : "desktop",
+      'data-ad-type': type,
+      'data-ad-network': network
+    };
+    
+    // Add any custom attributes from adConfig
+    return { ...baseAttributes, ...adConfig };
   };
   
   // Don't render if shouldn't be shown
@@ -94,11 +168,14 @@ const AdBanner = ({
             className="w-full h-full flex items-center justify-center"
             role="complementary"
             aria-label="Advertisement"
-            data-ad-slot={slotId}
-            data-ad-format={isMobile ? "mobile" : "desktop"}
-            data-ad-type={type}
+            {...getNetworkAttributes()}
           >
-            {/* Ad content will be inserted here by your ad provider */}
+            {!adLoaded && (
+              <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400">
+                Loading ad...
+              </div>
+            )}
+            {/* Ad content will be inserted here by the ad provider */}
           </div>
         </div>
       </div>
@@ -126,11 +203,14 @@ const AdBanner = ({
           className="w-full h-full"
           role="complementary"
           aria-label="Advertisement"
-          data-ad-slot={slotId}
-          data-ad-format={isMobile ? "mobile" : "desktop"}
-          data-ad-type={type}
+          {...getNetworkAttributes()}
         >
-          {/* Ad content will be inserted here by your ad provider */}
+          {!adLoaded && (
+            <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400 text-xs">
+              Loading...
+            </div>
+          )}
+          {/* Ad content will be inserted here by the ad provider */}
         </div>
       </div>
     );
@@ -142,14 +222,17 @@ const AdBanner = ({
       className={getAdStyling()}
       role="complementary"
       aria-label="Advertisement"
-      data-ad-slot={slotId}
-      data-ad-format={isMobile ? "mobile" : "desktop"}
-      data-ad-type={type}
+      {...getNetworkAttributes()}
     >
       <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded">
         Advertisement
       </div>
-      {/* Ad content will be inserted here by your ad provider */}
+      {!adLoaded && (
+        <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400">
+          Loading ad...
+        </div>
+      )}
+      {/* Ad content will be inserted here by the ad provider */}
     </div>
   );
 };
