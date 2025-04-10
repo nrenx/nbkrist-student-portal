@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -33,15 +32,19 @@ const AdBanner = ({
     // Set up exit intent detection
     if (type === 'exit-intent') {
       const handleMouseLeave = (e: MouseEvent) => {
+        // Only trigger if the mouse is leaving the top of the viewport
         if (e.clientY <= 0) {
           setShowExitIntent(true);
         }
       };
       
-      document.addEventListener('mouseleave', handleMouseLeave);
-      return () => document.removeEventListener('mouseleave', handleMouseLeave);
+      // Only add the listener on non-mobile devices
+      if (!isMobile) {
+        document.addEventListener('mouseleave', handleMouseLeave);
+        return () => document.removeEventListener('mouseleave', handleMouseLeave);
+      }
     }
-  }, [type, delay]);
+  }, [type, delay, isMobile]);
   
   const getAdStyling = () => {
     let baseStyles = `ad-container ${width} ${height} relative overflow-hidden`;

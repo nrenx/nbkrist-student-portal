@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 const Index = () => {
   const isMobile = useIsMobile();
   const [showNotificationDialog, setShowNotificationDialog] = useState(false);
+  const [showStickyAd, setShowStickyAd] = useState(true);
   
   // This could be used to show an interstitial ad on page load
   useEffect(() => {
@@ -29,6 +30,13 @@ const Index = () => {
     setShowNotificationDialog(false);
     // Code to register for push notifications would go here
   };
+
+  // When floating footer ad is displayed, hide the sticky ad
+  useEffect(() => {
+    // Check if floating footer ad exists and hide sticky ad if it does
+    const floatingFooterExists = document.querySelector('[data-ad-type="floating-footer"]') !== null;
+    setShowStickyAd(!floatingFooterExists);
+  }, []);
 
   return (
     <Layout>
@@ -147,7 +155,7 @@ const Index = () => {
         />
         
         {/* Sticky ad for mobile only - replaced by floating footer */}
-        {isMobile && !document.querySelector('[data-ad-type="floating-footer"]') && (
+        {isMobile && showStickyAd && (
           <AdBanner width="w-full" height="h-16" slotId="home-sticky-mobile" type="sticky" />
         )}
       </div>
