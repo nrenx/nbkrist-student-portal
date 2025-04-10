@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -5,6 +6,7 @@ import StudentProfile from '@/components/StudentProfile';
 import AdBanner from '@/components/AdBanner';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner"; // Updated import
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
@@ -12,6 +14,7 @@ const StudentDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const [studentData, setStudentData] = useState<any>(null);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Simulating API call to get student data
@@ -59,9 +62,9 @@ const StudentDetails = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
-        {/* Top Ad Banner */}
+        {/* Top Ad Banner - Higher visibility */}
         <div className="mb-8">
-          <AdBanner width="w-full" height="h-24" />
+          <AdBanner width="w-full" height="h-28" slotId="top-banner" />
         </div>
 
         <div className="mb-6">
@@ -77,10 +80,17 @@ const StudentDetails = () => {
           </Button>
         </div>
 
+        {/* In-content ad for mobile users */}
+        {isMobile && (
+          <div className="my-4">
+            <AdBanner width="w-full" height="h-20" slotId="mobile-mid-content" />
+          </div>
+        )}
+
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Ad on larger screens */}
           <div className="hidden md:block md:w-1/5">
-            <AdBanner width="w-full" height="h-full min-h-[400px]" />
+            <AdBanner width="w-full" height="h-full min-h-[500px]" slotId="left-sidebar" />
           </div>
 
           {/* Main Content */}
@@ -96,20 +106,32 @@ const StudentDetails = () => {
                 <Button onClick={handleBack}>Try Again</Button>
               </div>
             ) : studentData && (
-              <StudentProfile data={studentData} />
+              <>
+                <StudentProfile data={studentData} />
+                
+                {/* Ad below student profile - high engagement area */}
+                <div className="mt-6">
+                  <AdBanner width="w-full" height="h-24" slotId="below-profile" />
+                </div>
+              </>
             )}
           </div>
 
-          {/* Right Ad on larger screens */}
+          {/* Right Ad on larger screens - premium spot */}
           <div className="hidden md:block md:w-1/5">
-            <AdBanner width="w-full" height="h-full min-h-[400px]" />
+            <AdBanner width="w-full" height="h-full min-h-[500px]" slotId="right-sidebar" />
           </div>
         </div>
 
-        {/* Bottom Ad on smaller screens */}
-        <div className="md:hidden mt-8">
-          <AdBanner width="w-full" height="h-32" />
+        {/* Bottom Ad on all screens */}
+        <div className="mt-8">
+          <AdBanner width="w-full" height="h-32" slotId="bottom-banner" />
         </div>
+        
+        {/* Sticky ad for mobile only - high visibility and engagement */}
+        {isMobile && (
+          <AdBanner width="w-full" height="h-16" slotId="mobile-sticky" type="sticky" />
+        )}
       </div>
     </Layout>
   );
