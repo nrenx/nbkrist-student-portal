@@ -1,8 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AdPreferencesDialog from './AdPreferencesDialog';
+import AdAnalyticsDashboard from './AdAnalyticsDashboard';
 
 const Header = () => {
+  const [adPreferencesOpen, setAdPreferencesOpen] = useState(false);
+  const [adAnalyticsOpen, setAdAnalyticsOpen] = useState(false);
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8">
@@ -16,7 +21,7 @@ const Header = () => {
             <Link to="/about" className="text-gray-600 hover:text-nbkr transition-colors">About</Link>
             <Link to="/contact" className="text-gray-600 hover:text-nbkr transition-colors">Contact</Link>
           </nav>
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
             <button className="text-gray-600">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -25,6 +30,18 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Ad Preferences Dialog */}
+      <AdPreferencesDialog
+        open={adPreferencesOpen}
+        onOpenChange={setAdPreferencesOpen}
+      />
+
+      {/* Ad Analytics Dashboard */}
+      <AdAnalyticsDashboard
+        open={adAnalyticsOpen}
+        onOpenChange={setAdAnalyticsOpen}
+      />
     </header>
   );
 };

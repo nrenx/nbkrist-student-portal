@@ -21,7 +21,7 @@ const StudentDetails = () => {
     // In a real application, replace this with your actual API call
     const fetchStudentData = () => {
       setLoading(true);
-      
+
       // Simulate API delay
       setTimeout(() => {
         // For demo purposes, only show data for certain roll numbers
@@ -39,7 +39,7 @@ const StudentDetails = () => {
             mobile: '+91 9876543210',
             email: `${rollNumber.toLowerCase()}@nbkrist.ac.in`,
           };
-          
+
           setStudentData(mockData);
           setLoading(false);
         } else {
@@ -68,8 +68,8 @@ const StudentDetails = () => {
         </div>
 
         <div className="mb-6">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={handleBack}
             className="flex items-center"
           >
@@ -108,7 +108,7 @@ const StudentDetails = () => {
             ) : studentData && (
               <>
                 <StudentProfile data={studentData} />
-                
+
                 {/* Ad below student profile - high engagement area */}
                 <div className="mt-6">
                   <AdBanner width="w-full" height="h-24" slotId="below-profile" />
@@ -127,7 +127,7 @@ const StudentDetails = () => {
         <div className="mt-8">
           <AdBanner width="w-full" height="h-32" slotId="bottom-banner" />
         </div>
-        
+
         {/* Sticky ad for mobile only - high visibility and engagement */}
         {isMobile && (
           <AdBanner width="w-full" height="h-16" slotId="mobile-sticky" type="sticky" />
