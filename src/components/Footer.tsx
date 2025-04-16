@@ -1,11 +1,46 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FeedbackForm from './FeedbackForm';
+import { Button } from '@/components/ui/button';
 
 const Footer = () => {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
     <footer className="bg-white border-t mt-auto">
       <div className="container mx-auto px-4 py-6">
+        {/* Feedback Form Section */}
+        <div className="mb-8 border-b pb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold text-gray-800">Having Issues with the Portal?</h2>
+            <p className="text-sm text-gray-600 mt-2">
+              If you're facing any problems with attendance, mid marks, or student details not showing correctly, please let us know.
+            </p>
+            {!showFeedback ? (
+              <Button
+                onClick={() => setShowFeedback(true)}
+                className="mt-4 bg-nbkr hover:bg-nbkr-dark"
+              >
+                Report an Issue
+              </Button>
+            ) : (
+              <div className="max-w-md mx-auto mt-4">
+                <FeedbackForm />
+                <div className="text-center mt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowFeedback(false)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Regular Footer Content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-4">N.B.K.R.I.S.T</h3>
