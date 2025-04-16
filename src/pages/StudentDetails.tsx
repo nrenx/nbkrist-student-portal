@@ -3,64 +3,80 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import StudentProfile from '@/components/StudentProfile';
+import AttendanceDetails from '@/components/AttendanceDetails';
+import MidMarksDetails from '@/components/MidMarksDetails';
+import PersonalDetails from '@/components/PersonalDetails';
 import AdBanner from '@/components/AdBanner';
 import { Button } from '@/components/ui/button';
-import { toast } from "sonner"; // Updated import
+import { toast } from "sonner";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { fetchStudentDetails } from '@/services/studentService';
+import { ProcessedStudentData } from '@/types/student';
 
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
   const location = useLocation();
-  const { acadYear, yearSem } = location.state || { acadYear: '2023-24', yearSem: '42' };
+  const { acadYear, yearSem } = location.state || { acadYear: '2023-24', yearSem: '4-2' };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [studentData, setStudentData] = useState<any>(null);
+  const [studentData, setStudentData] = useState<ProcessedStudentData | null>(null);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Simulating API call to get student data
-    // In a real application, replace this with your actual API call
-    const fetchStudentData = () => {
+    // Function to fetch student data from Supabase
+    const getStudentData = async () => {
       setLoading(true);
+      setError(null);
 
-      // Simulate API delay
-      setTimeout(() => {
-        // For demo purposes, only show data for certain roll numbers
-        // In a real app, this would be an API call to your backend
-        if (rollNumber && ['123456', '19BCS7046', '20BCE1234', 'DEMO123'].includes(rollNumber)) {
-          // Mock student data
-          const mockData = {
-            rollNumber: rollNumber,
-            name: 'John Doe',
-            branch: 'Computer Science Engineering',
-            year: getYearText(yearSem),
-            section: 'A',
-            cgpa: 8.75,
-            address: 'Vidyanagar, Nellore District, AP',
-            mobile: '+91 9876543210',
-            email: `${rollNumber.toLowerCase()}@nbkrist.ac.in`,
-            acadYear: acadYear,
-            yearSem: yearSem,
-          };
+      try {
+        console.log('Fetching student data with:', { rollNumber, acadYear, yearSem });
 
-          setStudentData(mockData);
+        // Fetch student details from Supabase
+        const data = await fetchStudentDetails(rollNumber!, acadYear, yearSem);
+        console.log('Received data from Supabase:', data);
+
+        if (!data) {
+          const errorMsg = 'No student found with the provided details.';
+          console.log(errorMsg);
+          setError(errorMsg);
+          toast.error(errorMsg);
           setLoading(false);
-        } else {
-          setError('No student found with the provided roll number.');
-          toast.error('No student found with the provided roll number.');
-          setLoading(false);
+          return;
         }
-      }, 1500);
+
+        setStudentData(data);
+        setLoading(false);
+        toast.success('Student data loaded successfully!');
+      } catch (err: any) {
+        const errorMsg = err?.message || 'Unknown error';
+        console.error('Error fetching student data:', err);
+        setError(`An error occurred: ${errorMsg}`);
+        toast.error(`Error: ${errorMsg}`);
+        setLoading(false);
+      }
     };
 
     if (rollNumber) {
-      fetchStudentData();
+      getStudentData();
     }
   }, [rollNumber, acadYear, yearSem]);
 
   // Helper function to convert yearSem code to readable text
   const getYearText = (code: string) => {
+    // If the code is already in the format '1-1', '2-2', etc., convert it to a readable format
+    if (code && code.includes('-')) {
+      const [year, sem] = code.split('-');
+      const yearNames = ['First', 'Second', 'Third', 'Final'];
+      const semNames = ['First', 'Second'];
+
+      if (parseInt(year) >= 1 && parseInt(year) <= 4 && parseInt(sem) >= 1 && parseInt(sem) <= 2) {
+        return `${yearNames[parseInt(year)-1]} Year - ${semNames[parseInt(sem)-1]} Semester`;
+      }
+      return code; // Return as is if it doesn't match the expected format
+    }
+
+    // Otherwise, use the old mapping
     const yearMap: Record<string, string> = {
       '01': 'First Year',
       '11': 'First Year - First Semester',
@@ -127,11 +143,36 @@ const StudentDetails = () => {
               </div>
             ) : studentData && (
               <>
-                <StudentProfile data={studentData} />
+                <div className="space-y-6">
+                  {/* Basic student information */}
+                  <StudentProfile data={studentData} />
 
-                {/* Ad below student profile - high engagement area */}
-                <div className="mt-6">
-                  <AdBanner width="w-full" height="h-24" slotId="below-profile" />
+                  {/* Attendance information if available */}
+                  {studentData.attendance && (
+                    <AttendanceDetails
+                      attendance={studentData.attendance}
+                      attendancePercentage={studentData.attendancePercentage}
+                      totalClasses={studentData.totalClasses}
+                    />
+                  )}
+
+                  {/* Mid-term marks if available */}
+                  {studentData.midMarks && (
+                    <MidMarksDetails
+                      midMarks={studentData.midMarks}
+                      processedMidMarks={studentData.processedMidMarks}
+                    />
+                  )}
+
+                  {/* Personal details if available */}
+                  {studentData.personalDetails && (
+                    <PersonalDetails personalDetails={studentData.personalDetails} />
+                  )}
+
+                  {/* Ad below student profile - high engagement area */}
+                  <div className="mt-6">
+                    <AdBanner width="w-full" height="h-24" slotId="below-profile" />
+                  </div>
                 </div>
               </>
             )}
