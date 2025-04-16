@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import StudentProfile from '@/components/StudentProfile';
 import AdBanner from '@/components/AdBanner';
@@ -10,6 +10,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
+  const location = useLocation();
+  const { acadYear, yearSem } = location.state || { acadYear: '2023-24', yearSem: '42' };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [studentData, setStudentData] = useState<any>(null);
@@ -32,12 +34,14 @@ const StudentDetails = () => {
             rollNumber: rollNumber,
             name: 'John Doe',
             branch: 'Computer Science Engineering',
-            year: '3rd Year',
+            year: getYearText(yearSem),
             section: 'A',
             cgpa: 8.75,
             address: 'Vidyanagar, Nellore District, AP',
             mobile: '+91 9876543210',
             email: `${rollNumber.toLowerCase()}@nbkrist.ac.in`,
+            acadYear: acadYear,
+            yearSem: yearSem,
           };
 
           setStudentData(mockData);
@@ -53,7 +57,23 @@ const StudentDetails = () => {
     if (rollNumber) {
       fetchStudentData();
     }
-  }, [rollNumber]);
+  }, [rollNumber, acadYear, yearSem]);
+
+  // Helper function to convert yearSem code to readable text
+  const getYearText = (code: string) => {
+    const yearMap: Record<string, string> = {
+      '01': 'First Year',
+      '11': 'First Year - First Semester',
+      '12': 'First Year - Second Semester',
+      '21': 'Second Year - First Semester',
+      '22': 'Second Year - Second Semester',
+      '31': 'Third Year - First Semester',
+      '32': 'Third Year - Second Semester',
+      '41': 'Final Year - First Semester',
+      '42': 'Final Year - Second Semester',
+    };
+    return yearMap[code] || 'Unknown';
+  };
 
   const handleBack = () => {
     navigate('/');
