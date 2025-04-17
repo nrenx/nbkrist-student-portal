@@ -27,11 +27,14 @@ const SearchBox = () => {
       return;
     }
 
+    // Convert roll number to uppercase
+    const uppercaseRollNumber = rollNumber.trim().toUpperCase();
+
     // For demonstration, we'll use a regex pattern to validate roll number format
     // This should be customized based on your college's roll number format
-    const rollNumberPattern = /^[0-9A-Z]{1,12}$/i;
+    const rollNumberPattern = /^[0-9A-Z]{1,12}$/;
 
-    if (!rollNumberPattern.test(rollNumber)) {
+    if (!rollNumberPattern.test(uppercaseRollNumber)) {
       toast.error("Please enter a valid roll number format");
       return;
     }
@@ -41,7 +44,7 @@ const SearchBox = () => {
     try {
       // Navigate to the student details page with the form values
       // The actual data fetching will happen in the StudentDetails component
-      navigate(`/student/${rollNumber}`, { state: { acadYear, yearSem } });
+      navigate(`/student/${uppercaseRollNumber}`, { state: { acadYear, yearSem } });
     } catch (error) {
       setIsLoading(false);
       toast.error("An error occurred while fetching student details");
@@ -55,11 +58,17 @@ const SearchBox = () => {
         <div>
           <Input
             type="text"
-            placeholder="Enter your roll number"
+            placeholder="Enter your roll number (e.g., 22KB1A0521)"
             value={rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
             className="w-full"
             autoComplete="off"
+            onBlur={(e) => {
+              // Convert to uppercase when the field loses focus
+              if (e.target.value.trim()) {
+                setRollNumber(e.target.value.trim().toUpperCase());
+              }
+            }}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

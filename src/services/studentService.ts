@@ -15,7 +15,9 @@ export async function fetchStudentDetails(
   yearSem: string
 ): Promise<ProcessedStudentData | null> {
   try {
-    console.log('Query parameters:', { rollNumber, academicYear, yearSem });
+    // Ensure roll number is uppercase
+    const uppercaseRollNumber = rollNumber.toUpperCase();
+    console.log('Query parameters:', { rollNumber: uppercaseRollNumber, academicYear, yearSem });
 
     // Simple direct query to match the example code
     const { data, error } = await supabase
@@ -31,7 +33,7 @@ export async function fetchStudentDetails(
         mid_marks,
         csv_data
       `)
-      .eq('roll_number', rollNumber)
+      .eq('roll_number', uppercaseRollNumber)
       .eq('_academic_year', academicYear)
       .eq('_year_sem', yearSem)
       .single();

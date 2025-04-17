@@ -30,10 +30,12 @@ const StudentDetails = () => {
       setError(null);
 
       try {
-        console.log('Fetching student data with:', { rollNumber, acadYear, yearSem });
+        // Convert roll number to uppercase to ensure it matches the database format
+        const uppercaseRollNumber = rollNumber ? rollNumber.toUpperCase() : '';
+        console.log('Fetching student data with:', { rollNumber: uppercaseRollNumber, acadYear, yearSem });
 
         // Fetch student details from Supabase
-        const data = await fetchStudentDetails(rollNumber!, acadYear, yearSem);
+        const data = await fetchStudentDetails(uppercaseRollNumber, acadYear, yearSem);
         console.log('Received data from Supabase:', data);
 
         if (!data) {
