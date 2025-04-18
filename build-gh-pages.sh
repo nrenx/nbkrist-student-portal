@@ -5,13 +5,18 @@ set -e
 
 echo "Building for GitHub Pages..."
 
-# Ensure environment variables are available
-if [ ! -f .env.production ]; then
-  echo "Creating .env.production file..."
-  echo "VITE_SUPABASE_URL=https://ndeagjkuhzyozgimudow.supabase.co" > .env.production
-  echo "VITE_SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZWFnamt1aHp5b3pnaW11ZG93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDg5OTY4NiwiZXhwIjoyMDYwNDc1Njg2fQ.qyjFWHusv_o03P_eS_j_kCemXLD45wvioD3lxIqYlbM" >> .env.production
-  echo "VITE_SUPABASE_STORAGE_BUCKET=student_data" >> .env.production
+# Check for required environment variables
+if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_KEY" ]; then
+  echo "Error: Required environment variables VITE_SUPABASE_URL and VITE_SUPABASE_KEY must be set."
+  echo "Please set these variables in your environment or CI/CD pipeline."
+  exit 1
 fi
+
+# Create .env.production file with environment variables
+echo "Creating .env.production file from environment variables..."
+echo "VITE_SUPABASE_URL=$VITE_SUPABASE_URL" > .env.production
+echo "VITE_SUPABASE_KEY=$VITE_SUPABASE_KEY" >> .env.production
+echo "VITE_SUPABASE_STORAGE_BUCKET=${VITE_SUPABASE_STORAGE_BUCKET:-student_data}" >> .env.production
 
 # Clean build directory
 echo "Cleaning build directory..."

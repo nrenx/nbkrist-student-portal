@@ -40,6 +40,13 @@ cd nbkrist-student-portal
 # Install dependencies
 npm install
 
+# Create a .env file from the example
+cp .env.example .env
+
+# Edit the .env file with your Supabase credentials
+# VITE_SUPABASE_URL=your_supabase_url_here
+# VITE_SUPABASE_KEY=your_supabase_anon_key_here
+
 # Start the development server
 npm run dev
 ```
@@ -49,6 +56,19 @@ The development server will start at http://localhost:5173
 ## Deployment to GitHub Pages
 
 This project is configured for easy deployment to GitHub Pages.
+
+### Security Setup (Important!)
+
+Before deploying, you need to set up GitHub Secrets for your Supabase credentials:
+
+1. Go to your GitHub repository
+2. Click on "Settings" > "Secrets and variables" > "Actions"
+3. Add the following secrets:
+   - `VITE_SUPABASE_URL`: Your Supabase project URL
+   - `VITE_SUPABASE_KEY`: Your Supabase anon/public key
+   - `VITE_SUPABASE_STORAGE_BUCKET`: Your storage bucket name (optional)
+
+See [SECURITY.md](SECURITY.md) for more details on security best practices.
 
 ### Automatic Deployment
 
@@ -63,6 +83,10 @@ The project includes a GitHub Actions workflow that automatically deploys the si
 You can also deploy manually using the gh-pages package:
 
 ```sh
+# Set required environment variables first
+export VITE_SUPABASE_URL=your_supabase_url
+export VITE_SUPABASE_KEY=your_supabase_key
+
 # Build and deploy the site
 npm run deploy
 ```

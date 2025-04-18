@@ -38,9 +38,9 @@ student_data/
 ├── 2023-24/
 │   ├── 1/
 │   │   ├── rollIndex.json
-│   │   ├── CSE/
-│   │   │   ├── A/
-│   │   │   │   ├── 23KB1A0501/
+│   │   ├── BRANCH_CODE/
+│   │   │   ├── SECTION_CODE/
+│   │   │   │   ├── EXAMPLE0001/
 │   │   │   │   │   ├── personal_details.json
 │   │   │   │   │   ├── attendance.json
 │   │   │   │   │   └── mid_marks.json
@@ -54,13 +54,13 @@ This file maps roll numbers to their branch and section. If not provided, the sy
 
 ```json
 {
-  "23KB1A0501": {
-    "branch": "CSE",
-    "section": "A"
+  "EXAMPLE0001": {
+    "branch": "BRANCH_CODE",
+    "section": "SECTION_CODE"
   },
-  "23KB1A0502": {
-    "branch": "CSE",
-    "section": "A"
+  "EXAMPLE0002": {
+    "branch": "BRANCH_CODE",
+    "section": "SECTION_CODE"
   }
 }
 ```
@@ -70,10 +70,10 @@ This file maps roll numbers to their branch and section. If not provided, the sy
 ```json
 {
   "Name": "Student Name",
-  "Roll No": "23KB1A0501",
-  "Father Name": "Father's Name",
-  "Parent Mobile": "9876543210",
-  "Student Mobile": "9876543211",
+  "Roll No": "EXAMPLE0001",
+  "Father Name": "Parent Name",
+  "Parent Mobile": "1234567890",
+  "Student Mobile": "0987654321",
   "Aadhaar": "XXXX-XXXX-XXXX"
 }
 ```
@@ -110,10 +110,10 @@ This file maps roll numbers to their branch and section. If not provided, the sy
     "Lab 1": "48",
     "Lab 2": "45"
   },
-  "branch": "CSE",
-  "section": "A",
+  "branch": "BRANCH_CODE",
+  "section": "SECTION_CODE",
   "semester": "1-1",
-  "roll_number": "23KB1A0501",
+  "roll_number": "EXAMPLE0001",
   "academic_year": "2023-24"
 }
 ```
