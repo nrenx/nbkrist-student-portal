@@ -32,9 +32,10 @@ touch dist/.nojekyll
 echo "Copying 404.html to dist..."
 cp public/404.html dist/
 
-# Create a debug.js file to help with debugging
-echo "Creating debug.js file..."
-cat > dist/debug.js << 'EOL'
+# Create a debug.js file only if DEBUG=true is set
+if [ "$DEBUG" = "true" ]; then
+  echo "Creating debug.js file..."
+  cat > dist/debug.js << 'EOL'
 (function() {
   console.log('Debug script loaded');
 
@@ -94,6 +95,12 @@ cat > dist/debug.js << 'EOL'
 
   // Global error handler
   window.addEventListener('error', function(event) {
+    // Ignore errors from Chrome extensions
+    if (event.filename && event.filename.startsWith('chrome-extension://')) {
+      console.log('Ignoring error from Chrome extension:', event.filename);
+      return;
+    }
+
     console.error('Caught error:', event.error);
     if (debugDiv) {
       var errorMsg = document.createElement('div');
@@ -106,9 +113,11 @@ cat > dist/debug.js << 'EOL'
 })();
 EOL
 
-# Add debug script to index.html
-echo "Adding debug script to index.html..."
-sed -i '' -e 's/<\/body>/<script src="\/nbkrist-student-portal\/debug.js"><\/script><\/body>/' dist/index.html
+  # Add debug script to index.html
+  echo "Adding debug script to index.html..."
+  sed -i '' -e 's/<\/body>/<script src="\/nbkrist-student-portal\/debug.js"><\/script><\/body>/' dist/index.html
+  echo "Debug mode enabled."
+fi
 
 echo "Build completed successfully!"
 echo "You can now deploy the 'dist' directory to GitHub Pages."

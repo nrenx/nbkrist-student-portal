@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AdPreferencesDialog from './AdPreferencesDialog';
-import AdAnalyticsDashboard from './AdAnalyticsDashboard';
+import { AdPreferencesDialog, AdAnalyticsDashboard } from '@/features/ads';
 
 const Header = () => {
   const [adPreferencesOpen, setAdPreferencesOpen] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
-import AdBanner from '@/components/AdBanner';
+import { AdBanner } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAdNetworks } from '@/hooks/use-ad-networks';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';

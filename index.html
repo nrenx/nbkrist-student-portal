@@ -36,6 +36,12 @@
     <!-- Error logging script -->
     <script>
       window.onerror = function(message, source, lineno, colno, error) {
+        // Ignore errors from Chrome extensions
+        if (source && source.startsWith('chrome-extension://')) {
+          console.log('Ignoring error from Chrome extension:', source);
+          return true; // Let the browser handle the error
+        }
+
         console.error('Global error:', { message, source, lineno, colno, error });
         // Create a visible error message for debugging
         if (document.body) {

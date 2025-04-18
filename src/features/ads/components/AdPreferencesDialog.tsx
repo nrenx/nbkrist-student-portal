@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAdPreferences, AdPreferenceType } from '@/hooks/useAdPreferences';
+import { useAdPreferences, AdPreferenceType } from '@/features/ads/hooks/useAdPreferences';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';

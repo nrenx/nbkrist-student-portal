@@ -6,7 +6,7 @@ import StudentProfile from '@/components/StudentProfile';
 import AttendanceDetails from '@/components/AttendanceDetails';
 import MidMarksDetails from '@/components/MidMarksDetails';
 import PersonalDetails from '@/components/PersonalDetails';
-import AdBanner from '@/components/AdBanner';
+import { AdBanner } from '@/features/ads';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
 import { useIsMobile } from '@/hooks/use-mobile';

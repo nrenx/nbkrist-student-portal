@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAdPerformance } from '@/hooks/useAdPerformance';
+import { useAdPerformance } from '@/features/ads/hooks/useAdPerformance';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';

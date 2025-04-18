@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useAdFrequency } from '@/hooks/useAdFrequency';
-import { useAdPreferences, AdPreferenceType } from '@/hooks/useAdPreferences';
-import { useAdPerformance } from '@/hooks/useAdPerformance';
+import { useAdFrequency } from '@/features/ads/hooks/useAdFrequency';
+import { useAdPreferences, AdPreferenceType } from '@/features/ads/hooks/useAdPreferences';
+import { useAdPerformance } from '@/features/ads/hooks/useAdPerformance';
 
 interface AdBannerProps {
   width: string;
