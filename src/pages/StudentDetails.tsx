@@ -29,6 +29,14 @@ const StudentDetails = () => {
       setLoading(true);
       setError(null);
 
+      // Set a timeout to prevent the loading state from getting stuck
+      const timeoutId = setTimeout(() => {
+        console.log('Data fetch timeout - taking too long');
+        setError('Request timed out. Please try again.');
+        toast.error('Request timed out. Please try again.');
+        setLoading(false);
+      }, 30000); // 30 seconds timeout
+
       try {
         // Convert roll number to uppercase to ensure it matches the database format
         const uppercaseRollNumber = rollNumber ? rollNumber.toUpperCase() : '';
@@ -37,6 +45,9 @@ const StudentDetails = () => {
         // Fetch student details from Supabase
         const data = await fetchStudentDetails(uppercaseRollNumber, acadYear, yearSem);
         console.log('Received data from Supabase:', data);
+
+        // Clear the timeout since we got a response
+        clearTimeout(timeoutId);
 
         if (!data) {
           const errorMsg = 'No student found with the provided details.';
@@ -51,6 +62,9 @@ const StudentDetails = () => {
         setLoading(false);
         toast.success('Student data loaded successfully!');
       } catch (err: any) {
+        // Clear the timeout since we got a response (even if it's an error)
+        clearTimeout(timeoutId);
+
         const errorMsg = err?.message || 'Unknown error';
         console.error('Error fetching student data:', err);
         setError(`An error occurred: ${errorMsg}`);
@@ -62,6 +76,11 @@ const StudentDetails = () => {
     if (rollNumber) {
       getStudentData();
     }
+
+    // Cleanup function to clear any pending timeouts if the component unmounts
+    return () => {
+      // No specific cleanup needed here since timeoutId is scoped to getStudentData
+    };
   }, [rollNumber, acadYear, yearSem]);
 
   // Helper function to convert yearSem code to readable text

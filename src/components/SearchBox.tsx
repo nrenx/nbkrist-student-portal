@@ -11,12 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { fetchStudentDetails } from '@/services/studentService';
+import { testSupabaseConnection, testFileExists, testFileDownload } from '@/services/testSupabaseConnection';
 
 const SearchBox = () => {
   const [rollNumber, setRollNumber] = useState('');
   const [acadYear, setAcadYear] = useState('2024-25');
   const [yearSem, setYearSem] = useState('4-2'); // Default to Final Yr - Second Sem
   const [isLoading, setIsLoading] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -131,6 +133,50 @@ const SearchBox = () => {
           disabled={isLoading}
         >
           {isLoading ? "Fetching..." : "Fetch Details"}
+        </Button>
+
+        {/* Test button for debugging */}
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full mt-2"
+          disabled={isTesting}
+          onClick={async () => {
+            setIsTesting(true);
+            try {
+              // Test Supabase connection
+              const connectionResult = await testSupabaseConnection();
+              if (connectionResult) {
+                toast.success('Supabase connection successful!');
+
+                // Test if a specific file exists
+                const testPath = `${acadYear}/${yearSem.split('-')[0]}/rollIndex.json`;
+                const fileExistsResult = await testFileExists(testPath);
+                if (fileExistsResult) {
+                  toast.success(`File exists at ${testPath}`);
+
+                  // Try to download the file
+                  const downloadResult = await testFileDownload(testPath);
+                  if (downloadResult) {
+                    toast.success(`Successfully downloaded file from ${testPath}`);
+                  } else {
+                    toast.error(`Failed to download file from ${testPath}`);
+                  }
+                } else {
+                  toast.error(`File does not exist at ${testPath}`);
+                }
+              } else {
+                toast.error('Supabase connection failed!');
+              }
+            } catch (error) {
+              console.error('Error testing Supabase connection:', error);
+              toast.error(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            } finally {
+              setIsTesting(false);
+            }
+          }}
+        >
+          {isTesting ? "Testing..." : "Test Supabase Connection"}
         </Button>
       </form>
     </div>

@@ -97,6 +97,31 @@ const StudentProfile = ({ data }: StudentProfileProps) => {
                     <span className="text-sm font-medium">Student ID:</span>
                     <span className="ml-2 text-sm">{data.rollNumber}</span>
                   </div>
+
+                  {/* Show data availability indicators */}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {data.personalDetails && Object.keys(data.personalDetails).length > 2 && (
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                        Personal Details Available
+                      </span>
+                    )}
+                    {data.attendance && (
+                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        Attendance Available
+                      </span>
+                    )}
+                    {data.midMarks && (
+                      <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                        Mid Marks Available
+                      </span>
+                    )}
+                    {(!data.personalDetails || Object.keys(data.personalDetails).length <= 2) &&
+                     !data.attendance && !data.midMarks && (
+                      <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                        Limited Data Available
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

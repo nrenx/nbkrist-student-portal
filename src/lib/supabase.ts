@@ -1,20 +1,67 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { supabaseConfig } from '@/config/supabase';
 
-// Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+/**
+ * Initialize Supabase client with proper error handling
+ * This function attempts to create a Supabase client with the provided configuration
+ */
+const initializeSupabaseClient = (): SupabaseClient => {
+  // Get configuration values
+  const url = supabaseConfig.url || import.meta.env.VITE_SUPABASE_URL;
+  const key = supabaseConfig.key || import.meta.env.VITE_SUPABASE_KEY;
 
-// Log environment variables for debugging (remove in production)
-console.log('Supabase URL:', supabaseUrl ? 'Defined' : 'Undefined');
-console.log('Supabase Key:', supabaseKey ? `Defined (starts with ${supabaseKey.substring(0, 10)}...)` : 'Undefined');
+  // Log environment variables for debugging (remove in production)
+  console.log('Supabase URL:', url ? 'Defined' : 'Undefined');
+  console.log('Supabase Key:', key ? `Defined (starts with ${key.substring(0, 5)}...)` : 'Undefined');
 
-// Check if environment variables are defined
-if (!supabaseUrl || !supabaseKey) {
-  console.error('Supabase URL or Key is missing. Make sure you have set up your .env file correctly.');
-}
+  // Check if environment variables are defined
+  if (!url || !key) {
+    console.error('Supabase URL or Key is missing. Make sure you have set up your .env file correctly.');
+  }
 
-// Hardcoded values as fallback for development (REMOVE IN PRODUCTION)
-const url = supabaseUrl || 'https://oucqfglqvvlduhqabztv.supabase.co';
-const key = supabaseKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91Y3FmZ2xxdnZsZHVocWFienR2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDgxMzgzNSwiZXhwIjoyMDYwMzg5ODM1fQ.mNqyDTylA0ApXp4RA8APJbr-EjEDe8iIgnTguP486ZA';
+  try {
+    // Create and return the Supabase client
+    return createClient(url, key);
+  } catch (error) {
+    console.error('Failed to initialize Supabase client:', error);
+    throw new Error('Failed to initialize Supabase client');
+  }
+};
 
-export const supabase = createClient(url, key);
+// Initialize the Supabase client
+export const supabase = initializeSupabaseClient();
+
+/**
+ * Check if the storage bucket exists
+ * @returns Promise<boolean> - True if the bucket exists, false otherwise
+ */
+export const checkBucketExists = async (): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .storage
+      .getBucket(supabaseConfig.storageBucket);
+
+    if (error) {
+      console.error('Error checking bucket existence:', error);
+      return false;
+    }
+
+    return !!data;
+  } catch (error) {
+    console.error('Failed to check bucket existence:', error);
+    return false;
+  }
+};
+
+// Check bucket existence on startup
+checkBucketExists()
+  .then(exists => {
+    if (exists) {
+      console.log(`Storage bucket '${supabaseConfig.storageBucket}' exists and is accessible.`);
+    } else {
+      console.error(`Storage bucket '${supabaseConfig.storageBucket}' does not exist or is not accessible.`);
+    }
+  })
+  .catch(error => {
+    console.error('Error during bucket existence check:', error);
+  });
