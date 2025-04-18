@@ -10,9 +10,12 @@ const initializeSupabaseClient = (): SupabaseClient => {
   const url = supabaseConfig.url || import.meta.env.VITE_SUPABASE_URL;
   const key = supabaseConfig.key || import.meta.env.VITE_SUPABASE_KEY;
 
-  // Log environment variables for debugging (remove in production)
-  console.log('Supabase URL:', url ? 'Defined' : 'Undefined');
+  // Log environment variables for debugging
+  console.log('Supabase URL:', url);
   console.log('Supabase Key:', key ? `Defined (starts with ${key.substring(0, 5)}...)` : 'Undefined');
+  console.log('Environment:', import.meta.env.MODE);
+  console.log('Base URL:', import.meta.env.BASE_URL);
+  console.log('Storage Bucket:', supabaseConfig.storageBucket);
 
   // Check if environment variables are defined
   if (!url || !key) {

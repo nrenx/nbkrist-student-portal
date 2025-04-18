@@ -22,8 +22,8 @@ const getNumberEnvVar = (key: string, defaultValue: number): number => {
 
 export const supabaseConfig = {
   // Supabase project URL and API key
-  url: getEnvVar('VITE_SUPABASE_URL', ''),
-  key: getEnvVar('VITE_SUPABASE_KEY', ''),
+  url: getEnvVar('VITE_SUPABASE_URL', 'https://ndeagjkuhzyozgimudow.supabase.co'),
+  key: getEnvVar('VITE_SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZWFnamt1aHp5b3pnaW11ZG93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDg5OTY4NiwiZXhwIjoyMDYwNDc1Njg2fQ.qyjFWHusv_o03P_eS_j_kCemXLD45wvioD3lxIqYlbM'),
 
   // Storage bucket name for student data
   storageBucket: getEnvVar('VITE_SUPABASE_STORAGE_BUCKET', 'student_data'),

@@ -33,6 +33,32 @@
   <body>
     <div id="root"></div>
     <!-- The path will be replaced by Vite during build -->
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Error logging script -->
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error('Global error:', { message, source, lineno, colno, error });
+        // Create a visible error message for debugging
+        if (document.body) {
+          var errorDiv = document.createElement('div');
+          errorDiv.style.backgroundColor = '#ffdddd';
+          errorDiv.style.padding = '20px';
+          errorDiv.style.margin = '20px';
+          errorDiv.style.border = '1px solid #ff0000';
+          errorDiv.style.borderRadius = '5px';
+          errorDiv.innerHTML = '<h2>Error Detected</h2>' +
+                              '<p><strong>Message:</strong> ' + message + '</p>' +
+                              '<p><strong>Source:</strong> ' + source + '</p>' +
+                              '<p><strong>Line:</strong> ' + lineno + ', <strong>Column:</strong> ' + colno + '</p>';
+          document.body.appendChild(errorDiv);
+        }
+        return false;
+      };
+
+      // Log environment information
+      console.log('User Agent:', navigator.userAgent);
+      console.log('URL:', window.location.href);
+    </script>
+
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
