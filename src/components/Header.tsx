@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdPreferencesDialog, AdAnalyticsDashboard } from '@/features/ads';
 
@@ -41,8 +41,15 @@ const Header = () => {
       <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-nbkr">N.B.K.R.I.S.T</span>
-            <span className="ml-2 text-xs sm:text-sm text-gray-500">Student Portal</span>
+            <img
+              src="/nbkrist-student-portal/NBKRIST_logo.png"
+              alt="NBKRIST Logo"
+              className="h-14 md:h-16 mr-3 object-contain"
+            />
+            <div className="flex flex-col justify-center">
+              <span className="text-xl md:text-2xl font-bold text-nbkr">N.B.K.R.I.S.T</span>
+              <span className="text-xs sm:text-sm text-gray-500">Student Portal</span>
+            </div>
           </Link>
           <nav className="hidden md:flex space-x-6">
             <Link to="/" className="text-gray-600 hover:text-nbkr transition-colors">Home</Link>
