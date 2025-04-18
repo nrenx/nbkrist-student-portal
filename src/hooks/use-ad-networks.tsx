@@ -35,7 +35,14 @@ export function useAdNetworks({
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-  const [retryCount, setRetryCount] = React.useState<Record<AdNetwork, number>>({});
+  const [retryCount, setRetryCount] = React.useState<Record<AdNetwork, number>>({
+    default: 0,
+    google: 0,
+    facebook: 0,
+    amazon: 0,
+    taboola: 0,
+    outbrain: 0
+  });
   const [networkScripts, setNetworkScripts] = React.useState<Record<string, HTMLScriptElement>>({});
 
   // Get network script URL
