@@ -22,46 +22,36 @@ Create the following folder structure in your bucket:
 ```
 student_data/
 ├── {academic_year}/
-│   ├── {year_of_study}/
-│   │   ├── rollIndex.json (optional)
-│   │   ├── {branch}/
-│   │   │   ├── {section}/
-│   │   │   │   ├── {roll_number}/
-│   │   │   │   │   ├── personal_details.json
-│   │   │   │   │   ├── attendance.json
-│   │   │   │   │   └── mid_marks.json
+│   ├── {year_sem}/
+│   │   ├── {roll_number}/
+│   │   │   ├── personal_details.json
+│   │   │   ├── attendance.json
+│   │   │   ├── mid_marks.json
+│   │   │   └── {roll_number}.json  # Contains branch and section information
 ```
 
 For example:
 ```
 student_data/
-├── 2023-24/
-│   ├── 1/
-│   │   ├── rollIndex.json
-│   │   ├── BRANCH_CODE/
-│   │   │   ├── SECTION_CODE/
-│   │   │   │   ├── EXAMPLE0001/
-│   │   │   │   │   ├── personal_details.json
-│   │   │   │   │   ├── attendance.json
-│   │   │   │   │   └── mid_marks.json
+├── 2024-25/
+│   ├── 1-1/
+│   │   ├── 24KB1A0501/
+│   │   │   ├── personal_details.json
+│   │   │   ├── attendance.json
+│   │   │   ├── mid_marks.json
+│   │   │   └── 24KB1A0501.json
 ```
 
 ## 4. File Formats
 
-### rollIndex.json (Optional)
+### {roll_number}.json
 
-This file maps roll numbers to their branch and section. If not provided, the system will try to extract branch information from the roll number pattern.
+This file is named after the student's roll number (e.g., 24KB1A0501.json) and contains branch and section information for the student. If not provided, the system will try to extract branch information from the roll number pattern or personal details.
 
 ```json
 {
-  "EXAMPLE0001": {
-    "branch": "BRANCH_CODE",
-    "section": "SECTION_CODE"
-  },
-  "EXAMPLE0002": {
-    "branch": "BRANCH_CODE",
-    "section": "SECTION_CODE"
-  }
+  "branch": "BRANCH_CODE",
+  "section": "SECTION_CODE"
 }
 ```
 
@@ -163,12 +153,17 @@ VITE_SUPABASE_STORAGE_BUCKET=student_data
 2. The application calls `fetchStudentDetails` in `studentService.ts`
 3. This function delegates to `fetchStudentDetailsFromStorage` in `studentStorageService.ts`
 4. The storage service:
-   - Determines the branch and section using `rollIndex.json` or by extracting from the roll number pattern
-   - Constructs possible paths for the student data
-   - Attempts to download the data files from each path
+   - Generates the path to the student data using the exact structure: `{academic_year}/{year_sem}/{roll_number}/`
+     (e.g., `2024-25/1-1/24KB1A0501/`)
+   - Checks if the student folder exists at this path
+   - If the folder exists, downloads the student data files:
+     - personal_details.json
+     - attendance.json
+     - mid_marks.json
+     - {roll_number}.json (e.g., 24KB1A0501.json)
    - Parses the data, handling both JSON and multipart form data
    - Processes the data into a format compatible with the UI components
-   - Returns the processed data or null if not found
+   - Returns the processed data or null if the folder doesn't exist (displays "No data available")
 5. The UI components display the data to the user
 
 ### Error Handling

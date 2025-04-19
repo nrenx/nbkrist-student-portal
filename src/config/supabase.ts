@@ -29,21 +29,21 @@ export const supabaseConfig = {
   storageBucket: getEnvVar('VITE_SUPABASE_STORAGE_BUCKET', 'student_data'),
 
   // Path structure for student data files
-  pathTemplate: '{academicYear}/{yearOfStudy}/{branch}/{section}/{rollNumber}',
+  pathTemplate: 'student_details/{academicYear}/{yearOfStudy}/{rollNumber}',
 
   // File names for different types of student data
   fileNames: {
     personalDetails: 'personal_details.json',
     attendance: 'attendance.json',
     midMarks: 'mid_marks.json',
-    rollIndex: 'rollIndex.json'
+    // The roll number info file is named after the roll number itself
+    getRollNumberInfoFileName: (rollNumber: string) => `${rollNumber}.json`
   },
 
   // Base paths for student data
   basePaths: [
-    'student_details/{academicYear}/{yearOfStudy}/{branch}/{section}/{rollNumber}',
-    'student_data/student_details/{academicYear}/{yearOfStudy}/{branch}/{section}/{rollNumber}',
-    '{academicYear}/{yearOfStudy}/{branch}/{section}/{rollNumber}'
+    'student_details/{academicYear}/{yearOfStudy}/{rollNumber}',
+    '{academicYear}/{yearOfStudy}/{rollNumber}'
   ],
 
   // Retry configuration
