@@ -42,7 +42,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
             <img
-              src="/nbkrist-student-portal/NBKRIST_logo.png"
+              src="/NBKRIST_logo.png"
               alt="NBKRIST Logo"
               className="h-14 md:h-16 mr-3 object-contain"
             />
