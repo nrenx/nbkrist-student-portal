@@ -40,6 +40,12 @@ jobs:
       - name: Debug - List build output
         run: ls -la dist/
 
+      - name: Ensure CNAME file exists
+        run: |
+          echo "nbkrstudenthub.me" > dist/CNAME
+          echo "CNAME file created:"
+          cat dist/CNAME
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

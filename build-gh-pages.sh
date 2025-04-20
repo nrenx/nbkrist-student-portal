@@ -26,8 +26,9 @@ rm -rf dist
 echo "Building project..."
 npm run build
 
-# Ensure CNAME file exists if you have a custom domain
-# echo "yourdomain.com" > dist/CNAME
+# Ensure CNAME file exists for custom domain
+echo "Copying CNAME file to dist..."
+cp CNAME dist/
 
 # Ensure .nojekyll file exists to prevent Jekyll processing
 touch dist/.nojekyll
@@ -120,7 +121,7 @@ EOL
 
   # Add debug script to index.html
   echo "Adding debug script to index.html..."
-  sed -i '' -e 's/<\/body>/<script src="\/nbkrist-student-portal\/debug.js"><\/script><\/body>/' dist/index.html
+  sed -i '' -e 's/<\/body>/<script src="\/debug.js"><\/script><\/body>/' dist/index.html
   echo "Debug mode enabled."
 fi
 
