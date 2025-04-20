@@ -76,7 +76,7 @@ The project includes a GitHub Actions workflow that automatically deploys the si
 
 1. Push your changes to the main branch
 2. GitHub Actions will build and deploy the site
-3. Your site will be available at https://yourusername.github.io/nbkrist-student-portal/
+3. Your site will be available at https://nbkrstudenthub.me/
 
 ### Manual Deployment
 
