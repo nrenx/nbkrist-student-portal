@@ -121,8 +121,37 @@ const StudentDetails = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Top Ad Banner - Higher visibility */}
         <div className="mb-8">
-          <AdBanner width="w-full" height="h-28" slotId="top-banner" />
+          <AdBanner
+            width="w-full"
+            height="h-auto"
+            slotId="9557785615"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '9557785615',
+              'data-ad-format': 'auto',
+              'data-full-width-responsive': 'true'
+            }}
+          />
         </div>
+
+        {/* Pre-search ad for mobile - high visibility */}
+        {isMobile && (
+          <div className="mb-6">
+            <AdBanner
+              width="w-full"
+              height="h-auto"
+              slotId="4852253846"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4852253846',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
+            />
+          </div>
+        )}
 
         <div className="mb-6">
           <Button
@@ -140,14 +169,35 @@ const StudentDetails = () => {
         {/* In-content ad for mobile users */}
         {isMobile && (
           <div className="my-4">
-            <AdBanner width="w-full" height="h-20" slotId="mobile-mid-content" />
+            <AdBanner
+              width="w-full"
+              height="h-auto"
+              slotId="7861560560"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '7861560560',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
+            />
           </div>
         )}
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Ad on larger screens */}
-          <div className="hidden md:block md:w-1/5">
-            <AdBanner width="w-full" height="h-full min-h-[500px]" slotId="left-sidebar" />
+          <div className="hidden md:flex md:w-1/5 justify-center">
+            <AdBanner
+              width="w-[160px]"
+              height="h-[600px]"
+              slotId="4884043433"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4884043433',
+                'data-ad-format': 'vertical'
+              }}
+            />
           </div>
 
           {/* Main Content */}
@@ -177,6 +227,22 @@ const StudentDetails = () => {
                     />
                   )}
 
+                  {/* In-content ad - between attendance and mid-term marks */}
+                  <div className="my-6">
+                    <AdBanner
+                      width="w-full"
+                      height="h-auto"
+                      slotId="7861560560"
+                      network="google"
+                      adConfig={{
+                        'data-ad-client': 'ca-pub-7831792005606531',
+                        'data-ad-slot': '7861560560',
+                        'data-ad-format': 'auto',
+                        'data-full-width-responsive': 'true'
+                      }}
+                    />
+                  </div>
+
                   {/* Mid-term marks if available */}
                   {studentData.midMarks && (
                     <MidMarksDetails
@@ -190,9 +256,20 @@ const StudentDetails = () => {
                     <PersonalDetails personalDetails={studentData.personalDetails} />
                   )}
 
-                  {/* Ad below student profile - high engagement area */}
+                  {/* Post-search ad - high engagement area */}
                   <div className="mt-6">
-                    <AdBanner width="w-full" height="h-24" slotId="below-profile" />
+                    <AdBanner
+                      width="w-full"
+                      height="h-auto"
+                      slotId="2501197332"
+                      network="google"
+                      adConfig={{
+                        'data-ad-client': 'ca-pub-7831792005606531',
+                        'data-ad-slot': '2501197332',
+                        'data-ad-format': 'auto',
+                        'data-full-width-responsive': 'true'
+                      }}
+                    />
                   </div>
                 </div>
               </>
@@ -200,20 +277,64 @@ const StudentDetails = () => {
           </div>
 
           {/* Right Ad on larger screens - premium spot */}
-          <div className="hidden md:block md:w-1/5">
-            <AdBanner width="w-full" height="h-full min-h-[500px]" slotId="right-sidebar" />
+          <div className="hidden md:flex md:w-1/5 justify-center">
+            <AdBanner
+              width="w-[160px]"
+              height="h-[600px]"
+              slotId="4884043433"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4884043433',
+                'data-ad-format': 'vertical'
+              }}
+            />
           </div>
         </div>
 
-        {/* Bottom Ad on all screens */}
+        {/* Bottom Banner Ad - for all devices */}
         <div className="mt-8">
-          <AdBanner width="w-full" height="h-32" slotId="bottom-banner" />
+          <AdBanner
+            width="w-full"
+            height="h-auto"
+            slotId="8416703140"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '8416703140',
+              'data-ad-format': 'auto',
+              'data-full-width-responsive': 'true'
+            }}
+          />
         </div>
 
-        {/* Sticky ad for mobile only - high visibility and engagement */}
+        {/* Mobile Sticky ad - fixed at bottom of screen on mobile */}
         {isMobile && (
-          <AdBanner width="w-full" height="h-16" slotId="mobile-sticky" type="sticky" />
+          <AdBanner
+            width="w-[320px]"
+            height="h-[50px]"
+            slotId="8380435316"
+            type="sticky"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '8380435316'
+            }}
+          />
         )}
+
+        {/* Exit intent ad - appears when user tries to leave page */}
+        <AdBanner
+          width="w-[336px]"
+          height="h-[280px]"
+          slotId="1085008031"
+          type="exit-intent"
+          network="google"
+          adConfig={{
+            'data-ad-client': 'ca-pub-7831792005606531',
+            'data-ad-slot': '1085008031'
+          }}
+        />
       </div>
     </Layout>
   );

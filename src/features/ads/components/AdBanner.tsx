@@ -123,7 +123,7 @@ const AdBanner = ({
     }
   }, [type, delay, isMobile, shouldRenderAd, slotId, network, recordImpression, trackImpression]);
 
-  // Effect to initialize the ad based on the network
+  // Single useEffect for ad initialization and cleanup
   useEffect(() => {
     // Don't initialize if ad shouldn't be shown due to frequency caps or preferences
     if ((!showAd && !showExitIntent) || !shouldRenderAd) return;
@@ -137,60 +137,31 @@ const AdBanner = ({
       trackImpression(slotId, network);
     }
 
-    const initializeAd = async () => {
-      try {
-        // Placeholder for ad network initialization
-        // Each network will have different initialization needs
-        switch (network) {
-          case 'google':
-            // Google AdSense/AdManager initialization logic
-            console.log(`Initializing Google ad: ${slotId}, format: ${isMobile ? "mobile" : "desktop"}`);
-            if (window.adsbygoogle) {
-              window.adsbygoogle.push({
-                google_ad_client: adConfig['data-ad-client'] || 'ca-pub-example',
-                enable_page_level_ads: true
-              });
-            }
-            break;
-          case 'facebook':
-            // Facebook Audience Network initialization
-            console.log(`Initializing Facebook ad: ${slotId}`);
-            break;
-          case 'amazon':
-            // Amazon ads initialization
-            console.log(`Initializing Amazon ad: ${slotId}`);
-            break;
-          case 'taboola':
-            // Taboola ads initialization
-            console.log(`Initializing Taboola ad: ${slotId}`);
-            break;
-          case 'outbrain':
-            // Outbrain ads initialization
-            console.log(`Initializing Outbrain ad: ${slotId}`);
-            break;
-          default:
-            // Default placeholder or custom ad network
-            console.log(`Initializing default/custom ad: ${slotId}`);
-            break;
+    // Set a flag to indicate the ad is loaded
+    setAdLoaded(true);
+
+    // Initialize Google AdSense after a short delay to ensure DOM is ready
+    if (network === 'google') {
+      const timer = setTimeout(() => {
+        if (window.adsbygoogle) {
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (error) {
+            console.error('Error initializing AdSense:', error);
+          }
         }
+      }, 100);
 
-        // Simulate ad loading
-        setTimeout(() => {
-          setAdLoaded(true);
-        }, 300);
-      } catch (error) {
-        console.error(`Error initializing ${network} ad:`, error);
-      }
-    };
+      return () => {
+        clearTimeout(timer);
+        setAdLoaded(false);
+      };
+    }
 
-    initializeAd();
-
-    // Cleanup function if needed
     return () => {
-      // Cleanup logic for the specific ad network
-      console.log(`Cleaning up ${network} ad: ${slotId}`);
+      setAdLoaded(false);
     };
-  }, [showAd, showExitIntent, network, slotId, isMobile, adConfig, isVisible, shouldRenderAd, recordImpression, trackImpression, type]);
+  }, [showAd, showExitIntent, network, slotId, isVisible, shouldRenderAd, recordImpression, trackImpression, type]);
 
   const getAdStyling = () => {
     let baseStyles = `ad-container ${width} ${height} relative overflow-hidden`;
@@ -222,19 +193,6 @@ const AdBanner = ({
       }
       setViewStartTime(null);
     }
-  };
-
-  // Generate network-specific data attributes
-  const getNetworkAttributes = () => {
-    const baseAttributes: Record<string, string> = {
-      'data-ad-slot': slotId,
-      'data-ad-format': isMobile ? "mobile" : "desktop",
-      'data-ad-type': type,
-      'data-ad-network': network
-    };
-
-    // Add any custom attributes from adConfig
-    return { ...baseAttributes, ...adConfig };
   };
 
   // Don't render if shouldn't be shown or if frequency/preference limits are reached
@@ -272,14 +230,25 @@ const AdBanner = ({
             aria-label="Advertisement"
             ref={adRef}
             onClick={handleAdClick}
-            {...getNetworkAttributes()}
           >
-            {!adLoaded && (
+            {!adLoaded ? (
               <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400">
                 Loading ad...
               </div>
+            ) : (
+              <ins
+                className="adsbygoogle"
+                style={{
+                  display: 'block',
+                  width: adConfig['width'] || '100%',
+                  height: adConfig['height'] || '100%'
+                }}
+                data-ad-client={adConfig['data-ad-client'] || 'ca-pub-7831792005606531'}
+                data-ad-slot={adConfig['data-ad-slot'] || slotId}
+                data-ad-format={adConfig['data-ad-format'] || 'auto'}
+                data-full-width-responsive={adConfig['data-full-width-responsive'] || 'true'}
+              />
             )}
-            {/* Ad content will be inserted here by the ad provider */}
           </div>
         </div>
       </div>
@@ -309,14 +278,25 @@ const AdBanner = ({
           aria-label="Advertisement"
           ref={adRef}
           onClick={handleAdClick}
-          {...getNetworkAttributes()}
         >
-          {!adLoaded && (
+          {!adLoaded ? (
             <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400 text-xs">
               Loading...
             </div>
+          ) : (
+            <ins
+              className="adsbygoogle"
+              style={{
+                display: 'block',
+                width: adConfig['width'] || '100%',
+                height: adConfig['height'] || '100%'
+              }}
+              data-ad-client={adConfig['data-ad-client'] || 'ca-pub-7831792005606531'}
+              data-ad-slot={adConfig['data-ad-slot'] || slotId}
+              data-ad-format={adConfig['data-ad-format'] || 'auto'}
+              data-full-width-responsive={adConfig['data-full-width-responsive'] || 'true'}
+            />
           )}
-          {/* Ad content will be inserted here by the ad provider */}
         </div>
       </div>
     );
@@ -330,17 +310,28 @@ const AdBanner = ({
       aria-label="Advertisement"
       ref={adRef}
       onClick={handleAdClick}
-      {...getNetworkAttributes()}
     >
       <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded">
         Advertisement
       </div>
-      {!adLoaded && (
+      {!adLoaded ? (
         <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400">
           Loading ad...
         </div>
+      ) : (
+        <ins
+          className="adsbygoogle"
+          style={{
+            display: 'block',
+            width: adConfig['width'] || '100%',
+            height: adConfig['height'] || '100%'
+          }}
+          data-ad-client={adConfig['data-ad-client'] || 'ca-pub-7831792005606531'}
+          data-ad-slot={adConfig['data-ad-slot'] || slotId}
+          data-ad-format={adConfig['data-ad-format'] || 'auto'}
+          data-full-width-responsive={adConfig['data-full-width-responsive'] || 'true'}
+        />
       )}
-      {/* Ad content will be inserted here by the ad provider */}
     </div>
   );
 };

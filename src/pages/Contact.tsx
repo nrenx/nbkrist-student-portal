@@ -7,8 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner"; // Updated import
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { AdBanner } from '@/features/ads';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Contact = () => {
+  const isMobile = useIsMobile();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("Your message has been sent. We'll get back to you soon!");
@@ -20,7 +24,7 @@ const Contact = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardContent className="p-6">
@@ -32,39 +36,39 @@ const Contact = () => {
                     </label>
                     <Input id="name" placeholder="Enter your name" required />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address
                     </label>
                     <Input id="email" type="email" placeholder="Enter your email" required />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                       Subject
                     </label>
                     <Input id="subject" placeholder="Enter subject" required />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                       Message
                     </label>
                     <Textarea id="message" placeholder="Enter your message" rows={5} required />
                   </div>
-                  
+
                   <Button type="submit" className="w-full bg-nbkr hover:bg-nbkr-dark">
                     Send Message
                   </Button>
                 </form>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-6">
                 <h2 className="text-xl font-semibold mb-6">Contact Information</h2>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start">
                     <MapPin className="w-5 h-5 text-nbkr mt-1 mr-3" />
@@ -76,7 +80,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <Phone className="w-5 h-5 text-nbkr mt-1 mr-3" />
                     <div>
@@ -87,7 +91,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <Mail className="w-5 h-5 text-nbkr mt-1 mr-3" />
                     <div>
@@ -98,7 +102,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <Clock className="w-5 h-5 text-nbkr mt-1 mr-3" />
                     <div>
@@ -114,7 +118,7 @@ const Contact = () => {
               </CardContent>
             </Card>
           </div>
-          
+
           <div className="mt-12">
             <Card>
               <CardContent className="p-0">
@@ -127,6 +131,66 @@ const Contact = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Post-search ad - high engagement area */}
+          <div className="mt-8">
+            <AdBanner
+              width="w-full"
+              height="h-auto"
+              slotId="2501197332"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '2501197332',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
+            />
+          </div>
+
+          {/* Bottom Banner Ad */}
+          <div className="mt-8">
+            <AdBanner
+              width="w-full"
+              height="h-auto"
+              slotId="8416703140"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '8416703140',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
+            />
+          </div>
+
+          {/* Mobile Sticky ad - fixed at bottom of screen on mobile */}
+          {isMobile && (
+            <AdBanner
+              width="w-[320px]"
+              height="h-[50px]"
+              slotId="8380435316"
+              type="sticky"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '8380435316'
+              }}
+            />
+          )}
+
+          {/* Exit intent ad - appears when user tries to leave page */}
+          <AdBanner
+            width="w-[336px]"
+            height="h-[280px]"
+            slotId="1085008031"
+            type="exit-intent"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '1085008031'
+            }}
+          />
         </div>
       </div>
     </Layout>

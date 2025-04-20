@@ -71,9 +71,14 @@ const Index = () => {
           <AdBanner
             width="w-full"
             height="h-28"
-            slotId="home-top-banner"
+            slotId="9557785615"
             network="google"
-            adConfig={{ 'data-ad-client': 'ca-pub-example' }}
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '9557785615',
+              'data-ad-format': 'auto',
+              'data-full-width-responsive': 'true'
+            }}
           />
         </div>
 
@@ -86,14 +91,20 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Pre-search ad - high visibility */}
+        {/* Pre-search ad for mobile - high visibility */}
         {isMobile && (
           <div className="mb-6">
             <AdBanner
               width="w-full"
-              height="h-20"
-              slotId="pre-search-mobile"
-              network="facebook"
+              height="h-auto"
+              slotId="4852253846"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4852253846',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
             />
           </div>
         )}
@@ -109,20 +120,33 @@ const Index = () => {
         <div className="my-8">
           <AdBanner
             width="w-full"
-            height="h-24"
-            slotId="post-search"
-            network="taboola"
+            height="h-auto"
+            slotId="2501197332"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '2501197332',
+              'data-ad-format': 'auto',
+              'data-full-width-responsive': 'true'
+            }}
           />
         </div>
 
         {/* Side Ads on larger screens */}
         <div className="hidden md:flex justify-between my-12">
-          <AdBanner
-            width="w-1/4"
-            height="h-96"
-            slotId="home-left-sidebar"
-            network="amazon"
-          />
+          <div className="w-1/4 flex justify-center">
+            <AdBanner
+              width="w-[160px]"
+              height="h-[600px]"
+              slotId="4884043433"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4884043433',
+                'data-ad-format': 'vertical'
+              }}
+            />
+          </div>
           <div className="w-2/4 px-4">
             <div className="mt-8 max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
@@ -133,18 +157,42 @@ const Index = () => {
                 engineering institutions in Andhra Pradesh. The institute offers undergraduate, postgraduate and doctoral
                 programs in various disciplines of engineering and science.
               </p>
+
+              {/* In-content ad - between paragraphs for high engagement */}
+              <div className="my-6">
+                <AdBanner
+                  width="w-full"
+                  height="h-auto"
+                  slotId="7861560560"
+                  network="google"
+                  adConfig={{
+                    'data-ad-client': 'ca-pub-7831792005606531',
+                    'data-ad-slot': '7861560560',
+                    'data-ad-format': 'auto',
+                    'data-full-width-responsive': 'true'
+                  }}
+                />
+              </div>
+
               <p className="text-gray-600">
                 The institution is committed to providing quality education with state-of-the-art infrastructure,
                 well-qualified and experienced faculty, well-equipped laboratories, and a well-stocked library.
               </p>
             </div>
           </div>
-          <AdBanner
-            width="w-1/4"
-            height="h-96"
-            slotId="home-right-sidebar"
-            network="outbrain"
-          />
+          <div className="w-1/4 flex justify-center">
+            <AdBanner
+              width="w-[160px]"
+              height="h-[600px]"
+              slotId="4884043433"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '4884043433',
+                'data-ad-format': 'vertical'
+              }}
+            />
+          </div>
         </div>
 
         {/* Mobile about section */}
@@ -158,6 +206,23 @@ const Index = () => {
               engineering institutions in Andhra Pradesh. The institute offers undergraduate, postgraduate and doctoral
               programs in various disciplines of engineering and science.
             </p>
+
+            {/* In-content ad for mobile - between paragraphs */}
+            <div className="my-6">
+              <AdBanner
+                width="w-full"
+                height="h-auto"
+                slotId="7861560560"
+                network="google"
+                adConfig={{
+                  'data-ad-client': 'ca-pub-7831792005606531',
+                  'data-ad-slot': '7861560560',
+                  'data-ad-format': 'auto',
+                  'data-full-width-responsive': 'true'
+                }}
+              />
+            </div>
+
             <p className="text-gray-600">
               The institution is committed to providing quality education with state-of-the-art infrastructure,
               well-qualified and experienced faculty, well-equipped laboratories, and a well-stocked library.
@@ -165,17 +230,21 @@ const Index = () => {
           </div>
         )}
 
-        {/* Bottom Ad on mobile screens - closing experience */}
-        {isMobile && (
-          <div className="mt-8">
-            <AdBanner
-              width="w-full"
-              height="h-32"
-              slotId="home-bottom-mobile"
-              network="google"
-            />
-          </div>
-        )}
+        {/* Bottom Banner Ad - for all devices */}
+        <div className="mt-8">
+          <AdBanner
+            width="w-full"
+            height="h-auto"
+            slotId="8416703140"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '8416703140',
+              'data-ad-format': 'auto',
+              'data-full-width-responsive': 'true'
+            }}
+          />
+        </div>
 
         {/* Push notification ad that appears after a delay */}
         <AdBanner
@@ -189,11 +258,15 @@ const Index = () => {
 
         {/* Exit intent ad - appears when user tries to leave page */}
         <AdBanner
-          width="w-full max-w-md"
-          height="h-80"
-          slotId="exit-intent-ad"
+          width="w-[336px]"
+          height="h-[280px]"
+          slotId="1085008031"
           type="exit-intent"
           network="google"
+          adConfig={{
+            'data-ad-client': 'ca-pub-7831792005606531',
+            'data-ad-slot': '1085008031'
+          }}
         />
 
         {/* Floating footer ad - always visible */}
@@ -205,14 +278,18 @@ const Index = () => {
           network="amazon"
         />
 
-        {/* Sticky ad for mobile only - replaced by floating footer */}
+        {/* Mobile Sticky ad - fixed at bottom of screen on mobile */}
         {isMobile && showStickyAd && (
           <AdBanner
-            width="w-full"
-            height="h-16"
-            slotId="home-sticky-mobile"
+            width="w-[320px]"
+            height="h-[50px]"
+            slotId="8380435316"
             type="sticky"
-            network="facebook"
+            network="google"
+            adConfig={{
+              'data-ad-client': 'ca-pub-7831792005606531',
+              'data-ad-slot': '8380435316'
+            }}
           />
         )}
       </div>

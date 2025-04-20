@@ -49,7 +49,7 @@ export function useAdNetworks({
   const getNetworkScriptUrl = (network: AdNetwork): string => {
     switch (network) {
       case 'google':
-        return 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        return 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831792005606531';
       case 'facebook':
         return 'https://connect.facebook.net/en_US/fbadnw.js';
       case 'amazon':
@@ -121,6 +121,11 @@ export function useAdNetworks({
         script.src = scriptUrl;
         script.async = true;
         script.defer = true; // Add defer to prevent blocking
+
+        // Add crossorigin for Google AdSense
+        if (network === 'google') {
+          script.setAttribute('crossorigin', 'anonymous');
+        }
 
         // Add data attributes to help with debugging
         script.setAttribute('data-ad-network', network);
