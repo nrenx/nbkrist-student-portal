@@ -58,7 +58,7 @@ const SearchBox = () => {
         <div>
           <Input
             type="text"
-            placeholder="Enter your roll number (e.g., **KB*A0501)"
+            placeholder="Enter your roll number (e.g., 22KB1A0501)"
             value={rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
             className="w-full"
