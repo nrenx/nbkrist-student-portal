@@ -1,6 +1,6 @@
 # NBKRIST Student Portal
 
-A web application for NBKRIST students to access their academic information, attendance records, and examination results.
+A web application for NBKRIST students to access their academic information, attendance records, and examination results. Optimized with Google AdSense integration.
 
 ## Features
 

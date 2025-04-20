@@ -46,6 +46,12 @@ jobs:
           echo "CNAME file created:"
           cat dist/CNAME
 
+      - name: Ensure ads.txt file exists
+        run: |
+          echo "google.com, pub-7831792005606531, DIRECT, f08c47fec0942fa0" > dist/ads.txt
+          echo "ads.txt file created:"
+          cat dist/ads.txt
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
