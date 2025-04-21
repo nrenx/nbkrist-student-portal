@@ -55,7 +55,12 @@ const Index = () => {
   }
 
   return (
-    <Layout>
+    <Layout
+      title="NBKRIST Student Portal | NBKR Student Hub | Official Student Information"
+      description="NBKRIST Student Portal - Access your academic information, attendance records, and exam results. The official NBKR student hub for all student information."
+      keywords="nbkr, nbkrist, nbkr student portal, nbkr student login, nbkr student information, nbkr ist, nbkr student hub, nbkr hub"
+      ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
+    >
       <div className="container mx-auto px-4 py-8">
         {/* Removed interstitial ad on page load to comply with AdSense policies */}
 

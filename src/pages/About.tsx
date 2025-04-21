@@ -9,7 +9,12 @@ const About = () => {
   const isMobile = useIsMobile();
 
   return (
-    <Layout>
+    <Layout
+      title="About NBKRIST | NBKR Institute of Science & Technology"
+      description="Learn about NBKR Institute of Science & Technology (NBKRIST), established in 1979, one of the premier engineering institutions in Andhra Pradesh."
+      keywords="nbkr, nbkrist, nbkr college, nbkr engineering college, nbkr ist, nbkr institute of science and technology"
+      ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">About N.B.K.R.I.S.T</h1>

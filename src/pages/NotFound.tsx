@@ -7,7 +7,12 @@ import { AdBanner } from '@/features/ads';
 
 const NotFound = () => {
   return (
-    <Layout>
+    <Layout
+      title="Page Not Found | NBKRIST Student Portal"
+      description="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Return to the NBKR Student Hub homepage."
+      keywords="nbkr, nbkrist, nbkr student portal, page not found, 404"
+      ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-lg mx-auto text-center">
           <h1 className="text-7xl font-bold text-nbkr mb-4">404</h1>

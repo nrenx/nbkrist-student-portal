@@ -116,8 +116,22 @@ const StudentDetails = () => {
     navigate('/');
   };
 
+  // Create dynamic title and description based on student data
+  const pageTitle = studentData
+    ? `${studentData.name || rollNumber} | NBKRIST Student Details`
+    : `Student Details | NBKRIST Student Portal`;
+
+  const pageDescription = studentData
+    ? `View academic information, attendance records, and exam results for ${studentData.name || rollNumber} at NBKRIST.`
+    : `Access student academic information, attendance records, and exam results at NBKR Institute of Science & Technology.`;
+
   return (
-    <Layout>
+    <Layout
+      title={pageTitle}
+      description={pageDescription}
+      keywords={`nbkr, nbkrist, nbkr student portal, nbkr student login, ${rollNumber}, student details, attendance, mid marks`}
+      ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
+    >
       <div className="container mx-auto px-4 py-8">
         {/* Top Ad Banner - Higher visibility */}
         <div className="mb-8">
