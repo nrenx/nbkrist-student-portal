@@ -117,12 +117,13 @@ const StudentDetails = () => {
   };
 
   // Create dynamic title and description based on student data
+  const studentName = studentData?.personalDetails?.Name || rollNumber;
   const pageTitle = studentData
-    ? `${studentData.name || rollNumber} | NBKRIST Student Details`
+    ? `${studentName} | NBKRIST Student Details`
     : `Student Details | NBKRIST Student Portal`;
 
   const pageDescription = studentData
-    ? `View academic information, attendance records, and exam results for ${studentData.name || rollNumber} at NBKRIST.`
+    ? `View academic information, attendance records, and exam results for ${studentName} at NBKRIST.`
     : `Access student academic information, attendance records, and exam results at NBKR Institute of Science & Technology.`;
 
   return (
