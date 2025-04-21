@@ -108,32 +108,37 @@ const AdBanner = ({
 
   // Handle delayed ads and exit intent
   useEffect(() => {
-    // Handle delayed ads (interstitials)
-    if ((type === 'interstitial' || type === 'push-notification') && delay > 0 && shouldRenderAd) {
-      const timer = setTimeout(() => {
-        setShowAd(true);
-      }, delay);
-      return () => clearTimeout(timer);
-    }
+    // We've disabled these ad types, but keeping the code commented for future reference
 
-    // Set up exit intent detection
-    if (type === 'exit-intent' && shouldRenderAd) {
-      const handleMouseLeave = (e: MouseEvent) => {
-        // Only trigger if the mouse is leaving the top of the viewport
-        if (e.clientY <= 0) {
-          setShowExitIntent(true);
-          // Record impression for exit intent ad
-          recordImpression(slotId, type as any);
-          trackImpression(slotId, network);
-        }
-      };
+    // // Handle delayed ads (interstitials)
+    // if ((type === 'interstitial' || type === 'push-notification') && delay > 0 && shouldRenderAd) {
+    //   const timer = setTimeout(() => {
+    //     setShowAd(true);
+    //   }, delay);
+    //   return () => clearTimeout(timer);
+    // }
 
-      // Only add the listener on non-mobile devices
-      if (!isMobile) {
-        document.addEventListener('mouseleave', handleMouseLeave);
-        return () => document.removeEventListener('mouseleave', handleMouseLeave);
-      }
-    }
+    // // Set up exit intent detection
+    // if (type === 'exit-intent' && shouldRenderAd) {
+    //   const handleMouseLeave = (e: MouseEvent) => {
+    //     // Only trigger if the mouse is leaving the top of the viewport
+    //     if (e.clientY <= 0) {
+    //       setShowExitIntent(true);
+    //       // Record impression for exit intent ad
+    //       recordImpression(slotId, type as any);
+    //       trackImpression(slotId, network);
+    //     }
+    //   };
+
+    //   // Only add the listener on non-mobile devices
+    //   if (!isMobile) {
+    //     document.addEventListener('mouseleave', handleMouseLeave);
+    //     return () => document.removeEventListener('mouseleave', handleMouseLeave);
+    //   }
+    // }
+
+    // No active effects since we've disabled these ad types
+    return () => {};
   }, [type, delay, isMobile, shouldRenderAd, slotId, network, recordImpression, trackImpression]);
 
   // Single useEffect for ad initialization and cleanup
@@ -223,8 +228,9 @@ const AdBanner = ({
     recordClick(slotId, network);
   };
 
-  // For fullscreen/modal ads (exit intent & interstitial)
-  if ((type === 'exit-intent' && showExitIntent) || (type === 'interstitial' && showAd)) {
+  // We've disabled these ad types in shouldRenderAd, but keeping the code for future reference
+  // TypeScript needs this check to be modified to avoid type errors
+  if (false) { // Previously: ((type === 'exit-intent' && showExitIntent) || (type === 'interstitial' && showAd))
     return (
       <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
         <div className={`${width} ${height} max-w-screen-md relative bg-white p-4 rounded-lg`}>
@@ -272,8 +278,9 @@ const AdBanner = ({
     );
   }
 
-  // For push notification style ads
-  if (type === 'push-notification' && showAd) {
+  // We've disabled push notification ads in shouldRenderAd, but keeping the code for future reference
+  // TypeScript needs this check to be modified to avoid type errors
+  if (false) { // Previously: (type === 'push-notification' && showAd)
     return (
       <div className={getAdStyling()}>
         <button
