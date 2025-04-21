@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import StudentDetails from "./pages/StudentDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AdPolicy from "./pages/AdPolicy";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/student/:rollNumber" element={<StudentDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/ad-policy" element={<AdPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </HashRouter>

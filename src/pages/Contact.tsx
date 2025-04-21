@@ -164,33 +164,23 @@ const Contact = () => {
             />
           </div>
 
-          {/* Mobile Sticky ad - fixed at bottom of screen on mobile */}
+          {/* Mobile Banner ad - for mobile users */}
           {isMobile && (
-            <AdBanner
-              width="w-[320px]"
-              height="h-[50px]"
-              slotId="8380435316"
-              type="sticky"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '8380435316'
-              }}
-            />
+            <div className="mt-8">
+              <AdBanner
+                width="w-full"
+                height="h-auto"
+                slotId="8380435316"
+                network="google"
+                adConfig={{
+                  'data-ad-client': 'ca-pub-7831792005606531',
+                  'data-ad-slot': '8380435316',
+                  'data-ad-format': 'auto',
+                  'data-full-width-responsive': 'true'
+                }}
+              />
+            </div>
           )}
-
-          {/* Exit intent ad - appears when user tries to leave page */}
-          <AdBanner
-            width="w-[336px]"
-            height="h-[280px]"
-            slotId="1085008031"
-            type="exit-intent"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '1085008031'
-            }}
-          />
         </div>
       </div>
     </Layout>

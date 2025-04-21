@@ -40,23 +40,36 @@ const AdBanner = ({
   // Ad performance tracking
   const { recordImpression: trackImpression, recordClick, updateViewTime, updateViewability } = useAdPerformance();
 
-  // Check if this ad should be shown based on frequency and preferences
-  const shouldRenderAd = type === 'standard' ||
+  // Check if this ad should be shown based on frequency, preferences, and content visibility
+  const shouldRenderAd = (type === 'standard' ||
     (isAdTypeAllowed(type as AdPreferenceType) &&
-     shouldShowAd(slotId, type as any));
+     shouldShowAd(slotId, type as any))) &&
+    // Disable problematic ad types that violate AdSense policies
+    type !== 'interstitial' &&
+    type !== 'exit-intent' &&
+    type !== 'push-notification';
 
   // Set up Intersection Observer for lazy loading
   useEffect(() => {
-    if (!adRef.current || type === 'interstitial' || type === 'exit-intent' || type === 'push-notification') {
+    if (!adRef.current) {
       return;
     }
+
+    // Ensure we have at least 100px of content visible before showing ads
+    const options = {
+      rootMargin: '100px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        setIsVisible(entry.isIntersecting);
 
-        if (entry.isIntersecting) {
+        // Only set visible if the ad is at least 25% in view
+        const isSignificantlyVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        setIsVisible(isSignificantlyVisible);
+
+        if (isSignificantlyVisible) {
           // Start tracking view time when ad becomes visible
           if (!viewStartTime) {
             setViewStartTime(Date.now());
@@ -75,7 +88,7 @@ const AdBanner = ({
           setViewStartTime(null);
         }
       },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      options
     );
 
     observer.observe(adRef.current);
@@ -128,14 +141,16 @@ const AdBanner = ({
     // Don't initialize if ad shouldn't be shown due to frequency caps or preferences
     if ((!showAd && !showExitIntent) || !shouldRenderAd) return;
 
-    // For standard ads, only initialize when they become visible (lazy loading)
-    if (type === 'standard' && !isVisible) return;
+    // For all ads, only initialize when they become visible (lazy loading)
+    // This ensures we don't show ads on screens without content
+    if (!isVisible) return;
 
-    // Record impression when ad is shown
-    if (type !== 'exit-intent' || showExitIntent) {
+    // Wait a short delay to ensure content is loaded and visible first
+    const initDelay = setTimeout(() => {
+      // Record impression when ad is shown
       recordImpression(slotId, type as any);
       trackImpression(slotId, network);
-    }
+    }, 300);
 
     // Set a flag to indicate the ad is loaded
     setAdLoaded(true);
@@ -150,15 +165,17 @@ const AdBanner = ({
             console.error('Error initializing AdSense:', error);
           }
         }
-      }, 100);
+      }, 500); // Increased delay to ensure content is fully loaded
 
       return () => {
         clearTimeout(timer);
+        clearTimeout(initDelay);
         setAdLoaded(false);
       };
     }
 
     return () => {
+      clearTimeout(initDelay);
       setAdLoaded(false);
     };
   }, [showAd, showExitIntent, network, slotId, isVisible, shouldRenderAd, recordImpression, trackImpression, type]);

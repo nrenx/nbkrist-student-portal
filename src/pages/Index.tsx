@@ -57,14 +57,7 @@ const Index = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
-        {/* Interstitial ad on page load - shown immediately */}
-        <AdBanner
-          width="w-full"
-          height="h-96"
-          slotId="interstitial-pageload"
-          type="interstitial"
-          network="google"
-        />
+        {/* Removed interstitial ad on page load to comply with AdSense policies */}
 
         {/* Top Ad Banner - Prime position */}
         <div className="mb-8">
@@ -246,51 +239,28 @@ const Index = () => {
           />
         </div>
 
-        {/* Push notification ad that appears after a delay */}
-        <AdBanner
-          width="w-72"
-          height="h-24"
-          slotId="push-notification-ad"
-          type="push-notification"
-          delay={10000} // Show after 10 seconds
-          network="default"
-        />
+        {/* Removed push notification ad to comply with AdSense policies */}
 
-        {/* Exit intent ad - appears when user tries to leave page */}
-        <AdBanner
-          width="w-[336px]"
-          height="h-[280px]"
-          slotId="1085008031"
-          type="exit-intent"
-          network="google"
-          adConfig={{
-            'data-ad-client': 'ca-pub-7831792005606531',
-            'data-ad-slot': '1085008031'
-          }}
-        />
+        {/* Removed exit intent ad to comply with AdSense policies */}
 
-        {/* Floating footer ad - always visible */}
-        <AdBanner
-          width="w-full"
-          height="h-16"
-          slotId="floating-footer-ad"
-          type="floating-footer"
-          network="amazon"
-        />
+        {/* Removed floating footer ad to comply with AdSense policies */}
 
-        {/* Mobile Sticky ad - fixed at bottom of screen on mobile */}
-        {isMobile && showStickyAd && (
-          <AdBanner
-            width="w-[320px]"
-            height="h-[50px]"
-            slotId="8380435316"
-            type="sticky"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '8380435316'
-            }}
-          />
+        {/* Mobile Banner ad - for mobile users */}
+        {isMobile && (
+          <div className="mt-8">
+            <AdBanner
+              width="w-full"
+              height="h-auto"
+              slotId="8380435316"
+              network="google"
+              adConfig={{
+                'data-ad-client': 'ca-pub-7831792005606531',
+                'data-ad-slot': '8380435316',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
+              }}
+            />
+          </div>
         )}
       </div>
 
