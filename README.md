@@ -1,38 +1,49 @@
-# NBKRIST Student Portal
+# 🎓 NBKRIST Student Portal
 
-A web application for NBKRIST students to access their academic information, attendance records, and examination results. Optimized with Google AdSense integration.
+A modern web app that helps NBKRIST students access their academic data easily—without needing a login. Built using smart automation, AI tools, and clean UI design.
 
-## Features
+Hosted at: https://nbkrstudenthub.me/
 
-- Student information lookup by roll number
-- View attendance records
-- Check mid-term marks
-- Report issues with the portal
-- Mobile-responsive design
+## ✨ Features
 
-## Technologies Used
+- 🔍 Student info lookup by Roll Number
+- 📊 View Attendance Records
+- 📝 Check Mid-term Marks
+- ⚙️ Scraped from official Teacher Portal using Python scripts
+- ⚡ Fast, mobile-responsive, and optimized with Google AdSense
 
-This project is built with:
+## 💡 Background
 
-- Vite
-- TypeScript
-- React
-- React Router
-- shadcn-ui components
-- Tailwind CSS
+The official student portal lacked essential data like attendance and mid marks. After my suggestions were ignored, I discovered that teachers had a separate portal with all the info.
 
-## Development
+Using AI tools and a shared teacher login:
+
+- I built Python scrapers to extract attendance, marks, and personal data.
+- Uploaded data into Supabase via a structured script.
+- Created a modern React-based site where students can check their info by just entering their roll number.
+
+Monetized the solution using Google AdSense—turning a college flaw into an opportunity.
+
+## 🛠️ Technologies Used
+
+- **Frontend**: Vite, TypeScript, React, React Router
+- **UI**: shadcn/ui components, Tailwind CSS
+- **Backend**: Supabase (DB + Auth)
+- **Scripting**: Python (for data scraping & uploading)
+- **AI Tools**: ChatGPT, Claude, Sonnet, Lovable v0, etc.
+
+## ⚙️ Development Setup
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm (v8 or higher)
+- Node.js (v18+)
+- npm (v8+)
 
-### Setup
+### Installation
 
 ```sh
 # Clone the repository
-git clone https://github.com/yourusername/nbkrist-student-portal.git
+git clone https://github.com/nrenx/nbkrist-student-portal.git
 
 # Navigate to the project directory
 cd nbkrist-student-portal
@@ -53,30 +64,18 @@ npm run dev
 
 The development server will start at http://localhost:5173
 
-## Deployment to GitHub Pages
+## 🚀 Deployment
 
-This project is configured for easy deployment to GitHub Pages.
+### Auto Deployment via GitHub Actions
 
-### Security Setup (Important!)
+1. Go to Settings > Secrets and Variables > Actions in your GitHub repo
 
-Before deploying, you need to set up GitHub Secrets for your Supabase credentials:
+2. Add the following secrets:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_KEY`
+   - `VITE_SUPABASE_STORAGE_BUCKET` (optional)
 
-1. Go to your GitHub repository
-2. Click on "Settings" > "Secrets and variables" > "Actions"
-3. Add the following secrets:
-   - `VITE_SUPABASE_URL`: Your Supabase project URL
-   - `VITE_SUPABASE_KEY`: Your Supabase anon/public key
-   - `VITE_SUPABASE_STORAGE_BUCKET`: Your storage bucket name (optional)
-
-See [SECURITY.md](SECURITY.md) for more details on security best practices.
-
-### Automatic Deployment
-
-The project includes a GitHub Actions workflow that automatically deploys the site to GitHub Pages whenever changes are pushed to the main branch.
-
-1. Push your changes to the main branch
-2. GitHub Actions will build and deploy the site
-3. Your site will be available at https://nbkrstudenthub.me/
+On every push to main, GitHub Actions will deploy the latest build.
 
 ### Manual Deployment
 
@@ -91,18 +90,34 @@ export VITE_SUPABASE_KEY=your_supabase_key
 npm run deploy
 ```
 
-## Project Structure
+## 🧱 Project Structure
 
-- `src/` - Source code
-  - `components/` - Reusable UI components
-  - `pages/` - Page components
-  - `hooks/` - Custom React hooks
-  - `lib/` - Utility functions
+```
+src/
+│
+├── components/    # Reusable UI elements
+├── pages/         # Main route pages
+├── hooks/         # Custom React hooks
+└── lib/           # Utility functions
+```
 
-## Contributing
+## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+1. Fork the repo
+
+2. Create your feature branch
+```
+git checkout -b feature/amazing-feature
+```
+
+3. Commit your changes
+```
+git commit -m 'Add some amazing feature'
+```
+
+4. Push to GitHub
+```
+git push origin feature/amazing-feature
+```
+
 5. Open a Pull Request
