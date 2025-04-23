@@ -55,9 +55,10 @@ const AdBanner = ({
       return;
     }
 
-    // Ensure we have at least 100px of content visible before showing ads
+    // Ensure we have at least 200px of content visible before showing ads
+    // Increased margin to ensure more content is visible before ads load
     const options = {
-      rootMargin: '100px',
+      rootMargin: '200px',
       threshold: [0, 0.25, 0.5, 0.75, 1]
     };
 
@@ -67,7 +68,13 @@ const AdBanner = ({
 
         // Only set visible if the ad is at least 25% in view
         const isSignificantlyVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-        setIsVisible(isSignificantlyVisible);
+
+        // Check if there's enough content on the page before showing ads
+        const hasEnoughContent = document.body.textContent &&
+          document.body.textContent.trim().length > 500 && // Ensure there's at least 500 characters of text content
+          document.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li').length >= 3; // At least 3 content elements
+
+        setIsVisible(isSignificantlyVisible && hasEnoughContent);
 
         if (isSignificantlyVisible) {
           // Start tracking view time when ad becomes visible
@@ -150,19 +157,33 @@ const AdBanner = ({
     // This ensures we don't show ads on screens without content
     if (!isVisible) return;
 
-    // Wait a short delay to ensure content is loaded and visible first
+    // Additional check to ensure we have enough content on the page
+    const contentElements = document.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li');
+    if (contentElements.length < 3) return;
+
+    // Check if we're on a loading screen or error page without sufficient content
+    const hasLoadingIndicator = document.body.querySelector('.animate-spin') !== null;
+    const hasErrorMessage = document.body.querySelector('[role="alert"]') !== null;
+    if (hasLoadingIndicator && contentElements.length < 5) return;
+    if (hasErrorMessage && contentElements.length < 5) return;
+
+    // Wait a longer delay to ensure content is loaded and visible first
     const initDelay = setTimeout(() => {
       // Record impression when ad is shown
       recordImpression(slotId, type as any);
       trackImpression(slotId, network);
-    }, 300);
+    }, 800); // Increased from 300ms to 800ms
 
     // Set a flag to indicate the ad is loaded
     setAdLoaded(true);
 
-    // Initialize Google AdSense after a short delay to ensure DOM is ready
+    // Initialize Google AdSense after a longer delay to ensure DOM is ready and content is loaded
     if (network === 'google') {
       const timer = setTimeout(() => {
+        // Final check before initializing ad to ensure we have content
+        const contentElements = document.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li');
+        if (contentElements.length < 3) return;
+
         if (window.adsbygoogle) {
           try {
             (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -170,7 +191,7 @@ const AdBanner = ({
             console.error('Error initializing AdSense:', error);
           }
         }
-      }, 500); // Increased delay to ensure content is fully loaded
+      }, 1000); // Increased delay to ensure content is fully loaded
 
       return () => {
         clearTimeout(timer);

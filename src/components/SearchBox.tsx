@@ -15,7 +15,7 @@ import { fetchStudentDetails } from '@/services/studentService';
 const SearchBox = () => {
   const [rollNumber, setRollNumber] = useState('');
   const [acadYear, setAcadYear] = useState('2024-25');
-  const [yearSem, setYearSem] = useState('4-2'); // Default to Final Yr - Second Sem
+  const [yearSem, setYearSem] = useState('1-1'); // Default to Final Yr - Second Sem
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -56,9 +56,13 @@ const SearchBox = () => {
     <div className="search-container animate-fade-in">
       <form onSubmit={handleSearch} className="flex flex-col space-y-4">
         <div>
+          <label htmlFor="rollNumber" className="block text-sm font-medium text-gray-700 mb-1">
+            Roll Number
+          </label>
           <Input
+            id="rollNumber"
             type="text"
-            placeholder="Enter your roll number (e.g., 22KB1A0501)"
+            placeholder="Enter your roll number (e.g, 24KB1A0501)"
             value={rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
             className="w-full"
@@ -70,6 +74,7 @@ const SearchBox = () => {
               }
             }}
           />
+          <p className="text-xs text-gray-500 mt-1">Roll numbers are automatically converted to uppercase.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -81,7 +86,7 @@ const SearchBox = () => {
                 <SelectValue placeholder="Select academic year" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="2024-25">2024-25</SelectItem>
+                <SelectItem value="2024-25">2024-25(current)</SelectItem>
                 <SelectItem value="2023-24">2023-24</SelectItem>
                 <SelectItem value="2022-23">2022-23</SelectItem>
                 <SelectItem value="2021-22">2021-22</SelectItem>
@@ -106,21 +111,21 @@ const SearchBox = () => {
           </div>
           <div>
             <label htmlFor="yearSem" className="block text-sm font-medium text-gray-700 mb-1">
-              Year of Study
+              Year and Semester
             </label>
             <Select value={yearSem} onValueChange={setYearSem}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select year of study" />
+                <SelectValue placeholder="Select year and semester" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1-1">1-1</SelectItem>
-                <SelectItem value="1-2">1-2</SelectItem>
-                <SelectItem value="2-1">2-1</SelectItem>
-                <SelectItem value="2-2">2-2</SelectItem>
-                <SelectItem value="3-1">3-1</SelectItem>
-                <SelectItem value="3-2">3-2</SelectItem>
-                <SelectItem value="4-1">4-1</SelectItem>
-                <SelectItem value="4-2">4-2</SelectItem>
+                <SelectItem value="1-1">1-1 First Year - First Sem</SelectItem>
+                <SelectItem value="1-2">1-2 First Year - Second Sem</SelectItem>
+                <SelectItem value="2-1">2-1 Second Year - First Sem</SelectItem>
+                <SelectItem value="2-2">2-2 Second Year - Second Sem</SelectItem>
+                <SelectItem value="3-1">3-1 Third Year - First Sem</SelectItem>
+                <SelectItem value="3-2">3-2 Third Year - Second Sem</SelectItem>
+                <SelectItem value="4-1">4-1 Fourth Year - First Sem</SelectItem>
+                <SelectItem value="4-2">4-2 Fourth Year - Second Sem</SelectItem>
               </SelectContent>
             </Select>
           </div>

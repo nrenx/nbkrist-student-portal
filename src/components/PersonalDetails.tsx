@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PersonalDetailsData } from '@/types/student';
 import { User, Phone, Mail, CreditCard, UserCircle } from 'lucide-react';
+import { maskAadhaar } from '@/utils/maskData';
 
 interface PersonalDetailsProps {
   personalDetails: PersonalDetailsData;
@@ -101,7 +102,7 @@ const PersonalDetails = ({ personalDetails }: PersonalDetailsProps) => {
                   <CreditCard className="w-6 h-6 text-nbkr mr-3" />
                   <div>
                     <div className="text-sm text-gray-500">Aadhaar</div>
-                    <div className="font-semibold">{getAadhaar()}</div>
+                    <div className="font-semibold">{maskAadhaar(getAadhaar())}</div>
                   </div>
                 </div>
               )}
@@ -124,12 +125,21 @@ const PersonalDetails = ({ personalDetails }: PersonalDetailsProps) => {
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     <tbody>
-                      {otherDetails.map(([key, value]) => (
-                        <tr key={key} className="hover:bg-gray-50">
-                          <td className="p-3 border font-medium w-1/3">{formatKey(key)}</td>
-                          <td className="p-3 border">{value || 'N/A'}</td>
-                        </tr>
-                      ))}
+                      {otherDetails.map(([key, value]) => {
+                        // Check if this is an Aadhaar field that wasn't caught by the importantKeys filter
+                        const isAadhaarField = key.toLowerCase().includes('aadhaar') ||
+                                              key.toLowerCase().includes('aadhar') ||
+                                              key.toLowerCase().includes('uid');
+
+                        return (
+                          <tr key={key} className="hover:bg-gray-50">
+                            <td className="p-3 border font-medium w-1/3">{formatKey(key)}</td>
+                            <td className="p-3 border">
+                              {isAadhaarField ? maskAadhaar(value as string) : (value || 'N/A')}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

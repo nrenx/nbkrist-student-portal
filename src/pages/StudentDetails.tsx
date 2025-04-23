@@ -134,40 +134,7 @@ const StudentDetails = () => {
       ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
     >
       <div className="container mx-auto px-4 py-8">
-        {/* Top Ad Banner - Higher visibility */}
-        <div className="mb-8">
-          <AdBanner
-            width="w-full"
-            height="h-auto"
-            slotId="9557785615"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '9557785615',
-              'data-ad-format': 'auto',
-              'data-full-width-responsive': 'true'
-            }}
-          />
-        </div>
-
-        {/* Pre-search ad for mobile - high visibility */}
-        {isMobile && (
-          <div className="mb-6">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="4852253846"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4852253846',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
-            />
-          </div>
-        )}
-
+        {/* Back button - always visible regardless of loading state */}
         <div className="mb-6">
           <Button
             variant="outline"
@@ -181,8 +148,47 @@ const StudentDetails = () => {
           </Button>
         </div>
 
-        {/* In-content ad for mobile users */}
-        {isMobile && (
+        {/* Only show ads when not in loading state and no errors */}
+        {!loading && !error && (
+          <>
+            {/* Top Ad Banner - Higher visibility */}
+            <div className="mb-8">
+              <AdBanner
+                width="w-full"
+                height="h-auto"
+                slotId="9557785615"
+                network="google"
+                adConfig={{
+                  'data-ad-client': 'ca-pub-7831792005606531',
+                  'data-ad-slot': '9557785615',
+                  'data-ad-format': 'auto',
+                  'data-full-width-responsive': 'true'
+                }}
+              />
+            </div>
+
+            {/* Pre-search ad for mobile - high visibility */}
+            {isMobile && (
+              <div className="mb-6">
+                <AdBanner
+                  width="w-full"
+                  height="h-auto"
+                  slotId="4852253846"
+                  network="google"
+                  adConfig={{
+                    'data-ad-client': 'ca-pub-7831792005606531',
+                    'data-ad-slot': '4852253846',
+                    'data-ad-format': 'auto',
+                    'data-full-width-responsive': 'true'
+                  }}
+                />
+              </div>
+            )}
+          </>
+        )}
+
+        {/* In-content ad for mobile users - only shown when not loading and no errors */}
+        {!loading && !error && isMobile && (
           <div className="my-4">
             <AdBanner
               width="w-full"
@@ -200,20 +206,22 @@ const StudentDetails = () => {
         )}
 
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Left Ad on larger screens */}
-          <div className="hidden md:flex md:w-1/5 justify-center">
-            <AdBanner
-              width="w-[160px]"
-              height="h-[600px]"
-              slotId="4884043433"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4884043433',
-                'data-ad-format': 'vertical'
-              }}
-            />
-          </div>
+          {/* Left Ad on larger screens - only shown when not loading and no errors */}
+          {!loading && !error && (
+            <div className="hidden md:flex md:w-1/5 justify-center">
+              <AdBanner
+                width="w-[160px]"
+                height="h-[600px]"
+                slotId="4884043433"
+                network="google"
+                adConfig={{
+                  'data-ad-client': 'ca-pub-7831792005606531',
+                  'data-ad-slot': '4884043433',
+                  'data-ad-format': 'vertical'
+                }}
+              />
+            </div>
+          )}
 
           {/* Main Content */}
           <div className="flex-1">
@@ -242,21 +250,23 @@ const StudentDetails = () => {
                     />
                   )}
 
-                  {/* In-content ad - between attendance and mid-term marks */}
-                  <div className="my-6">
-                    <AdBanner
-                      width="w-full"
-                      height="h-auto"
-                      slotId="7861560560"
-                      network="google"
-                      adConfig={{
-                        'data-ad-client': 'ca-pub-7831792005606531',
-                        'data-ad-slot': '7861560560',
-                        'data-ad-format': 'auto',
-                        'data-full-width-responsive': 'true'
-                      }}
-                    />
-                  </div>
+                  {/* In-content ad - between attendance and mid-term marks - only shown if both sections exist */}
+                  {studentData.attendance && studentData.midMarks && (
+                    <div className="my-6">
+                      <AdBanner
+                        width="w-full"
+                        height="h-auto"
+                        slotId="7861560560"
+                        network="google"
+                        adConfig={{
+                          'data-ad-client': 'ca-pub-7831792005606531',
+                          'data-ad-slot': '7861560560',
+                          'data-ad-format': 'auto',
+                          'data-full-width-responsive': 'true'
+                        }}
+                      />
+                    </div>
+                  )}
 
                   {/* Mid-term marks if available */}
                   {studentData.midMarks && (
@@ -291,40 +301,44 @@ const StudentDetails = () => {
             )}
           </div>
 
-          {/* Right Ad on larger screens - premium spot */}
-          <div className="hidden md:flex md:w-1/5 justify-center">
+          {/* Right Ad on larger screens - premium spot - only shown when not loading and no errors */}
+          {!loading && !error && (
+            <div className="hidden md:flex md:w-1/5 justify-center">
+              <AdBanner
+                width="w-[160px]"
+                height="h-[600px]"
+                slotId="4884043433"
+                network="google"
+                adConfig={{
+                  'data-ad-client': 'ca-pub-7831792005606531',
+                  'data-ad-slot': '4884043433',
+                  'data-ad-format': 'vertical'
+                }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Bottom Banner Ad - for all devices - only shown when not loading and no errors */}
+        {!loading && !error && (
+          <div className="mt-8">
             <AdBanner
-              width="w-[160px]"
-              height="h-[600px]"
-              slotId="4884043433"
+              width="w-full"
+              height="h-auto"
+              slotId="8416703140"
               network="google"
               adConfig={{
                 'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4884043433',
-                'data-ad-format': 'vertical'
+                'data-ad-slot': '8416703140',
+                'data-ad-format': 'auto',
+                'data-full-width-responsive': 'true'
               }}
             />
           </div>
-        </div>
+        )}
 
-        {/* Bottom Banner Ad - for all devices */}
-        <div className="mt-8">
-          <AdBanner
-            width="w-full"
-            height="h-auto"
-            slotId="8416703140"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '8416703140',
-              'data-ad-format': 'auto',
-              'data-full-width-responsive': 'true'
-            }}
-          />
-        </div>
-
-        {/* Mobile Banner ad - for mobile users */}
-        {isMobile && (
+        {/* Mobile Banner ad - for mobile users - only shown when not loading and no errors */}
+        {!loading && !error && isMobile && (
           <div className="mt-8">
             <AdBanner
               width="w-full"

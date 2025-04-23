@@ -4,11 +4,10 @@ import SearchBox from '@/components/SearchBox';
 import { AdBanner } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAdNetworks } from '@/hooks/use-ad-networks';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const Index = () => {
   const isMobile = useIsMobile();
-  const [showNotificationDialog, setShowNotificationDialog] = useState(false);
+
   const [showStickyAd, setShowStickyAd] = useState(true);
 
   // Initialize ad networks
@@ -22,25 +21,11 @@ const Index = () => {
     }
   });
 
-  // This could be used to show an interstitial ad on page load
+  // Initialize content for ads
   useEffect(() => {
     // In a real implementation, you would initialize your ad service here
-    console.log('Home page loaded - ideal place to initialize ads');
-
-    // Show notification opt-in dialog after 3 seconds
-    const timer = setTimeout(() => {
-      setShowNotificationDialog(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
+    console.log('Home page loaded - ensuring content is ready before ads');
   }, []);
-
-  const handleAllowNotifications = () => {
-    // In production, this would trigger the actual notification permission request
-    console.log('User allowed notifications');
-    setShowNotificationDialog(false);
-    // Code to register for push notifications would go here
-  };
 
   // When floating footer ad is displayed, hide the sticky ad
   useEffect(() => {
@@ -64,7 +49,21 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Removed interstitial ad on page load to comply with AdSense policies */}
 
-        {/* Top Ad Banner - Prime position */}
+        {/* Add more content before the first ad to comply with AdSense policies */}
+        <div className="max-w-4xl mx-auto text-center mb-10 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            N.B.K.R.I.S.T Student Portal
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
+            Access your academic information by entering your roll number below. Quick, easy, and secure.
+          </p>
+          <p className="text-md text-gray-500 max-w-2xl mx-auto">
+            The official student portal for N.B.K.R Institute of Science & Technology students.
+            Check your attendance, mid-term marks, and personal details with a simple search.
+          </p>
+        </div>
+
+        {/* Top Ad Banner - Prime position (after sufficient content) */}
         <div className="mb-8">
           <AdBanner
             width="w-full"
@@ -80,14 +79,7 @@ const Index = () => {
           />
         </div>
 
-        <div className="max-w-4xl mx-auto text-center mb-10 animate-fade-in">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            N.B.K.R.I.S.T Student Portal
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Access your academic information by entering your roll number below. Quick, easy, and secure.
-          </p>
-        </div>
+
 
         {/* Pre-search ad for mobile - high visibility */}
         {isMobile && (
@@ -106,6 +98,7 @@ const Index = () => {
             />
           </div>
         )}
+
 
         <div className="max-w-xl mx-auto bg-white rounded-lg shadow-md p-6 mb-10">
           <h2 className="text-xl font-semibold text-center mb-4">
@@ -269,31 +262,7 @@ const Index = () => {
         )}
       </div>
 
-      {/* Notification permission dialog */}
-      <Dialog open={showNotificationDialog} onOpenChange={setShowNotificationDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Enable Notifications</DialogTitle>
-            <DialogDescription>
-              Get instant updates about your results, upcoming exams, and important college announcements.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mt-4">
-            <button
-              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90"
-              onClick={handleAllowNotifications}
-            >
-              Allow Notifications
-            </button>
-            <button
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
-              onClick={() => setShowNotificationDialog(false)}
-            >
-              Not Now
-            </button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Notification feature removed as requested */}
     </Layout>
   );
 };
