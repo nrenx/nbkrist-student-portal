@@ -32,5 +32,6 @@
     "allowJs": true
   },
   "include": ["src", "vite.config.ts"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
   "references": []
 }
