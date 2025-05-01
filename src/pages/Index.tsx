@@ -57,10 +57,6 @@ const Index = () => {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
             Access your academic information by entering your roll number below. Quick, easy, and secure.
           </p>
-          <p className="text-md text-gray-500 max-w-2xl mx-auto">
-            The official student portal for N.B.K.R Institute of Science & Technology students.
-            Check your attendance, mid-term marks, and personal details with a simple search.
-          </p>
         </div>
 
         {/* Top Ad Banner - Prime position (after sufficient content) */}
