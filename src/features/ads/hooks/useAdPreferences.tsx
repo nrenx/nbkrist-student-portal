@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type AdPreferenceType = 'all' | 'standard' | 'interstitial' | 'exit-intent' | 'push-notification' | 'floating-footer' | 'sticky';
+export type AdPreferenceType = 'all' | 'standard' | 'sticky';
 
 interface AdPreferences {
   disabledTypes: AdPreferenceType[];
@@ -45,10 +45,10 @@ export function useAdPreferences() {
   // Check if an ad type is allowed based on user preferences
   const isAdTypeAllowed = (adType: AdPreferenceType): boolean => {
     if (!isInitialized) return true;
-    
+
     // If 'all' is disabled, no ads are allowed
     if (preferences.disabledTypes.includes('all')) return false;
-    
+
     // Check if this specific type is disabled
     return !preferences.disabledTypes.includes(adType);
   };
@@ -57,7 +57,7 @@ export function useAdPreferences() {
   const toggleAdType = (adType: AdPreferenceType): void => {
     setPreferences(prev => {
       const isCurrentlyDisabled = prev.disabledTypes.includes(adType);
-      
+
       if (isCurrentlyDisabled) {
         // Enable this ad type
         return {

@@ -8,8 +8,7 @@ interface AdBannerProps {
   width: string;
   height: string;
   slotId?: string;
-  type?: 'standard' | 'interstitial' | 'sticky' | 'floating-footer' | 'exit-intent' | 'push-notification';
-  delay?: number; // For timed ads
+  type?: 'standard' | 'sticky';
   network?: 'default' | 'google' | 'facebook' | 'amazon' | 'taboola' | 'outbrain'; // Add supported networks
   adConfig?: Record<string, any>; // Additional network-specific configuration
 }
@@ -19,14 +18,11 @@ const AdBanner = ({
   height,
   slotId = "default-ad",
   type = "standard",
-  delay = 0,
   network = "default",
   adConfig = {}
 }: AdBannerProps) => {
   const isMobile = useIsMobile();
   const adRef = useRef<HTMLDivElement>(null);
-  const [showAd, setShowAd] = useState(type !== 'exit-intent' && type !== 'interstitial');
-  const [showExitIntent, setShowExitIntent] = useState(false);
   const [adLoaded, setAdLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [viewStartTime, setViewStartTime] = useState<number | null>(null);
@@ -41,13 +37,8 @@ const AdBanner = ({
   const { recordImpression: trackImpression, recordClick, updateViewTime, updateViewability } = useAdPerformance();
 
   // Check if this ad should be shown based on frequency, preferences, and content visibility
-  const shouldRenderAd = (type === 'standard' ||
-    (isAdTypeAllowed(type as AdPreferenceType) &&
-     shouldShowAd(slotId, type as any))) &&
-    // Disable problematic ad types that violate AdSense policies
-    type !== 'interstitial' &&
-    type !== 'exit-intent' &&
-    type !== 'push-notification';
+  const shouldRenderAd = isAdTypeAllowed(type as AdPreferenceType) &&
+    shouldShowAd(slotId, type as any);
 
   // Set up Intersection Observer for lazy loading
   useEffect(() => {
@@ -113,45 +104,12 @@ const AdBanner = ({
     };
   }, [adRef, slotId, network, viewStartTime, updateViewTime, updateViewability, type]);
 
-  // Handle delayed ads and exit intent
-  useEffect(() => {
-    // We've disabled these ad types, but keeping the code commented for future reference
 
-    // // Handle delayed ads (interstitials)
-    // if ((type === 'interstitial' || type === 'push-notification') && delay > 0 && shouldRenderAd) {
-    //   const timer = setTimeout(() => {
-    //     setShowAd(true);
-    //   }, delay);
-    //   return () => clearTimeout(timer);
-    // }
-
-    // // Set up exit intent detection
-    // if (type === 'exit-intent' && shouldRenderAd) {
-    //   const handleMouseLeave = (e: MouseEvent) => {
-    //     // Only trigger if the mouse is leaving the top of the viewport
-    //     if (e.clientY <= 0) {
-    //       setShowExitIntent(true);
-    //       // Record impression for exit intent ad
-    //       recordImpression(slotId, type as any);
-    //       trackImpression(slotId, network);
-    //     }
-    //   };
-
-    //   // Only add the listener on non-mobile devices
-    //   if (!isMobile) {
-    //     document.addEventListener('mouseleave', handleMouseLeave);
-    //     return () => document.removeEventListener('mouseleave', handleMouseLeave);
-    //   }
-    // }
-
-    // No active effects since we've disabled these ad types
-    return () => {};
-  }, [type, delay, isMobile, shouldRenderAd, slotId, network, recordImpression, trackImpression]);
 
   // Single useEffect for ad initialization and cleanup
   useEffect(() => {
     // Don't initialize if ad shouldn't be shown due to frequency caps or preferences
-    if ((!showAd && !showExitIntent) || !shouldRenderAd) return;
+    if (!shouldRenderAd) return;
 
     // For all ads, only initialize when they become visible (lazy loading)
     // This ensures we don't show ads on screens without content
@@ -204,7 +162,7 @@ const AdBanner = ({
       clearTimeout(initDelay);
       setAdLoaded(false);
     };
-  }, [showAd, showExitIntent, network, slotId, isVisible, shouldRenderAd, recordImpression, trackImpression, type]);
+  }, [network, slotId, isVisible, shouldRenderAd, recordImpression, trackImpression, type]);
 
   const getAdStyling = () => {
     let baseStyles = `ad-container ${width} ${height} relative overflow-hidden`;
@@ -212,22 +170,12 @@ const AdBanner = ({
     switch (type) {
       case "sticky":
         return `${baseStyles} fixed bottom-0 left-0 w-full z-40`;
-      case "floating-footer":
-        return `${baseStyles} fixed bottom-0 left-0 right-0 w-full z-50 shadow-lg`;
-      case "exit-intent":
-      case "interstitial":
-        return `${baseStyles} fixed inset-0 flex items-center justify-center z-50`;
-      case "push-notification":
-        return `${baseStyles} fixed top-4 right-4 z-50 shadow-lg rounded-lg`;
       default:
         return baseStyles;
     }
   };
 
   const handleCloseAd = () => {
-    setShowAd(false);
-    setShowExitIntent(false);
-
     // If we're tracking view time, record it when ad is closed
     if (viewStartTime) {
       const viewTimeSeconds = Math.floor((Date.now() - viewStartTime) / 1000);
@@ -239,7 +187,7 @@ const AdBanner = ({
   };
 
   // Don't render if shouldn't be shown or if frequency/preference limits are reached
-  if ((!showAd && !showExitIntent) || !shouldRenderAd) return null;
+  if (!shouldRenderAd) return null;
 
   // For debugging: show impression count
   const impressionCount = getImpressionCount(slotId, type as any);
@@ -249,105 +197,8 @@ const AdBanner = ({
     recordClick(slotId, network);
   };
 
-  // We've disabled these ad types in shouldRenderAd, but keeping the code for future reference
-  // TypeScript needs this check to be modified to avoid type errors
-  if (false) { // Previously: ((type === 'exit-intent' && showExitIntent) || (type === 'interstitial' && showAd))
-    return (
-      <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
-        <div className={`${width} ${height} max-w-screen-md relative bg-white p-4 rounded-lg`}>
-          <button
-            onClick={handleCloseAd}
-            className="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 transition-colors"
-            aria-label="Close advertisement"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded">
-            Advertisement
-          </div>
-          <div
-            className="w-full h-full flex items-center justify-center"
-            role="complementary"
-            aria-label="Advertisement"
-            ref={adRef}
-            onClick={handleAdClick}
-          >
-            {!adLoaded ? (
-              <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400">
-                Loading ad...
-              </div>
-            ) : (
-              <ins
-                className="adsbygoogle"
-                style={{
-                  display: 'block',
-                  width: adConfig['width'] || '100%',
-                  height: adConfig['height'] || '100%'
-                }}
-                data-ad-client={adConfig['data-ad-client'] || 'ca-pub-7831792005606531'}
-                data-ad-slot={adConfig['data-ad-slot'] || slotId}
-                data-ad-format={adConfig['data-ad-format'] || 'auto'}
-                data-full-width-responsive={adConfig['data-full-width-responsive'] || 'true'}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
-  // We've disabled push notification ads in shouldRenderAd, but keeping the code for future reference
-  // TypeScript needs this check to be modified to avoid type errors
-  if (false) { // Previously: (type === 'push-notification' && showAd)
-    return (
-      <div className={getAdStyling()}>
-        <button
-          onClick={handleCloseAd}
-          className="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 transition-colors"
-          aria-label="Close advertisement"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded">
-          Notification
-        </div>
-        <div
-          className="w-full h-full"
-          role="complementary"
-          aria-label="Advertisement"
-          ref={adRef}
-          onClick={handleAdClick}
-        >
-          {!adLoaded ? (
-            <div className="animate-pulse bg-gray-200 w-full h-full flex items-center justify-center text-gray-400 text-xs">
-              Loading...
-            </div>
-          ) : (
-            <ins
-              className="adsbygoogle"
-              style={{
-                display: 'block',
-                width: adConfig['width'] || '100%',
-                height: adConfig['height'] || '100%'
-              }}
-              data-ad-client={adConfig['data-ad-client'] || 'ca-pub-7831792005606531'}
-              data-ad-slot={adConfig['data-ad-slot'] || slotId}
-              data-ad-format={adConfig['data-ad-format'] || 'auto'}
-              data-full-width-responsive={adConfig['data-full-width-responsive'] || 'true'}
-            />
-          )}
-        </div>
-      </div>
-    );
-  }
 
-  // Standard ads and floating footer
   return (
     <div
       className={getAdStyling()}

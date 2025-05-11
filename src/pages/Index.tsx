@@ -1,43 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
-import { AdBanner } from '@/features/ads';
+import { AdPlaceholder } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useAdNetworks } from '@/hooks/use-ad-networks';
 
 const Index = () => {
   const isMobile = useIsMobile();
-
-  const [showStickyAd, setShowStickyAd] = useState(true);
-
-  // Initialize ad networks
-  const { initializedNetworks, loading: adsLoading, error: adsError } = useAdNetworks({
-    networks: ['default', 'google'], // Add the networks you want to use
-    onInitialized: (network) => {
-      console.log(`${network} ad network initialized successfully`);
-    },
-    onError: (network, error) => {
-      console.error(`Error initializing ${network} ad network:`, error);
-    }
-  });
-
-  // Initialize content for ads
-  useEffect(() => {
-    // In a real implementation, you would initialize your ad service here
-    console.log('Home page loaded - ensuring content is ready before ads');
-  }, []);
-
-  // When floating footer ad is displayed, hide the sticky ad
-  useEffect(() => {
-    // Check if floating footer ad exists and hide sticky ad if it does
-    const floatingFooterExists = document.querySelector('[data-ad-type="floating-footer"]') !== null;
-    setShowStickyAd(!floatingFooterExists);
-  }, []);
-
-  // Display any ad network loading errors
-  if (adsError) {
-    console.error('Ad network error:', adsError);
-  }
 
   return (
     <Layout
@@ -47,7 +15,7 @@ const Index = () => {
       ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
     >
       <div className="container mx-auto px-4 py-8">
-        {/* Removed interstitial ad on page load to comply with AdSense policies */}
+
 
         {/* Add more content before the first ad to comply with AdSense policies */}
         <div className="max-w-4xl mx-auto text-center mb-10 animate-fade-in">
@@ -61,17 +29,10 @@ const Index = () => {
 
         {/* Top Ad Banner - Prime position (after sufficient content) */}
         <div className="mb-8">
-          <AdBanner
+          <AdPlaceholder
             width="w-full"
             height="h-28"
-            slotId="9557785615"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '9557785615',
-              'data-ad-format': 'auto',
-              'data-full-width-responsive': 'true'
-            }}
+            label="Top Banner Ad"
           />
         </div>
 
@@ -80,17 +41,10 @@ const Index = () => {
         {/* Pre-search ad for mobile - high visibility */}
         {isMobile && (
           <div className="mb-6">
-            <AdBanner
+            <AdPlaceholder
               width="w-full"
-              height="h-auto"
-              slotId="4852253846"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4852253846',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+              height="h-16"
+              label="Pre-search Mobile Ad"
             />
           </div>
         )}
@@ -105,33 +59,20 @@ const Index = () => {
 
         {/* Post-search ad - high engagement area */}
         <div className="my-8">
-          <AdBanner
+          <AdPlaceholder
             width="w-full"
-            height="h-auto"
-            slotId="2501197332"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '2501197332',
-              'data-ad-format': 'auto',
-              'data-full-width-responsive': 'true'
-            }}
+            height="h-20"
+            label="Post-search Ad"
           />
         </div>
 
         {/* Side Ads on larger screens */}
         <div className="hidden md:flex justify-between my-12">
           <div className="w-1/4 flex justify-center">
-            <AdBanner
+            <AdPlaceholder
               width="w-[160px]"
               height="h-[600px]"
-              slotId="4884043433"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4884043433',
-                'data-ad-format': 'vertical'
-              }}
+              label="Side Ad (Left)"
             />
           </div>
           <div className="w-2/4 px-4">
@@ -147,17 +88,10 @@ const Index = () => {
 
               {/* In-content ad - between paragraphs for high engagement */}
               <div className="my-6">
-                <AdBanner
+                <AdPlaceholder
                   width="w-full"
-                  height="h-auto"
-                  slotId="7861560560"
-                  network="google"
-                  adConfig={{
-                    'data-ad-client': 'ca-pub-7831792005606531',
-                    'data-ad-slot': '7861560560',
-                    'data-ad-format': 'auto',
-                    'data-full-width-responsive': 'true'
-                  }}
+                  height="h-20"
+                  label="In-content Ad"
                 />
               </div>
 
@@ -168,16 +102,10 @@ const Index = () => {
             </div>
           </div>
           <div className="w-1/4 flex justify-center">
-            <AdBanner
+            <AdPlaceholder
               width="w-[160px]"
               height="h-[600px]"
-              slotId="4884043433"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '4884043433',
-                'data-ad-format': 'vertical'
-              }}
+              label="Side Ad (Right)"
             />
           </div>
         </div>
@@ -196,17 +124,10 @@ const Index = () => {
 
             {/* In-content ad for mobile - between paragraphs */}
             <div className="my-6">
-              <AdBanner
+              <AdPlaceholder
                 width="w-full"
-                height="h-auto"
-                slotId="7861560560"
-                network="google"
-                adConfig={{
-                  'data-ad-client': 'ca-pub-7831792005606531',
-                  'data-ad-slot': '7861560560',
-                  'data-ad-format': 'auto',
-                  'data-full-width-responsive': 'true'
-                }}
+                height="h-20"
+                label="Mobile In-content Ad"
               />
             </div>
 
@@ -219,46 +140,28 @@ const Index = () => {
 
         {/* Bottom Banner Ad - for all devices */}
         <div className="mt-8">
-          <AdBanner
+          <AdPlaceholder
             width="w-full"
-            height="h-auto"
-            slotId="8416703140"
-            network="google"
-            adConfig={{
-              'data-ad-client': 'ca-pub-7831792005606531',
-              'data-ad-slot': '8416703140',
-              'data-ad-format': 'auto',
-              'data-full-width-responsive': 'true'
-            }}
+            height="h-24"
+            label="Bottom Banner Ad"
           />
         </div>
 
-        {/* Removed push notification ad to comply with AdSense policies */}
 
-        {/* Removed exit intent ad to comply with AdSense policies */}
-
-        {/* Removed floating footer ad to comply with AdSense policies */}
 
         {/* Mobile Banner ad - for mobile users */}
         {isMobile && (
           <div className="mt-8">
-            <AdBanner
+            <AdPlaceholder
               width="w-full"
-              height="h-auto"
-              slotId="8380435316"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '8380435316',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+              height="h-16"
+              label="Mobile Sticky Ad"
             />
           </div>
         )}
       </div>
 
-      {/* Notification feature removed as requested */}
+
     </Layout>
   );
 };

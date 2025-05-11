@@ -1,5 +1,6 @@
 // Components
 export { default as AdBanner } from './components/AdBanner';
+export { default as AdPlaceholder } from './components/AdPlaceholder';
 export { default as AdAnalyticsDashboard } from './components/AdAnalyticsDashboard';
 export { default as AdPreferencesDialog } from './components/AdPreferencesDialog';
 
