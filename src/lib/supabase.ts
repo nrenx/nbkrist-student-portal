@@ -22,6 +22,7 @@ const initializeSupabaseClient = (): SupabaseClient => {
   // Check if environment variables are defined
   if (!url || !key) {
     console.error('Supabase URL or Key is missing. Make sure you have set up your .env file correctly.');
+    throw new Error('Supabase configuration is incomplete');
   }
 
   try {
