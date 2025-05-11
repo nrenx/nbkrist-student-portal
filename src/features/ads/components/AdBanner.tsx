@@ -8,7 +8,7 @@ interface AdBannerProps {
   width: string;
   height: string;
   slotId?: string;
-  type?: 'standard' | 'sticky';
+  type?: 'standard' | 'sticky' | 'interstitial' | 'exit-intent' | 'push-notification' | 'floating-footer';
   network?: 'default' | 'google' | 'facebook' | 'amazon' | 'taboola' | 'outbrain'; // Add supported networks
   adConfig?: Record<string, any>; // Additional network-specific configuration
 }

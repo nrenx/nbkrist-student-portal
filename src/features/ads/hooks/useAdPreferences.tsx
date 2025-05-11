@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type AdPreferenceType = 'all' | 'standard' | 'sticky';
+export type AdPreferenceType = 'all' | 'standard' | 'sticky' | 'interstitial' | 'exit-intent' | 'push-notification' | 'floating-footer';
 
 interface AdPreferences {
   disabledTypes: AdPreferenceType[];

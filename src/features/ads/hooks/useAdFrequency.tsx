@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-type AdType = 'sticky';
+type AdType = 'sticky' | 'standard' | 'interstitial' | 'exit-intent' | 'push-notification' | 'floating-footer';
 
 interface AdFrequencyConfig {
   maxImpressions: number;
@@ -10,6 +10,11 @@ interface AdFrequencyConfig {
 // Default frequency limits for different ad types
 const DEFAULT_FREQUENCY_LIMITS: Record<AdType, AdFrequencyConfig> = {
   'sticky': { maxImpressions: 5, timeWindow: 24 }, // 5 per day
+  'standard': { maxImpressions: 10, timeWindow: 24 }, // 10 per day
+  'interstitial': { maxImpressions: 3, timeWindow: 24 }, // 3 per day
+  'exit-intent': { maxImpressions: 2, timeWindow: 24 }, // 2 per day
+  'push-notification': { maxImpressions: 3, timeWindow: 24 }, // 3 per day
+  'floating-footer': { maxImpressions: 5, timeWindow: 24 }, // 5 per day
 };
 
 interface AdImpressionRecord {
