@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import SEO from './SEO';
+import VisitorCounter from './VisitorCounter';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ const Layout = ({
           {children}
         </main>
         <Footer />
+        <VisitorCounter />
       </div>
     </SEO>
   );

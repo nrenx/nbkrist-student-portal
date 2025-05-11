@@ -9,6 +9,7 @@ Hosted at: https://nbkrstudenthub.me/
 - 🔍 Student info lookup by Roll Number
 - 📊 View Attendance Records
 - 📝 Check Mid-term Marks
+- 👥 Real-time visitor counter showing active users
 - ⚙️ Scraped from official Teacher Portal using Python scripts
 - ⚡ Fast, mobile-responsive, and optimized with Google AdSense
 
@@ -74,6 +75,10 @@ The development server will start at http://localhost:5173
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_KEY`
    - `VITE_SUPABASE_STORAGE_BUCKET` (optional)
+
+3. Set up the required Supabase tables:
+   - Run the SQL migrations in the `supabase/migrations` folder
+   - Ensure the `visitor_sessions` table is created for the real-time visitor counter
 
 On every push to main, GitHub Actions will deploy the latest build.
 
