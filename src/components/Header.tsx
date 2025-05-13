@@ -56,7 +56,6 @@ const Header = () => {
             <Link to="/blog" className="text-gray-600 hover:text-nbkr transition-colors">Blog</Link>
             <Link to="/college-logos" className="text-gray-600 hover:text-nbkr transition-colors">College Logos</Link>
             <Link to="/contact" className="text-gray-600 hover:text-nbkr transition-colors">Contact</Link>
-            <Link to="/ad-policy" className="text-gray-600 hover:text-nbkr transition-colors">Ad Policy</Link>
           </nav>
           <div className="md:hidden flex items-center space-x-2">
             <button
@@ -117,13 +116,6 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
-              </Link>
-              <Link
-                to="/ad-policy"
-                className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-nbkr transition-colors rounded-md"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Ad Policy
               </Link>
             </nav>
           </div>
