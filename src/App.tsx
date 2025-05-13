@@ -11,6 +11,7 @@ import StudentDetails from "./pages/StudentDetails";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogSubmit from "./pages/BlogSubmit";
+import CollegeLogos from "./pages/CollegeLogos";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Contact from "./pages/Contact";
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/post/:id" element={<BlogPost />} />
             <Route path="/blog/submit" element={<BlogSubmit />} />
+            <Route path="/college-logos" element={<CollegeLogos />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/contact" element={<Contact />} />

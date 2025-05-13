@@ -22,9 +22,6 @@ const Index = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
             N.B.K.R.I.S.T Student Portal
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
-            Access your academic information by entering your roll number below. Quick, easy, and secure.
-          </p>
         </div>
 
         {/* Top Ad Banner - Prime position (after sufficient content) */}
