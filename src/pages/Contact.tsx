@@ -39,7 +39,7 @@ const Contact = () => {
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">Need help with the student portal?</h3>
                   <p className="text-gray-600 mb-2">Contact our admin directly via WhatsApp:</p>
                   <p className="text-2xl font-bold text-green-600">9849839819</p>
-                  <p className="text-sm text-gray-500 mt-2">WhatsApp messages only, please.</p>
+                  <p className="text-sm text-gray-500 mt-2">WhatsApp messages only.</p>
                 </div>
                 <div className="mt-4 md:mt-0">
                   <a
