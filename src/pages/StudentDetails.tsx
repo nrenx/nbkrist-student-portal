@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { fetchStudentDetails } from '@/services/studentService';
 import { ProcessedStudentData } from '@/types/student';
+import { Helmet } from 'react-helmet';
 
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
@@ -126,6 +127,28 @@ const StudentDetails = () => {
     ? `View academic information, attendance records, and exam results for ${studentName} at NBKRIST.`
     : `Access student academic information, attendance records, and exam results at NBKR Institute of Science & Technology.`;
 
+  // Create structured data for student details
+  const getStructuredData = () => {
+    if (!studentData) return null;
+
+    const studentName = studentData.personalDetails?.name || `Student ${rollNumber}`;
+    const branch = studentData.personalDetails?.branch || '';
+    const section = studentData.personalDetails?.section || '';
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": studentName,
+      "identifier": rollNumber,
+      "description": `${studentName} is a student at NBKR Institute of Science & Technology in the ${branch} department, section ${section}.`,
+      "affiliation": {
+        "@type": "EducationalOrganization",
+        "name": "NBKR Institute of Science & Technology",
+        "url": "https://nbkrstudenthub.me"
+      }
+    };
+  };
+
   return (
     <Layout
       title={pageTitle}
@@ -133,6 +156,13 @@ const StudentDetails = () => {
       keywords={`nbkr, nbkrist, nbkr student portal, nbkr student login, ${rollNumber}, student details, attendance, mid marks`}
       ogImage="https://nbkrstudenthub.me/NBKRIST_logo.png"
     >
+      {studentData && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(getStructuredData())}
+          </script>
+        </Helmet>
+      )}
       <div className="container mx-auto px-4 py-8">
         {/* Back button - always visible regardless of loading state */}
         <div className="mb-6">

@@ -54,7 +54,7 @@ const Header = () => {
           <nav className="hidden md:flex space-x-6">
             <Link to="/" className="text-gray-600 hover:text-nbkr transition-colors">Home</Link>
             <Link to="/blog" className="text-gray-600 hover:text-nbkr transition-colors">Blog</Link>
-            <Link to="/college-logos" className="text-gray-600 hover:text-nbkr transition-colors">College Logos</Link>
+            <Link to="/college-logo" className="text-gray-600 hover:text-nbkr transition-colors">College Logo</Link>
             <Link to="/contact" className="text-gray-600 hover:text-nbkr transition-colors">Contact</Link>
           </nav>
           <div className="md:hidden flex items-center space-x-2">
@@ -104,11 +104,11 @@ const Header = () => {
                 Blog
               </Link>
               <Link
-                to="/college-logos"
+                to="/college-logo"
                 className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-nbkr transition-colors rounded-md"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                College Logos
+                College Logo
               </Link>
               <Link
                 to="/contact"

@@ -1,17 +1,67 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { toast } from "sonner"; // Updated import
+import { toast } from "sonner";
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { AdBanner } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Contact = () => {
   const isMobile = useIsMobile();
+
+  // Add LocalBusiness structured data for better SEO
+  useEffect(() => {
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "N.B.K.R. Institute of Science & Technology",
+      "url": "https://nbkrstudenthub.me",
+      "logo": "https://nbkrstudenthub.me/NBKRIST_logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vidyanagar",
+        "addressLocality": "SPSR Nellore District",
+        "addressRegion": "Andhra Pradesh",
+        "postalCode": "524413",
+        "addressCountry": "IN"
+      },
+      "telephone": "+91 1234567890",
+      "email": "info@nbkrist.ac.in",
+      "openingHours": [
+        "Mo-Fr 09:00-17:00",
+        "Sa 09:00-13:00"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91 9849839819",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Telugu"]
+      }
+    };
+
+    let script = document.querySelector('#contact-structured-data');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'contact-structured-data';
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(structuredData);
+      document.head.appendChild(script);
+    } else {
+      script.textContent = JSON.stringify(structuredData);
+    }
+
+    return () => {
+      // Clean up on unmount
+      const scriptToRemove = document.querySelector('#contact-structured-data');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+      }
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +70,12 @@ const Contact = () => {
   };
 
   return (
-    <Layout>
+    <Layout
+      title="Contact NBKRIST | Get in Touch with NBKR Student Hub"
+      description="Contact NBKR Institute of Science & Technology for inquiries about admissions, academics, or technical support. Reach us via phone, email, or our contact form."
+      keywords="nbkr contact, nbkrist contact, nbkr student portal contact, nbkr ist contact, nbkr institute contact, nbkr help"
+      ogType="website"
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
           {/* Admin Contact Banner - Prominent at the top */}

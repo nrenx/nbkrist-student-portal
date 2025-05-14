@@ -10,9 +10,10 @@ SITEMAP_URL="https://nbkrstudenthub.me/sitemap.xml"
 echo "Submitting sitemap on $(date)"
 echo "-----------------------------------"
 
-# Submit to Google
-echo "Submitting sitemap to Google..."
-curl "https://www.google.com/ping?sitemap=$SITEMAP_URL"
+# Note about Google
+echo "Note: Google has deprecated the ping method for sitemaps."
+echo "Please submit your sitemap manually through Google Search Console:"
+echo "https://search.google.com/search-console"
 echo -e "\n"
 
 # Submit to Bing

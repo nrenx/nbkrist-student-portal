@@ -4,7 +4,14 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const AdPolicy = () => {
   return (
-    <Layout>
+    <Layout
+      title="Advertising Policy | NBKRIST Student Portal"
+      description="Learn about our advertising policy, ad placement guidelines, and user privacy considerations for the NBKRIST Student Portal."
+      keywords="nbkr ad policy, nbkrist advertising, nbkr student portal ads, google adsense policy, nbkr ist ads"
+      ogType="article"
+      publishedTime="2023-09-01T00:00:00+00:00"
+      modifiedTime="2023-09-15T00:00:00+00:00"
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">Advertising Policy</h1>
