@@ -43,11 +43,11 @@ const Contact = () => {
       }
     };
 
-    let script = document.querySelector('#contact-structured-data');
+    let script = document.querySelector('#contact-structured-data') as HTMLScriptElement;
     if (!script) {
       script = document.createElement('script');
       script.id = 'contact-structured-data';
-      script.type = 'application/ld+json';
+      script.setAttribute('type', 'application/ld+json');
       script.textContent = JSON.stringify(structuredData);
       document.head.appendChild(script);
     } else {

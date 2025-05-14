@@ -122,7 +122,7 @@ const SEO: React.FC<SEOProps> = ({
     }
 
     // Basic WebSite schema
-    const structuredData = {
+    const structuredData: any = {
       '@context': 'https://schema.org',
       '@type': ogType === 'article' ? 'Article' : 'WebSite',
       'url': canonicalHref,

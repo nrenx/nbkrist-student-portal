@@ -12,6 +12,8 @@ interface LayoutProps {
   keywords?: string;
   ogImage?: string;
   ogType?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
 const Layout = ({
@@ -20,7 +22,9 @@ const Layout = ({
   description,
   keywords,
   ogImage,
-  ogType
+  ogType,
+  publishedTime,
+  modifiedTime
 }: LayoutProps) => {
   return (
     <SEO
@@ -29,6 +33,8 @@ const Layout = ({
       keywords={keywords}
       ogImage={ogImage}
       ogType={ogType}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
     >
       <div className="flex flex-col min-h-screen">
         <Header />
