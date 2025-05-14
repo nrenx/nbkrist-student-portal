@@ -47,7 +47,7 @@ const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onLoginSuccess }) => {
           onLoginSuccess();
         } else {
           // Force a redirect if the useEffect doesn't catch it
-          window.location.href = '/#/admin/dashboard';
+          window.location.href = '/admin/dashboard';
         }
       } else if (result.error) {
         setError(result.error);

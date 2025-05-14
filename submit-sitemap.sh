@@ -6,6 +6,10 @@
 # Set your sitemap URL
 SITEMAP_URL="https://nbkrstudenthub.me/sitemap.xml"
 
+# Print current date and time
+echo "Submitting sitemap on $(date)"
+echo "-----------------------------------"
+
 # Submit to Google
 echo "Submitting sitemap to Google..."
 curl "https://www.google.com/ping?sitemap=$SITEMAP_URL"
@@ -16,5 +20,15 @@ echo "Submitting sitemap to Bing..."
 curl "https://www.bing.com/ping?sitemap=$SITEMAP_URL"
 echo -e "\n"
 
+# Submit to Yandex
+echo "Submitting sitemap to Yandex..."
+curl "https://webmaster.yandex.com/ping?sitemap=$SITEMAP_URL"
+echo -e "\n"
+
 echo "Sitemap submission complete!"
-echo "Note: You should also manually submit your sitemap in Google Search Console and Bing Webmaster Tools for better tracking."
+echo "-----------------------------------"
+echo "Important: You should also manually submit your sitemap in:"
+echo "1. Google Search Console: https://search.google.com/search-console"
+echo "2. Bing Webmaster Tools: https://www.bing.com/webmasters"
+echo "3. Yandex Webmaster: https://webmaster.yandex.com"
+echo "This will provide better tracking and ensure your site is properly indexed."

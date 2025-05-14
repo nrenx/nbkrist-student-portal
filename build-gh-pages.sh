@@ -33,10 +33,13 @@ cp CNAME dist/
 # Ensure .nojekyll file exists to prevent Jekyll processing
 touch dist/.nojekyll
 
-# With HashRouter, we don't need a 404.html file
-# But we'll keep it just in case
+# With BrowserRouter, we need a 404.html file for GitHub Pages SPA routing
 echo "Copying 404.html to dist..."
 cp public/404.html dist/
+
+# Create a _redirects file for Netlify (in case we ever use it)
+echo "Creating _redirects file for Netlify..."
+echo "/* /index.html 200" > dist/_redirects
 
 # Create a debug.js file only if DEBUG=true is set
 if [ "$DEBUG" = "true" ]; then
