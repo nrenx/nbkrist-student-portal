@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
 import { AdPlaceholder } from '@/features/ads';
@@ -52,6 +53,15 @@ const Index = () => {
             Enter Your Roll Number
           </h2>
           <SearchBox />
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500 mb-2">Don't know the roll number?</p>
+            <Link
+              to="/student-name-search"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Search by Student Name →
+            </Link>
+          </div>
         </div>
 
         {/* Post-search ad - high engagement area */}

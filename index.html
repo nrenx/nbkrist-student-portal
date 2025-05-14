@@ -30,30 +30,26 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico">
 
-    <!-- Start Single Page Apps for GitHub Pages -->
+    <!-- BrowserRouter Support for GitHub Pages -->
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
+      // This script helps with BrowserRouter on GitHub Pages
+      // It handles redirects from 404.html to maintain proper URLs
+      (function() {
+        // Check if we need to redirect (coming from a 404 page)
+        if (sessionStorage.redirect) {
+          // Get the saved URL from sessionStorage
+          var redirectUrl = sessionStorage.redirect;
+          // Remove the saved URL
+          delete sessionStorage.redirect;
+
+          // If the current URL doesn't match the saved URL, redirect
+          if (redirectUrl !== window.location.href) {
+            window.history.replaceState(null, null, redirectUrl);
+          }
         }
-      }(window.location))
+      })();
     </script>
-    <!-- End Single Page Apps for GitHub Pages -->
+    <!-- End BrowserRouter Support -->
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831792005606531"
@@ -80,7 +76,7 @@
       "url": "https://nbkrstudenthub.me",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://nbkrstudenthub.me/?rollNumber={search_term_string}",
+        "target": "https://nbkrstudenthub.me/student/{search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }

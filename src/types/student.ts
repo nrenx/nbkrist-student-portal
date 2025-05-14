@@ -100,3 +100,41 @@ export interface ProcessedStudentData {
   processedMidMarks?: ProcessedMidMarksData;
   csvData?: any;
 }
+
+// Personal details for student name search
+export interface PersonalDetails {
+  name?: string;
+  Name?: string; // Add capitalized Name field to match the actual data
+  rollNumber: string;
+  'Roll No'?: string; // Add original Roll No field from the data
+  'Father Name'?: string; // Add original Father Name field from the data
+  'Parent Mobile'?: string; // Add original Parent Mobile field from the data
+  'Student Mobile'?: string; // Add original Student Mobile field from the data
+  Aadhaar?: string; // Add original Aadhaar field from the data
+  fatherName?: string;
+  parentMobile?: string;
+  studentMobile?: string;
+  aadhaar?: string;
+  extractedAt?: string;
+  extracted_at?: string; // Add original extracted_at field from the data
+  email?: string;
+  phone?: string;
+  branch?: string;
+  section?: string;
+  address?: string;
+  [key: string]: any; // Allow for additional fields in the JSON
+}
+
+// Search parameters for student name search
+export interface SearchParams {
+  namePrefix: string; // Any part of the student's name
+  academicYear: string;
+  yearOfStudy: string;
+}
+
+// Search result for student name search
+export interface SearchResult {
+  data: PersonalDetails | null;
+  rollNumber: string;
+  error?: string;
+}

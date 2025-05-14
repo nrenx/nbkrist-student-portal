@@ -63,8 +63,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Resources</h3>
             <ul className="space-y-2">
               <li><a href="http://103.203.175.90:94/TimeTables/viewTTByClass.php" className="text-sm text-gray-600 hover:text-nbkr">Academic Calendar</a></li>
-              <li><a href="#" className="text-sm text-gray-600 hover:text-nbkr">Library</a></li>
-              <li><a href="#" className="text-sm text-gray-600 hover:text-nbkr">Departments</a></li>
+              <li><Link to="/resources/library" className="text-sm text-gray-600 hover:text-nbkr">Library</Link></li>
+              <li><Link to="/resources/departments" className="text-sm text-gray-600 hover:text-nbkr">Departments</Link></li>
             </ul>
           </div>
           <div>

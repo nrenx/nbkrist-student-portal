@@ -22,7 +22,7 @@ const AdminLogin = () => {
 
   // Handle manual redirect
   const handleManualRedirect = () => {
-    window.location.href = '/admin/dashboard';
+    navigate('/admin/dashboard');
   };
 
   return (

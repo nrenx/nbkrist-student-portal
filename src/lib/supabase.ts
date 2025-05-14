@@ -1,41 +1,34 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { supabaseConfig } from '@/config/supabase';
 
-/**
- * Initialize Supabase client with proper error handling
- * This function attempts to create a Supabase client with the provided configuration
- */
-const initializeSupabaseClient = (): SupabaseClient => {
-  // Get configuration values
-  const url = supabaseConfig.url || import.meta.env.VITE_SUPABASE_URL;
-  const key = supabaseConfig.key || import.meta.env.VITE_SUPABASE_KEY;
+// Use the provided Supabase credentials
+const supabaseUrl = 'https://ndeagjkuhzyozgimudow.supabase.co';
 
-  // Only log non-sensitive information in development mode
-  if (import.meta.env.DEV) {
-    console.log('Environment:', import.meta.env.MODE);
-    console.log('Base URL:', import.meta.env.BASE_URL);
-    console.log('Storage Bucket:', supabaseConfig.storageBucket);
-    console.log('Supabase URL defined:', !!url);
-    console.log('Supabase Key defined:', !!key);
-  }
+// Use service_role key for full access to storage
+const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZWFnamt1aHp5b3pnaW11ZG93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDg5OTY4NiwiZXhwIjoyMDYwNDc1Njg2fQ.qyjFWHusv_o03P_eS_j_kCemXLD45wvioD3lxIqYlbM';
 
-  // Check if environment variables are defined
-  if (!url || !key) {
-    console.error('Supabase URL or Key is missing. Make sure you have set up your .env file correctly.');
-    throw new Error('Supabase configuration is incomplete');
-  }
-
-  try {
-    // Create and return the Supabase client
-    return createClient(url, key);
-  } catch (error) {
-    console.error('Failed to initialize Supabase client:', error);
-    throw new Error('Failed to initialize Supabase client');
-  }
-};
-
-// Initialize the Supabase client
-export const supabase = initializeSupabaseClient();
+// Create a Supabase client with optimized options for storage
+export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+  },
+  global: {
+    headers: {
+      'Cache-Control': 'no-store',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+  },
+  db: {
+    schema: 'public',
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 10,
+    },
+  },
+});
 
 /**
  * Check if the storage bucket exists

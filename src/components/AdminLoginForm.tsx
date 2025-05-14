@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const { login, isLoading } = useAdminAuth();
   const [error, setError] = useState<string | null>(null);
@@ -46,8 +48,8 @@ const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onLoginSuccess }) => {
         if (onLoginSuccess) {
           onLoginSuccess();
         } else {
-          // Force a redirect if the useEffect doesn't catch it
-          window.location.href = '/admin/dashboard';
+          // Use React Router's navigate for client-side routing
+          navigate('/admin/dashboard');
         }
       } else if (result.error) {
         setError(result.error);
