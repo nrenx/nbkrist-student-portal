@@ -68,21 +68,6 @@ const CollegeLogoPage = () => {
               Upload Logo
             </Button>
           </div>
-
-          <div className="mt-8 text-left bg-gray-50 p-6 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">About NBKR Institute Logo</h2>
-            <p className="text-gray-700 mb-4">
-              The official NBKR Institute of Science & Technology (NBKRIST) logo represents the institution's commitment to
-              excellence in education since its establishment in 1979. The logo symbolizes knowledge, innovation, and the
-              institute's rich heritage in providing quality technical education.
-            </p>
-            <h3 className="text-xl font-medium text-gray-800 mb-2">Logo Usage Guidelines</h3>
-            <p className="text-gray-700 mb-4">
-              When using the NBKR logo, please maintain its proportions and colors. The logo should not be modified,
-              distorted, or used in ways that could diminish its integrity. For official publications, always use the
-              high-resolution version available here.
-            </p>
-          </div>
         </div>
 
         {/* Top Ad Banner */}
@@ -134,7 +119,7 @@ const CollegeLogoPage = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Logo Usage</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Logo Applications</h3>
               <ul className="list-disc pl-5 space-y-2 text-gray-700">
                 <li>Academic presentations and research papers</li>
                 <li>Student projects and assignments</li>
@@ -143,10 +128,7 @@ const CollegeLogoPage = () => {
               </ul>
             </div>
           </div>
-          <p className="text-gray-700 mb-4">
-            The NBKR Institute of Science & Technology (NBKRIST) logo is a registered trademark and should be used in accordance
-            with the institution's branding guidelines. For commercial usage or special permissions, please contact the college administration.
-          </p>
+
         </div>
 
         {/* Bottom Ad Banner */}
