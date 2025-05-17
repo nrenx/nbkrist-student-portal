@@ -55,16 +55,15 @@ const Footer = () => {
               <li><Link to="/blog" className="text-sm text-gray-600 hover:text-nbkr">Blog</Link></li>
               <li><Link to="/college-logo" className="text-sm text-gray-600 hover:text-nbkr">College Logo</Link></li>
               <li><Link to="/contact" className="text-sm text-gray-600 hover:text-nbkr">Contact</Link></li>
-              <li><Link to="/ad-policy" className="text-sm text-gray-600 hover:text-nbkr">Ad Policy</Link></li>
-              <li><Link to="/admin/dashboard" className="text-sm text-gray-600 hover:text-nbkr">Admin Dashboard</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li><a href="http://103.203.175.90:94/TimeTables/viewTTByClass.php" className="text-sm text-gray-600 hover:text-nbkr">Academic Calendar</a></li>
-              <li><Link to="/resources/library" className="text-sm text-gray-600 hover:text-nbkr">Library</Link></li>
-              <li><Link to="/resources/departments" className="text-sm text-gray-600 hover:text-nbkr">Departments</Link></li>
+              <li><Link to="/admin/dashboard" className="text-sm text-gray-600 hover:text-nbkr">Admin Dashboard</Link></li>
+              <li><Link to="/ad-policy" className="text-sm text-gray-600 hover:text-nbkr">Ad Policy</Link></li>
+              {/* This link is used for railway.com for backend purpose */}
+              <li><a href="https://nbkr-webupload-render-production-8a09.up.railway.app/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-nbkr">Update Student Details</a></li>
             </ul>
           </div>
           <div>
