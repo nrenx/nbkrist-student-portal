@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, Info, XCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { AdBanner } from '@/features/ads';
+import { AdBanner, AdsterraAd, AdsterraNativeBanner } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 import SearchForm from '@/components/StudentNameSearchForm';
 import SearchResults from '@/components/StudentNameSearchResults';
@@ -39,17 +39,11 @@ const StudentNameSearch = () => {
 
           {/* Top Banner Ad */}
           <div className="mb-8">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="9557785615"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '9557785615',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+            <AdsterraAd
+              adKey="df08e80e0411f467a2bf4c4b472cfa73"
+              width={728}
+              height={90}
+              className="mx-auto"
             />
           </div>
 

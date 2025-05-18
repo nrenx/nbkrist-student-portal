@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
-import { AdPlaceholder, AdsterraAd } from '@/features/ads';
+import { AdPlaceholder, AdsterraAd, AdsterraNativeBanner } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -40,10 +40,9 @@ const Index = () => {
         {/* Pre-search ad for mobile - high visibility */}
         {isMobile && (
           <div className="mb-6">
-            <AdPlaceholder
-              width="w-full"
-              height="h-16"
-              label="Pre-search Mobile Ad"
+            <AdsterraNativeBanner
+              adKey="0ff47a52378e603887c6c43532a138d8"
+              className="w-full"
             />
           </div>
         )}
@@ -137,10 +136,9 @@ const Index = () => {
 
               {/* In-content ad - between paragraphs for high engagement */}
               <div className="my-6">
-                <AdPlaceholder
-                  width="w-full"
-                  height="h-20"
-                  label="In-content Ad"
+                <AdsterraNativeBanner
+                  adKey="0ff47a52378e603887c6c43532a138d8"
+                  className="w-full"
                 />
               </div>
 
@@ -151,10 +149,9 @@ const Index = () => {
             </div>
           </div>
           <div className="w-1/4 flex justify-center">
-            <AdPlaceholder
-              width="w-[160px]"
-              height="h-[600px]"
-              label="Side Ad (Right)"
+            <AdsterraNativeBanner
+              adKey="0ff47a52378e603887c6c43532a138d8"
+              className="w-[160px] min-h-[600px]"
             />
           </div>
         </div>
@@ -173,10 +170,9 @@ const Index = () => {
 
             {/* In-content ad for mobile - between paragraphs */}
             <div className="my-6">
-              <AdPlaceholder
-                width="w-full"
-                height="h-20"
-                label="Mobile In-content Ad"
+              <AdsterraNativeBanner
+                adKey="0ff47a52378e603887c6c43532a138d8"
+                className="w-full"
               />
             </div>
 
@@ -189,10 +185,11 @@ const Index = () => {
 
         {/* Bottom Banner Ad - for all devices */}
         <div className="mt-8">
-          <AdPlaceholder
-            width="w-full"
-            height="h-24"
-            label="Bottom Banner Ad"
+          <AdsterraAd
+            adKey="df08e80e0411f467a2bf4c4b472cfa73"
+            width={728}
+            height={90}
+            className="mx-auto"
           />
         </div>
 
@@ -200,11 +197,10 @@ const Index = () => {
 
         {/* Mobile Banner ad - for mobile users */}
         {isMobile && (
-          <div className="mt-8">
-            <AdPlaceholder
-              width="w-full"
-              height="h-16"
-              label="Mobile Sticky Ad"
+          <div className="mt-8 sticky bottom-0 z-50">
+            <AdsterraNativeBanner
+              adKey="0ff47a52378e603887c6c43532a138d8"
+              className="w-full"
             />
           </div>
         )}

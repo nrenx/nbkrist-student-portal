@@ -6,7 +6,7 @@ import StudentProfile from '@/components/StudentProfile';
 import AttendanceDetails from '@/components/AttendanceDetails';
 import MidMarksDetails from '@/components/MidMarksDetails';
 import PersonalDetails from '@/components/PersonalDetails';
-import { AdBanner } from '@/features/ads';
+import { AdBanner, AdsterraAd, AdsterraNativeBanner } from '@/features/ads';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -183,34 +183,20 @@ const StudentDetails = () => {
           <>
             {/* Top Ad Banner - Higher visibility */}
             <div className="mb-8">
-              <AdBanner
-                width="w-full"
-                height="h-auto"
-                slotId="9557785615"
-                network="google"
-                adConfig={{
-                  'data-ad-client': 'ca-pub-7831792005606531',
-                  'data-ad-slot': '9557785615',
-                  'data-ad-format': 'auto',
-                  'data-full-width-responsive': 'true'
-                }}
+              <AdsterraAd
+                adKey="df08e80e0411f467a2bf4c4b472cfa73"
+                width={728}
+                height={90}
+                className="mx-auto"
               />
             </div>
 
             {/* Pre-search ad for mobile - high visibility */}
             {isMobile && (
               <div className="mb-6">
-                <AdBanner
-                  width="w-full"
-                  height="h-auto"
-                  slotId="4852253846"
-                  network="google"
-                  adConfig={{
-                    'data-ad-client': 'ca-pub-7831792005606531',
-                    'data-ad-slot': '4852253846',
-                    'data-ad-format': 'auto',
-                    'data-full-width-responsive': 'true'
-                  }}
+                <AdsterraNativeBanner
+                  adKey="0ff47a52378e603887c6c43532a138d8"
+                  className="w-full"
                 />
               </div>
             )}
