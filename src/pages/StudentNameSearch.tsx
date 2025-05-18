@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, Info, XCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { AdBanner, AdsterraAd, AdsterraNativeBanner } from '@/features/ads';
+import { AdBanner, AdsterraAd, AdsterraNativeBanner, AdPlaceholder } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 import SearchForm from '@/components/StudentNameSearchForm';
 import SearchResults from '@/components/StudentNameSearchResults';
