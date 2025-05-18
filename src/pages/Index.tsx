@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
-import { AdPlaceholder } from '@/features/ads';
+import { AdPlaceholder, AdsterraAd } from '@/features/ads';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -27,10 +27,11 @@ const Index = () => {
 
         {/* Top Ad Banner - Prime position (after sufficient content) */}
         <div className="mb-8">
-          <AdPlaceholder
-            width="w-full"
-            height="h-28"
-            label="Top Banner Ad"
+          <AdsterraAd
+            adKey="df08e80e0411f467a2bf4c4b472cfa73"
+            width={728}
+            height={90}
+            className="mx-auto"
           />
         </div>
 
