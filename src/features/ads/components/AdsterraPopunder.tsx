@@ -4,17 +4,23 @@ import { useAdPreferences } from '../hooks/useAdPreferences';
 
 interface AdsterraPopunderProps {
   scriptSrc: string;
+  adKey?: string; // Optional ad key for direct implementation
+  exitIntent?: boolean; // Whether to show on exit intent only
 }
 
 /**
  * AdsterraPopunder component
  *
- * This component loads an Adsterra Popunder advertisement.
+ * This component loads an Adsterra Popunder advertisement following official guidelines.
  * It's designed to be included once in the app layout to work site-wide.
  * It respects user preferences and frequency limits.
+ *
+ * Implementation follows Adsterra's official guidelines for Popunder ads.
  */
 const AdsterraPopunder: React.FC<AdsterraPopunderProps> = ({
-  scriptSrc
+  scriptSrc,
+  adKey,
+  exitIntent = false
 }) => {
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -42,35 +48,78 @@ const AdsterraPopunder: React.FC<AdsterraPopunderProps> = ({
         return;
       }
 
-      // Create and inject the script
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = scriptSrc;
-      script.async = true;
-      script.onerror = (e) => {
-        console.error('Error loading Adsterra Popunder script:', e);
-        setError('Failed to load advertisement');
-      };
-      script.onload = () => {
-        setLoaded(true);
-        // Record impression for frequency limiting
-        recordImpression('popunder', 'interstitial');
-      };
+      // For direct implementation with adKey
+      if (adKey) {
+        // Create the atOptions script
+        const optionsScript = document.createElement('script');
+        optionsScript.type = 'text/javascript';
+        optionsScript.text = `
+          atOptions = {
+            'key' : '${adKey}',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : ${JSON.stringify(exitIntent ? { exitIntent: true } : {})}
+          };
+        `;
+        document.head.appendChild(optionsScript);
 
-      // Add the script to the document head
-      document.head.appendChild(script);
+        // Create the invoke script
+        const invokeScript = document.createElement('script');
+        invokeScript.type = 'text/javascript';
+        invokeScript.async = true;
+        invokeScript.src = `//www.highperformanceformat.com/${adKey}/invoke.js`;
+        invokeScript.onerror = (e) => {
+          console.error('Error loading Adsterra Popunder script:', e);
+          setError('Failed to load advertisement');
+        };
+        invokeScript.onload = () => {
+          setLoaded(true);
+          recordImpression('popunder', 'interstitial');
+          console.log('Adsterra Popunder loaded successfully');
+        };
 
-      // Cleanup function to remove the script when component unmounts
-      return () => {
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
-      };
+        document.head.appendChild(invokeScript);
+
+        return () => {
+          if (optionsScript.parentNode) optionsScript.parentNode.removeChild(optionsScript);
+          if (invokeScript.parentNode) invokeScript.parentNode.removeChild(invokeScript);
+        };
+      }
+      // For script URL implementation
+      else {
+        // Create and inject the script
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = scriptSrc;
+        script.async = true;
+        script.setAttribute('data-cfasync', 'false'); // CloudFlare compatibility
+        script.onerror = (e) => {
+          console.error('Error loading Adsterra Popunder script:', e);
+          setError('Failed to load advertisement');
+        };
+        script.onload = () => {
+          setLoaded(true);
+          // Record impression for frequency limiting
+          recordImpression('popunder', 'interstitial');
+          console.log('Adsterra Popunder loaded successfully');
+        };
+
+        // Add the script to the document head
+        document.head.appendChild(script);
+
+        // Cleanup function to remove the script when component unmounts
+        return () => {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        };
+      }
     } catch (err) {
       console.error('Error setting up Adsterra Popunder:', err);
       setError('Failed to initialize advertisement');
     }
-  }, [scriptSrc, isAdTypeAllowed, shouldShowAd, recordImpression]);
+  }, [scriptSrc, adKey, exitIntent, isAdTypeAllowed, shouldShowAd, recordImpression]);
 
   // This component doesn't render anything visible
   return null;

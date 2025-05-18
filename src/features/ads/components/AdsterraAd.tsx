@@ -12,7 +12,7 @@ interface AdsterraAdProps {
  * AdsterraAd component
  *
  * This component renders an Adsterra advertisement using their provided script.
- * It dynamically injects the script and creates the necessary container.
+ * It follows the official Adsterra implementation guidelines.
  */
 const AdsterraAd: React.FC<AdsterraAdProps> = ({
   adKey,
@@ -23,52 +23,55 @@ const AdsterraAd: React.FC<AdsterraAdProps> = ({
 }) => {
   const adContainerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
-      // Create a unique ID for this ad instance
-      const uniqueId = `adsterra-${adKey}-${Math.random().toString(36).substring(2, 9)}`;
+      // Create a container ID for this specific ad
+      const containerId = `atContainer-${adKey}`;
 
-      // Create a global atOptions object if it doesn't exist
-      if (!(window as any).atOptions) {
-        (window as any).atOptions = {};
+      // Clear any existing content in the container
+      if (adContainerRef.current) {
+        adContainerRef.current.innerHTML = '';
       }
 
-      // Set the ad options for this specific ad
-      (window as any).atOptions = {
-        'key': adKey,
-        'format': format,
-        'height': height,
-        'width': width,
-        'params': {}
-      };
+      // Create the script element for atOptions
+      const optionsScript = document.createElement('script');
+      optionsScript.type = 'text/javascript';
+      optionsScript.text = `
+        atOptions = {
+          'key' : '${adKey}',
+          'format' : '${format}',
+          'height' : ${height},
+          'width' : ${width},
+          'params' : {}
+        };
+      `;
 
-      // Check if script already exists to prevent duplicates
-      const existingScript = document.querySelector(`script[src*="${adKey}/invoke.js"]`);
-      if (existingScript) {
-        console.log('Adsterra script already exists, reusing it');
-        return;
-      }
-
-      // Create and inject the script
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `//www.highperformanceformat.com/${adKey}/invoke.js`;
-      script.async = true;
-      script.onerror = (e) => {
+      // Create the invoke script element
+      const invokeScript = document.createElement('script');
+      invokeScript.type = 'text/javascript';
+      invokeScript.async = true;
+      invokeScript.src = `//www.highperformanceformat.com/${adKey}/invoke.js`;
+      invokeScript.onerror = (e) => {
         console.error('Error loading Adsterra script:', e);
         setError('Failed to load advertisement');
       };
+      invokeScript.onload = () => {
+        setIsLoaded(true);
+        console.log(`Adsterra banner loaded successfully: ${adKey}`);
+      };
 
-      // Add the script to the document head instead of the container
-      document.head.appendChild(script);
+      // Add scripts to the container in the correct order
+      if (adContainerRef.current) {
+        adContainerRef.current.appendChild(optionsScript);
+        adContainerRef.current.appendChild(invokeScript);
+      }
 
-      // Cleanup function to remove the script when component unmounts
       return () => {
-        // Only remove if this is the last instance using this script
-        const remainingAds = document.querySelectorAll(`.adsterra-container[data-key="${adKey}"]`);
-        if (remainingAds.length <= 1 && script.parentNode) {
-          script.parentNode.removeChild(script);
+        // Clean up on unmount
+        if (adContainerRef.current) {
+          adContainerRef.current.innerHTML = '';
         }
       };
     } catch (err) {
@@ -79,7 +82,7 @@ const AdsterraAd: React.FC<AdsterraAdProps> = ({
 
   return (
     <div className={`adsterra-container relative overflow-hidden ${className}`} data-key={adKey}>
-      <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded">
+      <div className="absolute top-1 left-1 bg-black/10 text-xs px-1 rounded z-10">
         Advertisement
       </div>
       {error ? (
@@ -91,9 +94,7 @@ const AdsterraAd: React.FC<AdsterraAdProps> = ({
           ref={adContainerRef}
           className="w-full h-full"
           style={{ minHeight: `${height}px`, minWidth: `${width}px` }}
-        >
-          <div id={`container-${adKey}`} />
-        </div>
+        />
       )}
     </div>
   );

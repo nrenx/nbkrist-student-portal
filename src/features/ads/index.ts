@@ -6,6 +6,7 @@ export { default as AdsterraNativeBanner } from './components/AdsterraNativeBann
 export { default as AdsterraSocialBar } from './components/AdsterraSocialBar';
 export { default as AdsterraDirectLink } from './components/AdsterraDirectLink';
 export { default as AdsterraPopunder } from './components/AdsterraPopunder';
+export { default as AdsterraDirectImplementation } from './components/AdsterraDirectImplementation';
 export { default as AdAnalyticsDashboard } from './components/AdAnalyticsDashboard';
 export { default as AdPreferencesDialog } from './components/AdPreferencesDialog';
 

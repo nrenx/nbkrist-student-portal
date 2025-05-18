@@ -6,7 +6,7 @@ import StudentProfile from '@/components/StudentProfile';
 import AttendanceDetails from '@/components/AttendanceDetails';
 import MidMarksDetails from '@/components/MidMarksDetails';
 import PersonalDetails from '@/components/PersonalDetails';
-import { AdBanner, AdsterraAd, AdsterraNativeBanner, AdPlaceholder, AdsterraSocialBar } from '@/features/ads';
+import { AdBanner, AdsterraAd, AdsterraNativeBanner, AdPlaceholder, AdsterraSocialBar, AdsterraDirectImplementation } from '@/features/ads';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -206,11 +206,12 @@ const StudentDetails = () => {
         {/* In-content ad for mobile users - only shown when not loading and no errors */}
         {!loading && !error && isMobile && (
           <div className="my-4">
-            <AdsterraAd
+            <AdsterraDirectImplementation
               adKey="2f6a09d319339970ed24c67184142dd1"
               width={300}
               height={250}
               className="mx-auto"
+              adType="banner"
             />
           </div>
         )}
@@ -219,11 +220,12 @@ const StudentDetails = () => {
           {/* Left Ad on larger screens - only shown when not loading and no errors */}
           {!loading && !error && (
             <div className="hidden md:flex md:w-1/5 justify-center">
-              <AdsterraAd
+              <AdsterraDirectImplementation
                 adKey="cb2fca7e175e5bc597a876f51881ab4e"
                 width={160}
                 height={600}
                 className="mx-auto"
+                adType="banner"
               />
             </div>
           )}
@@ -310,11 +312,12 @@ const StudentDetails = () => {
           {/* Right Ad on larger screens - premium spot - only shown when not loading and no errors */}
           {!loading && !error && (
             <div className="hidden md:flex md:w-1/5 justify-center">
-              <AdsterraAd
+              <AdsterraDirectImplementation
                 adKey="585fbee164d8c6e6f7917e04ab8d10d8"
                 width={160}
                 height={300}
                 className="mx-auto"
+                adType="banner"
               />
             </div>
           )}
@@ -344,6 +347,8 @@ const StudentDetails = () => {
             <AdsterraSocialBar
               scriptSrc="//pl26675708.profitableratecpm.com/09/ff/29/09ff291450a6031107bd48a3919c3f48.js"
               className="w-full"
+              position="bottom"
+              trackImpression={true}
             />
           </div>
         )}
