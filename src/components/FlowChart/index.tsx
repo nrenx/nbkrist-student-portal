@@ -154,7 +154,7 @@ const FlowChart: React.FC<FlowChartProps> = ({ className }) => {
 
   return (
     <motion.div
-      className={`w-full h-[1050px] rounded-lg shadow-lg border border-gray-200 ${className}`}
+      className={`w-full h-[1150px] rounded-lg shadow-lg border border-gray-200 pb-16 flowchart-container ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -168,6 +168,11 @@ const FlowChart: React.FC<FlowChartProps> = ({ className }) => {
         edgeTypes={edgeTypes}
         connectionLineType={ConnectionLineType.SmoothStep}
         fitView
+        fitViewOptions={{
+          padding: 0.2,
+          minZoom: 0.2,
+          maxZoom: 1.5
+        }}
         attributionPosition="bottom-right"
         defaultEdgeOptions={{
           type: 'animated',

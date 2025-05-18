@@ -50,20 +50,24 @@
   .btn-primary {
     @apply bg-nbkr hover:bg-nbkr-dark text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200;
   }
-  
+
   .link-hover {
     @apply hover:text-nbkr transition-colors duration-200;
   }
-  
+
   .card-hover {
     @apply hover:shadow-lg transition-shadow duration-200;
   }
-  
+
   .search-container {
     @apply max-w-md w-full mx-auto;
   }
-  
+
   .ad-container {
     @apply border border-dashed border-gray-300 bg-gray-50 flex items-center justify-center text-gray-400 text-sm;
+  }
+
+  .flowchart-container {
+    @apply overflow-visible;
   }
 }

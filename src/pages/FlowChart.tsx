@@ -26,7 +26,7 @@ const FlowChartPage: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-[800px] w-full">
+              <div className="h-[1200px] w-full mb-8 flowchart-container">
                 <FlowChart />
               </div>
             </CardContent>
