@@ -17,6 +17,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Contact from "./pages/Contact";
 import AdPolicy from "./pages/AdPolicy";
+import FlowChart from "./pages/FlowChart";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/blog/post/:id" element={<BlogPost />} />
             <Route path="/blog/submit" element={<BlogSubmit />} />
             <Route path="/college-logo" element={<CollegeLogo />} />
+            <Route path="/how-it-works" element={<FlowChart />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/contact" element={<Contact />} />

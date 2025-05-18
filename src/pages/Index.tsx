@@ -64,6 +64,47 @@ const Index = () => {
           </div>
         </div>
 
+        {/* How It Works Section */}
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-10">
+          <h2 className="text-xl font-semibold text-center mb-4">
+            How NBKR Student Portal Works
+          </h2>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="md:w-1/2">
+              <p className="text-gray-600 mb-4">
+                Curious about how this portal works? We've created an interactive visual flowchart
+                that explains the entire system - from data collection to display.
+              </p>
+              <p className="text-gray-600 mb-4">
+                Explore the student search flow, admin data update process, and how information
+                moves through our system.
+              </p>
+              <div className="text-center md:text-left">
+                <Link
+                  to="/how-it-works"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-nbkr text-white rounded-md hover:bg-nbkr-dark transition-colors"
+                >
+                  View Interactive Flowchart
+                </Link>
+              </div>
+            </div>
+            <div className="md:w-1/2 flex justify-center">
+              <div className="bg-gray-100 rounded-lg p-4 w-full max-w-xs h-48 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-nbkr">
+                  <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                  <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                  <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                  <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                  <path d="M10 7h4"></path>
+                  <path d="M7 10v4"></path>
+                  <path d="M17 10v4"></path>
+                  <path d="M10 17h4"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Post-search ad - high engagement area */}
         <div className="my-8">
           <AdPlaceholder

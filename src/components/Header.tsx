@@ -56,6 +56,7 @@ const Header = () => {
             <Link to="/student-name-search" className="text-gray-600 hover:text-nbkr transition-colors">Name Search</Link>
             <Link to="/blog" className="text-gray-600 hover:text-nbkr transition-colors">Blog</Link>
             <Link to="/college-logo" className="text-gray-600 hover:text-nbkr transition-colors">College Logo</Link>
+            <Link to="/how-it-works" className="text-gray-600 hover:text-nbkr transition-colors">How It Works</Link>
             <Link to="/contact" className="text-gray-600 hover:text-nbkr transition-colors">Contact</Link>
           </nav>
           <div className="md:hidden flex items-center space-x-2">
@@ -117,6 +118,13 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 College Logo
+              </Link>
+              <Link
+                to="/how-it-works"
+                className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-nbkr transition-colors rounded-md"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                How It Works
               </Link>
               <Link
                 to="/contact"
