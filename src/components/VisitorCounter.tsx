@@ -20,8 +20,8 @@ const VisitorCounter: React.FC<VisitorCounterProps> = ({ className }) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div 
-            className={`fixed bottom-6 right-20 bg-nbkr text-white p-2 rounded-full shadow-lg hover:bg-nbkr-dark transition-colors z-50 flex items-center justify-center ${className}`}
+          <div
+            className={`fixed bottom-2 right-2 bg-nbkr text-white p-2 rounded-full shadow-lg hover:bg-nbkr-dark transition-colors z-50 flex items-center justify-center ${className}`}
             aria-label="Users Online"
           >
             <div className="flex items-center gap-1.5">
