@@ -40,9 +40,11 @@ const Index = () => {
         {/* Pre-search ad for mobile - high visibility */}
         {isMobile && (
           <div className="mb-6">
-            <AdsterraNativeBanner
-              adKey="0ff47a52378e603887c6c43532a138d8"
-              className="w-full"
+            <AdsterraAd
+              adKey="df08e80e0411f467a2bf4c4b472cfa73"
+              width={728}
+              height={90}
+              className="mx-auto"
             />
           </div>
         )}

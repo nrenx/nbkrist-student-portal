@@ -1,10 +1,11 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { initializeErrorHandler } from "@/utils/errorHandler";
 
 import Index from "./pages/Index";
 import StudentDetails from "./pages/StudentDetails";
@@ -23,32 +24,39 @@ import NotFound from "./pages/NotFound";
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
 
-const App = () => (
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/student/:rollNumber" element={<StudentDetails />} />
-            <Route path="/student-name-search" element={<StudentNameSearch />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/post/:id" element={<BlogPost />} />
-            <Route path="/blog/submit" element={<BlogSubmit />} />
-            <Route path="/college-logo" element={<CollegeLogo />} />
-            <Route path="/how-it-works" element={<FlowChart />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/ad-policy" element={<AdPolicy />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+const App = () => {
+  // Initialize error handler on mount
+  useEffect(() => {
+    initializeErrorHandler();
+  }, []);
+
+  return (
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/student/:rollNumber" element={<StudentDetails />} />
+              <Route path="/student-name-search" element={<StudentNameSearch />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/post/:id" element={<BlogPost />} />
+              <Route path="/blog/submit" element={<BlogSubmit />} />
+              <Route path="/college-logo" element={<CollegeLogo />} />
+              <Route path="/how-it-works" element={<FlowChart />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/ad-policy" element={<AdPolicy />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+};
 
 export default App;
