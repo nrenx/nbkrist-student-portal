@@ -310,16 +310,11 @@ const StudentDetails = () => {
           {/* Right Ad on larger screens - premium spot - only shown when not loading and no errors */}
           {!loading && !error && (
             <div className="hidden md:flex md:w-1/5 justify-center">
-              <AdBanner
-                width="w-[160px]"
-                height="h-[600px]"
-                slotId="4884043433"
-                network="google"
-                adConfig={{
-                  'data-ad-client': 'ca-pub-7831792005606531',
-                  'data-ad-slot': '4884043433',
-                  'data-ad-format': 'vertical'
-                }}
+              <AdsterraAd
+                adKey="585fbee164d8c6e6f7917e04ab8d10d8"
+                width={160}
+                height={300}
+                className="mx-auto"
               />
             </div>
           )}

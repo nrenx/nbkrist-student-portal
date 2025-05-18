@@ -188,11 +188,10 @@ const Index = () => {
 
         {/* Bottom Banner Ad - for all devices */}
         <div className="mt-8">
-          <AdsterraAd
-            adKey="df08e80e0411f467a2bf4c4b472cfa73"
-            width={728}
-            height={90}
-            className="mx-auto"
+          <AdPlaceholder
+            width="w-full"
+            height="h-24"
+            label="Bottom Banner Ad (Removed duplicate)"
           />
         </div>
 
