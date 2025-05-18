@@ -2,7 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { EdgeProps, getBezierPath, getSmoothStepPath, EdgeLabelRenderer } from 'reactflow';
 import { motion } from 'framer-motion';
 
-const AnimatedEdge: React.FC<EdgeProps> = ({
+// Extended interface to include the missing properties
+interface AnimatedEdgeProps extends EdgeProps {
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+  style?: {
+    strokeWidth?: string | number;
+    strokeDasharray?: string;
+    [key: string]: any;
+  };
+}
+
+const AnimatedEdge: React.FC<AnimatedEdgeProps> = ({
   id,
   sourceX,
   sourceY,
@@ -10,7 +21,7 @@ const AnimatedEdge: React.FC<EdgeProps> = ({
   targetY,
   sourcePosition,
   targetPosition,
-  style = {},
+  style = {} as AnimatedEdgeProps['style'],
   data,
   markerEnd,
   sourceHandle,
@@ -68,8 +79,8 @@ const AnimatedEdge: React.FC<EdgeProps> = ({
         ref={setPathRef}
         style={{
           ...style,
-          strokeWidth: style.strokeWidth || 2,
-          strokeDasharray: style.strokeDasharray || 'none',
+          strokeWidth: style?.strokeWidth || 2,
+          strokeDasharray: style?.strokeDasharray || 'none',
           stroke: data?.color || '#b1b1b7',
           fill: 'none',
         }}
@@ -84,8 +95,8 @@ const AnimatedEdge: React.FC<EdgeProps> = ({
           d={edgePath}
           fill="none"
           stroke={data?.color || '#1a56db'}
-          strokeWidth={style.strokeWidth ? style.strokeWidth + 1 : 3}
-          strokeDasharray={style.strokeDasharray || 'none'}
+          strokeWidth={style?.strokeWidth ? Number(style.strokeWidth) + 1 : 3}
+          strokeDasharray={style?.strokeDasharray || 'none'}
           initial={{ pathLength: 0 }}
           animate={{ pathLength: isAnimated ? 1 : 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
