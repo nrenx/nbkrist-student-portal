@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import SEO from './SEO';
 import VisitorCounter from './VisitorCounter';
+import { AdsterraPopunder } from '@/features/ads';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -43,6 +44,8 @@ const Layout = ({
         </main>
         <Footer />
         <VisitorCounter />
+        {/* Site-wide Adsterra Popunder */}
+        <AdsterraPopunder scriptSrc="//pl26676210.profitableratecpm.com/0e/9e/cd/0e9ecdba3847d3f45ee011044c34ac2e.js" />
       </div>
     </SEO>
   );

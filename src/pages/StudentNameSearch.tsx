@@ -39,11 +39,10 @@ const StudentNameSearch = () => {
 
           {/* Top Banner Ad */}
           <div className="mb-8">
-            <AdsterraAd
-              adKey="df08e80e0411f467a2bf4c4b472cfa73"
-              width={728}
-              height={90}
-              className="mx-auto"
+            <AdPlaceholder
+              width="w-full"
+              height="h-28"
+              label="Top Banner Ad (Removed duplicate)"
             />
           </div>
 
@@ -129,34 +128,22 @@ const StudentNameSearch = () => {
 
           {/* Bottom Banner Ad */}
           <div className="mt-8">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="8416703140"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '8416703140',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+            <AdsterraAd
+              adKey="8b14f87d9dbd67ea5fc6fb3f83ad3c48"
+              width={468}
+              height={60}
+              className="mx-auto"
             />
           </div>
 
           {/* Mobile Sticky Ad */}
           {isMobile && (
-            <div className="mt-8">
-              <AdBanner
-                width="w-full"
-                height="h-auto"
-                slotId="8380435316"
-                network="google"
-                adConfig={{
-                  'data-ad-client': 'ca-pub-7831792005606531',
-                  'data-ad-slot': '8380435316',
-                  'data-ad-format': 'auto',
-                  'data-full-width-responsive': 'true'
-                }}
+            <div className="mt-8 sticky bottom-0 z-50">
+              <AdsterraAd
+                adKey="9b331e1b14b4c9d25f6130507dfa0bd5"
+                width={320}
+                height={50}
+                className="mx-auto"
               />
             </div>
           )}

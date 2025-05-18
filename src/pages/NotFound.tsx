@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
-import { AdBanner } from '@/features/ads';
+import { AdBanner, AdsterraDirectLink } from '@/features/ads';
 
 const NotFound = () => {
   return (
@@ -41,18 +41,11 @@ const NotFound = () => {
           </Link>
 
           {/* Single ad with proper spacing from content */}
-          <div className="mt-8">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="2501197332"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '2501197332',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+          <div className="mt-8 max-w-md mx-auto">
+            <AdsterraDirectLink
+              url="https://www.profitableratecpm.com/xjm97v2v?key=79ca1dfc649daac131b1fae37f663154"
+              buttonText="Find What You're Looking For"
+              className="w-full"
             />
           </div>
         </div>

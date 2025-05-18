@@ -183,20 +183,20 @@ const StudentDetails = () => {
           <>
             {/* Top Ad Banner - Higher visibility */}
             <div className="mb-8">
-              <AdsterraAd
-                adKey="df08e80e0411f467a2bf4c4b472cfa73"
-                width={728}
-                height={90}
-                className="mx-auto"
+              <AdPlaceholder
+                width="w-full"
+                height="h-28"
+                label="Top Banner Ad (Removed duplicate)"
               />
             </div>
 
             {/* Pre-search ad for mobile - high visibility */}
             {isMobile && (
               <div className="mb-6">
-                <AdsterraNativeBanner
-                  adKey="0ff47a52378e603887c6c43532a138d8"
-                  className="w-full"
+                <AdPlaceholder
+                  width="w-full"
+                  height="h-16"
+                  label="Pre-search Mobile Ad (Removed duplicate)"
                 />
               </div>
             )}
@@ -206,17 +206,11 @@ const StudentDetails = () => {
         {/* In-content ad for mobile users - only shown when not loading and no errors */}
         {!loading && !error && isMobile && (
           <div className="my-4">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="7861560560"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '7861560560',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+            <AdsterraAd
+              adKey="2f6a09d319339970ed24c67184142dd1"
+              width={300}
+              height={250}
+              className="mx-auto"
             />
           </div>
         )}
@@ -225,16 +219,11 @@ const StudentDetails = () => {
           {/* Left Ad on larger screens - only shown when not loading and no errors */}
           {!loading && !error && (
             <div className="hidden md:flex md:w-1/5 justify-center">
-              <AdBanner
-                width="w-[160px]"
-                height="h-[600px]"
-                slotId="4884043433"
-                network="google"
-                adConfig={{
-                  'data-ad-client': 'ca-pub-7831792005606531',
-                  'data-ad-slot': '4884043433',
-                  'data-ad-format': 'vertical'
-                }}
+              <AdsterraAd
+                adKey="cb2fca7e175e5bc597a876f51881ab4e"
+                width={160}
+                height={600}
+                className="mx-auto"
               />
             </div>
           )}
@@ -356,18 +345,10 @@ const StudentDetails = () => {
 
         {/* Mobile Banner ad - for mobile users - only shown when not loading and no errors */}
         {!loading && !error && isMobile && (
-          <div className="mt-8">
-            <AdBanner
-              width="w-full"
-              height="h-auto"
-              slotId="8380435316"
-              network="google"
-              adConfig={{
-                'data-ad-client': 'ca-pub-7831792005606531',
-                'data-ad-slot': '8380435316',
-                'data-ad-format': 'auto',
-                'data-full-width-responsive': 'true'
-              }}
+          <div className="mt-8 sticky bottom-0 z-50">
+            <AdsterraSocialBar
+              scriptSrc="//pl26675708.profitableratecpm.com/09/ff/29/09ff291450a6031107bd48a3919c3f48.js"
+              className="w-full"
             />
           </div>
         )}
