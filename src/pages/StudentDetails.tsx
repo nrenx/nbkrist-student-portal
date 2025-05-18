@@ -277,6 +277,7 @@ const StudentDetails = () => {
                       attendance={studentData.attendance}
                       attendancePercentage={studentData.attendancePercentage}
                       totalClasses={studentData.totalClasses}
+                      lastUpdated={studentData.midMarks?.last_updated}
                     />
                   )}
 

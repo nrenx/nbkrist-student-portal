@@ -2,17 +2,20 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AttendanceData } from '@/types/student';
 import { Calendar, CheckCircle, BarChart, Clock } from 'lucide-react';
+import { formatDate } from '@/utils/formatDate';
 
 interface AttendanceDetailsProps {
   attendance: AttendanceData;
   attendancePercentage?: string;
   totalClasses?: string;
+  lastUpdated?: string;
 }
 
 const AttendanceDetails = ({
   attendance,
   attendancePercentage,
-  totalClasses
+  totalClasses,
+  lastUpdated
 }: AttendanceDetailsProps) => {
   // Filter out metadata and special fields
   const subjectAttendance = Object.entries(attendance || {})
@@ -25,9 +28,13 @@ const AttendanceDetails = ({
   return (
     <Card className="overflow-hidden mt-6">
       <CardHeader className="bg-nbkr text-white">
-        <CardTitle className="flex items-center">
-          <Calendar className="w-5 h-5 mr-2" />
-          <span>Attendance Information</span>
+        <CardTitle className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Calendar className="w-5 h-5 mr-2" />
+            <span>Attendance Information {lastUpdated && (
+              <span className="text-sm font-normal ml-1">(Last Updated: {formatDate(lastUpdated)})</span>
+            )}</span>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">

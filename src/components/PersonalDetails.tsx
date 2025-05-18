@@ -3,19 +3,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PersonalDetailsData } from '@/types/student';
 import { User, Phone, Mail, CreditCard, UserCircle } from 'lucide-react';
 import { maskAadhaar } from '@/utils/maskData';
+import { formatDate } from '@/utils/formatDate';
 
 interface PersonalDetailsProps {
   personalDetails: PersonalDetailsData;
 }
 
 const PersonalDetails = ({ personalDetails }: PersonalDetailsProps) => {
-  // Filter out metadata and null values
+  // Filter out metadata, internal fields, and null values
   const details = Object.entries(personalDetails || {})
     .filter(([key, value]) =>
       key !== '_metadata' &&
+      key !== 'S.No' &&
+      key !== 'extracted_at' &&
       value !== null &&
       value !== undefined
     );
+
+  // Get the extracted_at date for the "Last Updated" information
+  const lastUpdated = personalDetails?.extracted_at;
 
   // Format key for display
   const formatKey = (key: string) => {
@@ -47,9 +53,13 @@ const PersonalDetails = ({ personalDetails }: PersonalDetailsProps) => {
   return (
     <Card className="overflow-hidden mt-6">
       <CardHeader className="bg-nbkr text-white">
-        <CardTitle className="flex items-center">
-          <User className="w-5 h-5 mr-2" />
-          <span>Personal Details</span>
+        <CardTitle className="flex items-center justify-between">
+          <div className="flex items-center">
+            <User className="w-5 h-5 mr-2" />
+            <span>Personal Details {lastUpdated && (
+              <span className="text-sm font-normal ml-1">(Last Updated: {formatDate(lastUpdated)})</span>
+            )}</span>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
