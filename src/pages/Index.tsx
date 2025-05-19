@@ -19,8 +19,8 @@ const Index = () => {
 
 
         {/* Add more content before the first ad to comply with AdSense policies */}
-        <div className="max-w-4xl mx-auto text-center mb-10 animate-fade-in">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        <div className={`max-w-4xl mx-auto text-center ${isMobile ? 'mb-6' : 'mb-10'} animate-fade-in`}>
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-bold text-gray-900 ${isMobile ? 'mb-2' : 'mb-4'}`}>
             N.B.K.R.I.S.T Student Portal
           </h1>
         </div>
