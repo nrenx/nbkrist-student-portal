@@ -31,6 +31,35 @@ const AdsterraPopunder: React.FC<AdsterraPopunderProps> = ({
   // Ad preferences - check if user allows popunders
   const { isAdTypeAllowed } = useAdPreferences();
 
+  // Function to add exit intent handler
+  const addExitIntentHandler = () => {
+    // Only add the handler if it doesn't already exist
+    if (window.document.body.getAttribute('data-exit-intent-handler')) {
+      return;
+    }
+
+    // Mark that we've added the handler
+    window.document.body.setAttribute('data-exit-intent-handler', 'true');
+
+    // Variable to track if popunder has been shown
+    let popunderShown = false;
+
+    // Function to handle mouse leave event (exit intent)
+    const handleMouseLeave = (e: MouseEvent) => {
+      // Only trigger if mouse leaves through the top of the page
+      if (e.clientY <= 0 && !popunderShown) {
+        popunderShown = true;
+        console.log('Exit intent detected, allowing popunder');
+
+        // Remove the handler after it's been triggered once
+        document.removeEventListener('mouseout', handleMouseLeave);
+      }
+    };
+
+    // Add the event listener
+    document.addEventListener('mouseout', handleMouseLeave);
+  };
+
   useEffect(() => {
     // Only show popunder if allowed by preferences and frequency
     const canShowPopunder = isAdTypeAllowed('interstitial') && shouldShowAd('popunder', 'interstitial');
@@ -91,9 +120,26 @@ const AdsterraPopunder: React.FC<AdsterraPopunderProps> = ({
         // Create and inject the script
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = scriptSrc;
         script.async = true;
         script.setAttribute('data-cfasync', 'false'); // CloudFlare compatibility
+
+        // If exitIntent is true, modify the script URL to include exit intent parameter
+        if (exitIntent) {
+          // Some Adsterra popunder scripts support exit intent via URL parameter
+          if (scriptSrc.includes('?')) {
+            script.src = `${scriptSrc}&exitIntent=true`;
+          } else {
+            script.src = `${scriptSrc}?exitIntent=true`;
+          }
+
+          // Also add a data attribute for custom handling
+          script.setAttribute('data-exit-intent', 'true');
+
+          console.log('Adsterra Popunder configured for exit intent only');
+        } else {
+          script.src = scriptSrc;
+        }
+
         script.onerror = (e) => {
           console.error('Error loading Adsterra Popunder script:', e);
           setError('Failed to load advertisement');
@@ -103,6 +149,11 @@ const AdsterraPopunder: React.FC<AdsterraPopunderProps> = ({
           // Record impression for frequency limiting
           recordImpression('popunder', 'interstitial');
           console.log('Adsterra Popunder loaded successfully');
+
+          // If exit intent is enabled, add custom exit intent handler
+          if (exitIntent) {
+            addExitIntentHandler();
+          }
         };
 
         // Add the script to the document head

@@ -11,10 +11,10 @@ interface AdFrequencyConfig {
 const DEFAULT_FREQUENCY_LIMITS: Record<AdType, AdFrequencyConfig> = {
   'sticky': { maxImpressions: 5, timeWindow: 24 }, // 5 per day
   'standard': { maxImpressions: 10, timeWindow: 24 }, // 10 per day
-  'interstitial': { maxImpressions: 3, timeWindow: 24 }, // 3 per day
-  'exit-intent': { maxImpressions: 2, timeWindow: 24 }, // 2 per day
-  'push-notification': { maxImpressions: 3, timeWindow: 24 }, // 3 per day
-  'floating-footer': { maxImpressions: 5, timeWindow: 24 }, // 5 per day
+  'interstitial': { maxImpressions: 1, timeWindow: 24 }, // 1 per day (reduced from 3)
+  'exit-intent': { maxImpressions: 1, timeWindow: 48 }, // 1 every 2 days (reduced from 2 per day)
+  'push-notification': { maxImpressions: 2, timeWindow: 24 }, // 2 per day (reduced from 3)
+  'floating-footer': { maxImpressions: 3, timeWindow: 24 }, // 3 per day (reduced from 5)
 };
 
 interface AdImpressionRecord {
