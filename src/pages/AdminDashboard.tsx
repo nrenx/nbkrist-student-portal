@@ -13,12 +13,13 @@ import { fetchAllLogos } from '@/services/logoService';
 import { BlogPost } from '@/types/blog';
 import { CollegeLogo } from '@/types/logo';
 import { LogOut, Loader2 } from 'lucide-react';
+import { AdVisibilityManager } from '@/features/ads';
 
 const AdminDashboard = () => {
   const { isAuthenticated, isLoading: authLoading, logout, adminUser } = useAdminAuth();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState<string>('blog');
+  const [activeTab, setActiveTab] = useState<string>('ads');
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [logos, setLogos] = useState<CollegeLogo[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
@@ -127,11 +128,16 @@ const AdminDashboard = () => {
           </Button>
         </div>
 
-        <Tabs defaultValue="blog" value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="ads" value={activeTab} onValueChange={setActiveTab} className="mb-8">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="ads">Ad Management</TabsTrigger>
             <TabsTrigger value="blog">Blog Posts</TabsTrigger>
             <TabsTrigger value="logos">College Logos</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="ads" className="mt-6">
+            <AdVisibilityManager className="mb-8" />
+          </TabsContent>
 
           <TabsContent value="blog" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

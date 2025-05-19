@@ -9,8 +9,10 @@ export { default as AdsterraPopunder } from './components/AdsterraPopunder';
 export { default as AdsterraDirectImplementation } from './components/AdsterraDirectImplementation';
 export { default as AdAnalyticsDashboard } from './components/AdAnalyticsDashboard';
 export { default as AdPreferencesDialog } from './components/AdPreferencesDialog';
+export { default as AdVisibilityManager } from './components/AdVisibilityManager';
 
 // Hooks
 export { useAdFrequency } from './hooks/useAdFrequency';
 export { useAdPerformance } from './hooks/useAdPerformance';
 export { useAdPreferences, type AdPreferenceType } from './hooks/useAdPreferences';
+export { useAdVisibility, type AdVisibilityConfig } from './hooks/useAdVisibility';
