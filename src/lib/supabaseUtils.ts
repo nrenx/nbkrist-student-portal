@@ -146,7 +146,7 @@ export async function listAcademicYears() {
 
 /**
  * List all years of study for a specific academic year
- * @param academicYear The academic year (e.g., "2024-25")
+ * @param academicYear The academic year (e.g., "2025-26")
  * @returns An object with the list of years of study and any error messages
  */
 export async function listYearsOfStudy(academicYear: string) {
@@ -252,7 +252,7 @@ export async function getSignedUrl(filePath: string, expiresIn: number = 60) {
 
 /**
  * List all roll numbers in a specific year of study
- * @param academicYear The academic year (e.g., "2024-25")
+ * @param academicYear The academic year (e.g., "2025-26")
  * @param yearOfStudy The year of study (e.g., "3-2")
  * @returns An object with the list of roll numbers and any error messages
  */

@@ -17,7 +17,7 @@ import { Helmet } from 'react-helmet';
 const StudentDetails = () => {
   const { rollNumber } = useParams<{ rollNumber: string }>();
   const location = useLocation();
-  const { acadYear, yearSem } = location.state || { acadYear: '2023-24', yearSem: '4-2' };
+  const { acadYear, yearSem } = location.state || { acadYear: '2025-26', yearSem: '4-2' };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [studentData, setStudentData] = useState<ProcessedStudentData | null>(null);

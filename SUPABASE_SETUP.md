@@ -33,13 +33,13 @@ student_data/
 For example:
 ```
 student_data/
-├── 2024-25/
+├── 2025-26/
 │   ├── 1-1/
-│   │   ├── 24KB1A0501/
+│   │   ├── 25KB1A0501/
 │   │   │   ├── personal_details.json
 │   │   │   ├── attendance.json
 │   │   │   ├── mid_marks.json
-│   │   │   └── 24KB1A0501.json
+│   │   │   └── 25KB1A0501.json
 ```
 
 ## 4. File Formats
@@ -104,7 +104,7 @@ This file is named after the student's roll number (e.g., 24KB1A0501.json) and c
   "section": "SECTION_CODE",
   "semester": "1-1",
   "roll_number": "EXAMPLE0001",
-  "academic_year": "2023-24"
+  "academic_year": "2025-26"
 }
 ```
 
@@ -154,13 +154,13 @@ VITE_SUPABASE_STORAGE_BUCKET=student_data
 3. This function delegates to `fetchStudentDetailsFromStorage` in `studentStorageService.ts`
 4. The storage service:
    - Generates the path to the student data using the exact structure: `{academic_year}/{year_sem}/{roll_number}/`
-     (e.g., `2024-25/1-1/24KB1A0501/`)
+     (e.g., `2025-26/1-1/25KB1A0501/`)
    - Checks if the student folder exists at this path
    - If the folder exists, downloads the student data files:
      - personal_details.json
      - attendance.json
      - mid_marks.json
-     - {roll_number}.json (e.g., 24KB1A0501.json)
+     - {roll_number}.json (e.g., 25KB1A0501.json)
    - Parses the data, handling both JSON and multipart form data
    - Processes the data into a format compatible with the UI components
    - Returns the processed data or null if the folder doesn't exist (displays "No data available")

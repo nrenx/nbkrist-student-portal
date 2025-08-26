@@ -14,7 +14,7 @@ import { fetchStudentDetails } from '@/services/studentService';
 
 const SearchBox = () => {
   const [rollNumber, setRollNumber] = useState('');
-  const [acadYear, setAcadYear] = useState('2024-25');
+  const [acadYear, setAcadYear] = useState('2025-26');
   const [yearSem, setYearSem] = useState('1-1'); // Default to Final Yr - Second Sem
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -86,7 +86,8 @@ const SearchBox = () => {
                 <SelectValue placeholder="Select academic year" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="2024-25">2024-25(current)</SelectItem>
+                <SelectItem value="2025-26">2025-26(current)</SelectItem>
+                <SelectItem value="2024-25">2024-25</SelectItem>
                 <SelectItem value="2023-24">2023-24</SelectItem>
                 <SelectItem value="2022-23">2022-23</SelectItem>
                 <SelectItem value="2021-22">2021-22</SelectItem>

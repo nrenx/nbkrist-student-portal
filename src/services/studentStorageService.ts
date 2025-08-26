@@ -390,7 +390,7 @@ function getStudentDataPath(
   console.log(`Using full year-semester format: ${yearSem}`);
 
   // Use the storage structure matching the Supabase bucket
-  // Based on the screenshot: 2024-25/1-1/24KB1A0501/
+  // Based on the screenshot: 2025-26/1-1/25KB1A0501/
   const path = `${academicYear}/${yearSem}/${rollNumber}`;
   console.log(`Student data path: ${path}`);
 
@@ -400,7 +400,7 @@ function getStudentDataPath(
 /**
  * Fetch student details from Supabase Storage
  * @param rollNumber - Student roll number
- * @param academicYear - Academic year (e.g., "2023-24")
+ * @param academicYear - Academic year (e.g., "2025-26")
  * @param yearSem - Year and semester (e.g., "1-1")
  * @returns Promise with processed student data or null if not found
  */

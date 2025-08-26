@@ -6,7 +6,7 @@ import { fetchStudentDetailsFromStorage } from './studentStorageService';
  * This function now uses the storage-based implementation
  *
  * @param rollNumber - Student roll number
- * @param academicYear - Academic year (e.g., "2023-24")
+ * @param academicYear - Academic year (e.g., "2025-26")
  * @param yearSem - Year and semester code (e.g., "1-1" for First Yr - First Sem)
  * @returns Processed student data or null if not found
  */
